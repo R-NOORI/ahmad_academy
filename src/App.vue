@@ -1,6 +1,8 @@
 <template>
-  <appHeader />
-  <router-view />
+  <div class="main">
+    <appHeader />
+    <router-view />
+  </div>
 </template>
 
 <script>
@@ -13,6 +15,11 @@ export default {
 </script>
 
 <style lang="less">
+body,
+html {
+  padding: 0;
+  margin: 0;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -21,16 +28,24 @@ export default {
   color: #2c3e50;
 }
 
-nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+.main {
+  background: url('./assets/bg.jpg');
+  height: 900px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 100% 100%;
 }
+
+// nav {
+//   padding: 30px;
+
+//   a {
+//     font-weight: bold;
+//     color: #2c3e50;
+
+//     &.router-link-exact-active {
+//       color: #42b983;
+//     }
+//   }
+// }
 </style>
