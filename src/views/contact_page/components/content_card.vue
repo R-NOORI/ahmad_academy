@@ -20,6 +20,9 @@ export default {
 
 <style lang="less" scoped>
 .contact-card {
+  position: relative;
+  top: 0;
+  transition: top ease 0.5s;
   width: 252px;
   height: 274px;
   background-color: #ffffff;
@@ -59,6 +62,7 @@ export default {
   &:hover {
     background-color: #f16d11;
     transition: 0.5s;
+    top: -20px;
     h3,
     p {
       color: #ffffff;

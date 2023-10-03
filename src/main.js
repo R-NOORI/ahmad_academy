@@ -20,6 +20,9 @@ import {
   faEnvelope,
   faMagnifyingGlass,
   faArrowRight,
+  faClipboardList,
+  faClock,
+  faCircleUser,
 } from '@fortawesome/free-solid-svg-icons'
 import {} from '@fortawesome/free-regular-svg-icons'
 import {
@@ -43,7 +46,10 @@ library.add(
   faPhone,
   faEnvelope,
   faMagnifyingGlass,
-  faArrowRight
+  faArrowRight,
+  faClipboardList,
+  faClock,
+  faCircleUser
 )
 
 /* add font awesome icon component */

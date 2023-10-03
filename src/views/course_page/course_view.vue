@@ -1,5 +1,6 @@
 <template>
   <div class="course-page">
+    <AppPageTitleArea />
     <div class="course-page-content">
       <div class="search-content">
         <p>Showing 1-6 Of 15 Results</p>
@@ -11,12 +12,32 @@
           />
         </div>
       </div>
+      <div class="course-list">
+        <CourseCard />
+        <CourseCard />
+        <CourseCard />
+        <CourseCard />
+        <CourseCard />
+        <CourseCard />
+      </div>
+      <el-pagination
+        style="margin-top: 50px"
+        background="red"
+        color="red"
+        layout="prev, pager, next"
+        :total="1000"
+      />
     </div>
+    <AppFooter />
   </div>
 </template>
 
 <script>
+import CourseCard from './components/course_card.vue'
+import AppFooter from '@/components/footer/app_footer.vue'
+import AppPageTitleArea from '@/components/app_page_title_area.vue'
 export default {
+  components: { CourseCard, AppFooter, AppPageTitleArea },
   data() {
     return {
       zoom: 15,
@@ -31,19 +52,24 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   &-content {
     background-color: #ffff;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     min-width: 80%;
     max-width: 70%;
-    margin: 100px 0px;
+    margin: 120px 0px;
+
     .search-content {
       display: flex;
       flex-direction: row;
       justify-content: space-between;
       align-items: center;
+      margin-bottom: 40px;
+      width: 100%;
       .search-content-field {
         background-color: #f5f5f5;
         padding: 0px 30px;
@@ -68,6 +94,22 @@ export default {
         }
       }
     }
+    .course-list {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      width: 100%;
+    }
   }
+}
+
+.pagination-div {
+  .is-active {
+    background-color: red;
+  }
+}
+.el-pagination is-background {
+  background-color: red;
 }
 </style>
