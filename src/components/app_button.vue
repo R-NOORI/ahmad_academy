@@ -29,6 +29,7 @@ button {
   color: #ffffff;
   font-size: 15px;
   font-weight: 700;
+  cursor: pointer;
   .btn-left-icon,
   .btn-right-icon {
     font-size: 15px;

@@ -1,5 +1,5 @@
 <template>
-  <div class="main">
+  <div :class="{ main: routeName == '/' }">
     <appHeader />
     <router-view />
   </div>
@@ -10,6 +10,14 @@ import appHeader from '@/components/header/app_header.vue'
 export default {
   components: {
     appHeader,
+  },
+  computed: {
+    routeName() {
+      return this.$router.currentRoute.value.path
+    },
+  },
+  mounted() {
+    console.log('current route name ', this.routeName)
   },
 }
 </script>
