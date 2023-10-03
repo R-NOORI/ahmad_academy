@@ -9,8 +9,12 @@
       <router-link to="/contact">Contact</router-link>
       <router-link to="/about">About</router-link>
       <div class="header_btn">
-        <el-button color="#525fe1" size="large"
-          ><span>Login / Register</span></el-button
+        <el-button color="#525fe1" size="large">
+          <font-awesome-icon
+            :icon="['far', 'user']"
+            style="margin-right: 8px"
+          />
+          <span> Login / Register</span></el-button
         >
       </div>
     </div>
@@ -68,8 +72,8 @@ a {
   }
 
   &.router-link-exact-active {
-    color: #ffffff;
-    border-bottom: 2px solid #ff8d00;
+    color: @color-secondary;
+    border-bottom: 2px solid @color-secondary;
   }
 }
 </style>

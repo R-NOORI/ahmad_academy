@@ -21,7 +21,7 @@ import {
   faMagnifyingGlass,
   faArrowRight,
 } from '@fortawesome/free-solid-svg-icons'
-import {} from '@fortawesome/free-regular-svg-icons'
+import { faUser } from '@fortawesome/free-regular-svg-icons'
 import {
   faFacebookF,
   faLinkedinIn,
@@ -43,7 +43,8 @@ library.add(
   faPhone,
   faEnvelope,
   faMagnifyingGlass,
-  faArrowRight
+  faArrowRight,
+  faUser
 )
 
 /* add font awesome icon component */
