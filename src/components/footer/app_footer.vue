@@ -168,6 +168,7 @@
   align-items: center;
   width: 100%;
   min-height: 500px;
+  margin-top: 130px;
   &-content {
     display: flex;
     flex-direction: row;
