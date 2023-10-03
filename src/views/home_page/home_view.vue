@@ -141,18 +141,15 @@
         </div>
       </div>
     </div>
-    <appFooter />
   </div>
 </template>
 
 <script>
 import AppButon from '@/components/app_button.vue'
-import appFooter from '@/components/footer/app_footer.vue'
 
 export default {
   components: {
     AppButon,
-    appFooter,
   },
 }
 </script>
