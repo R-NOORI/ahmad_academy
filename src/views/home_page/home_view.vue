@@ -1,7 +1,13 @@
 <template>
   <div class="container">
     <div class="main-content">
-      <div class="hero_text">
+      <div
+        v-motion
+        :initial="{ opacity: 0, y: 100 }"
+        :enter="{ opacity: 1, y: 0 }"
+        :delay="200"
+        class="hero_text"
+      >
         <h4>LEARN NEW THINGS DAILY</h4>
         <h1>Education Is A Path To Success In Life</h1>
         <h5>
@@ -13,7 +19,13 @@
           :right-icon="['fas', 'arrow-right']"
         />
       </div>
-      <div class="hero_image">
+      <div
+        v-motion
+        :initial="{ opacity: 0, y: -100 }"
+        :enter="{ opacity: 1, y: 0 }"
+        :delay="400"
+        class="hero_image"
+      >
         <img src="@/assets/hero_image_1.png" />
       </div>
     </div>
@@ -25,13 +37,55 @@
       <div class="offers">
         <div class="offers_card">
           <div class="offers_icon_container">
-            <font-awesome-icon class="icon" :icon="icons" />
+            <font-awesome-icon
+              class="icon"
+              :icon="['fas', 'briefcase']"
+              size="lg"
+            />
           </div>
+          <h3>Expert Instructions</h3>
+          <p>
+            We have a highly expert and experience instructor that can you help
+            you acheieve your goals
+          </p>
+        </div>
+        <!-- card 2 -->
+        <div class="offers_card">
+          <div class="offers_icon_container">
+            <font-awesome-icon
+              class="icon"
+              :icon="['fas', 'globe']"
+              size="lg"
+            />
+          </div>
+          <h3>Video Tutorials</h3>
+          <p>
+            We have a highly expert and experience instructor that can you help
+            you acheieve your goals
+          </p>
+        </div>
+        <!-- card 3 -->
+        <div class="offers_card">
+          <div class="offers_icon_container">
+            <font-awesome-icon class="icon" :icon="['fas', 'gear']" size="lg" />
+          </div>
+          <h3>Learn From Anywhere</h3>
+          <p>
+            We have a highly expert and experience instructor that can you help
+            you acheieve your goals
+          </p>
         </div>
       </div>
     </div>
 
-    <div class="sub-content">
+    <div
+      v-motion
+      :initial="{ opacity: 0, y: 100 }"
+      :enter="{ opacity: 1, y: 0 }"
+      :visible="{ opacity: 1, y: 0 }"
+      :delay="200"
+      class="sub-content"
+    >
       <el-divider content-position="center"
         ><p class="title_1">SKILLED INSTRUCTOR</p></el-divider
       >
@@ -269,25 +323,52 @@ export default {
     }
     .offers {
       display: flex;
-      justify-content: space-evenly;
+      justify-content: center;
       align-items: center;
       .offers_card {
         width: 252px;
         height: 274px;
+        margin: 20px;
         background-color: rgba(249, 249, 249, 0.792);
         margin-right: 30px;
         border-radius: 10px;
         display: flex;
         flex-direction: column;
         justify-content: center;
-        align-items: center;
+        align-items: flex-start;
         position: relative;
         top: 0;
         transition: top ease 0.5s;
+        padding: 20px;
         &:hover {
           box-shadow: -1px 5px 12px #cccccc5e;
           background-color: #ffffff;
           top: -20px;
+          .offers_icon_container {
+            background-color: @color-secondary;
+
+            .icon {
+              color: white;
+            }
+          }
+        }
+        .offers_icon_container {
+          width: 70px;
+          height: 70px;
+          background-color: #5361df58;
+          border-top-left-radius: 50%;
+          border-top-right-radius: 50%;
+          line-height: 70px;
+          margin-bottom: 10px;
+          .icon {
+            color: @color-secondary;
+          }
+        }
+        h3 {
+          text-align: left;
+        }
+        p {
+          text-align: left;
         }
       }
     }

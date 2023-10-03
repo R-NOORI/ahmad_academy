@@ -1,5 +1,5 @@
 <template>
-  <div class="nav">
+  <div class="nav" :class="{ scrolledNav: isScrolling }">
     <div class="app_icon">
       <img src="@/assets/logo.png" />
     </div>
@@ -22,7 +22,9 @@
 </template>
 
 <script>
-export default {}
+export default {
+  props: ['isScrolling'],
+}
 </script>
 
 <style lang="less" scoped>
@@ -30,11 +32,12 @@ export default {}
   display: flex;
   justify-content: space-around;
   box-sizing: border-box;
-
+  align-items: center;
+  height: 80px;
   .app_icon {
     width: 40px;
     height: 40px;
-    margin-top: 25px;
+    // margin-top: 25px;
     img {
       width: 40px;
       height: 40px;
@@ -43,10 +46,11 @@ export default {}
 
   .nav_item {
     // flex-grow: 1;
-    margin-top: 30px;
+    // margin-top: 30px;
     display: flex;
     // width: 500px;
     justify-content: space-evenly;
+    align-items: center;
   }
   .header_btn {
     margin-left: 50px;
@@ -57,6 +61,14 @@ export default {}
       font-size: medium;
     }
   }
+}
+
+.scrolledNav {
+  background-color: white;
+  box-shadow: 1px 10px 20px -5px rgba(112, 112, 112, 0.57);
+  -webkit-box-shadow: 1px 10px 20px -5px rgba(112, 112, 112, 0.57);
+  -moz-box-shadow: 1px 10px 20px -5px rgba(112, 112, 112, 0.57);
+  position: sticky;
 }
 
 a {

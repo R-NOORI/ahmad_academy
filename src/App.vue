@@ -1,6 +1,6 @@
 <template>
   <div :class="{ main: routeName == '/' }">
-    <appHeader />
+    <appHeader :isScrolling="isScrolled" />
     <router-view />
   </div>
 </template>
@@ -11,13 +11,35 @@ export default {
   components: {
     appHeader,
   },
+  data() {
+    return {
+      isScrolled: false,
+    }
+  },
+
+  mounted() {
+    window.addEventListener('scroll', this.handleScroll)
+  },
+  unmounted() {
+    window.removeEventListener('scroll', this.handleScroll)
+  },
+  methods: {
+    handleScroll() {
+      // Any code to be executed when the window is scrolled
+      console.log('scrolling', window.scrollY)
+      if (window.scrollY > 100) {
+        this.isScrolled = true
+      }
+      if (window.scrollY < 100) {
+        this.isScrolled = false
+      }
+      console.log('is scrolling ', this.isScrolled)
+    },
+  },
   computed: {
     routeName() {
       return this.$router.currentRoute.value.path
     },
-  },
-  mounted() {
-    console.log('current route name ', this.routeName)
   },
 }
 </script>

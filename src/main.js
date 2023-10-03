@@ -4,6 +4,8 @@ import router from './router'
 import store from './store'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
+import { MotionPlugin } from '@vueuse/motion'
+
 /* import the fontawesome core */
 import { library } from '@fortawesome/fontawesome-svg-core'
 /* import font awesome icon component */
@@ -23,6 +25,8 @@ import {
   faClipboardList,
   faClock,
   faCircleUser,
+  faBriefcase,
+  faGear,
 } from '@fortawesome/free-solid-svg-icons'
 import { faUser } from '@fortawesome/free-regular-svg-icons'
 import {
@@ -50,7 +54,9 @@ library.add(
   faClipboardList,
   faClock,
   faCircleUser,
-  faUser
+  faUser,
+  faBriefcase,
+  faGear
 )
 
 /* add font awesome icon component */
@@ -59,4 +65,5 @@ createApp(App)
   .use(store)
   .use(router)
   .use(ElementPlus)
+  .use(MotionPlugin)
   .mount('#app')
