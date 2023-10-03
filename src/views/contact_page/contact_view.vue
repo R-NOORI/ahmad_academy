@@ -1,5 +1,6 @@
 <template>
   <div class="contact-root">
+    <AppPageTitleArea :currentPath="this.$route.name" />
     <div class="contact-page">
       <h4>NEED HELP?</h4>
       <h1>Get In Touch With us</h1>
@@ -40,10 +41,7 @@
           <input placeholder="Phone" />
           <input placeholder="Subject" />
           <textarea class="text-area" placeholder="Your Massage" />
-          <app_button
-            btnText="submit now"
-            :rightIcon="['fas', 'arrow-right']"
-          />
+          <AppButton btnText="submit now" :rightIcon="['fas', 'arrow-right']" />
         </div>
       </div>
     </div>
@@ -62,24 +60,24 @@
         <l-marker :lat-lng="[31.619061, 65.724823]"></l-marker>
       </l-map>
     </div>
-    <app_footer />
   </div>
 </template>
 
 <script>
 import 'leaflet/dist/leaflet.css'
 import contact_card from '@/views/contact_page/components/content_card.vue'
-import app_footer from '@/components/footer/app_footer.vue'
-import app_button from '@/components/app_button.vue'
+import AppButton from '@/components/app_button.vue'
+import AppPageTitleArea from '@/components/app_page_title_area.vue'
+
 import { LMap, LTileLayer, LMarker } from '@vue-leaflet/vue-leaflet'
 export default {
   components: {
-    app_footer,
     LMap,
     LTileLayer,
     LMarker,
     contact_card,
-    app_button,
+    AppButton,
+    AppPageTitleArea,
   },
   data() {
     return {
@@ -102,7 +100,6 @@ export default {
     justify-content: center;
     min-width: 80%;
     max-width: 70%;
-    margin: 100px 0px;
     h4 {
       color: @color-secondary;
     }
@@ -161,7 +158,7 @@ export default {
     min-width: 80%;
     max-width: 70%;
     height: 500px;
-    margin-bottom: 100px;
+    margin-top: 100px;
   }
 }
 </style>

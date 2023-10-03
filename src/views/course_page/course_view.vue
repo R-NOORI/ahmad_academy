@@ -1,6 +1,6 @@
 <template>
   <div class="course-page">
-    <AppPageTitleArea />
+    <AppPageTitleArea :currentPath="this.$route.name" />
     <div class="course-page-content">
       <div class="search-content">
         <p>Showing 1-6 Of 15 Results</p>
@@ -28,20 +28,22 @@
         :total="1000"
       />
     </div>
-    <AppFooter />
   </div>
 </template>
 
 <script>
 import CourseCard from './components/course_card.vue'
-import AppFooter from '@/components/footer/app_footer.vue'
 import AppPageTitleArea from '@/components/app_page_title_area.vue'
 export default {
-  components: { CourseCard, AppFooter, AppPageTitleArea },
+  components: { CourseCard, AppPageTitleArea },
   data() {
     return {
       zoom: 15,
     }
+  },
+  mounted() {
+    console.log(this.$route.name)
+    console.log(this.$route.path)
   },
 }
 </script>
@@ -61,7 +63,6 @@ export default {
     align-items: center;
     min-width: 80%;
     max-width: 70%;
-    margin: 120px 0px;
 
     .search-content {
       display: flex;
@@ -102,14 +103,5 @@ export default {
       width: 100%;
     }
   }
-}
-
-.pagination-div {
-  .is-active {
-    background-color: red;
-  }
-}
-.el-pagination is-background {
-  background-color: red;
 }
 </style>

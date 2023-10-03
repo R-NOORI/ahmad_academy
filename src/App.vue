@@ -1,15 +1,18 @@
 <template>
   <div :class="{ main: routeName == '/' }">
-    <appHeader />
+    <AppHeader />
     <router-view />
+    <AppFooter />
   </div>
 </template>
 
 <script>
-import appHeader from '@/components/header/app_header.vue'
+import AppHeader from '@/components/header/app_header.vue'
+import AppFooter from './components/footer/app_footer.vue'
 export default {
   components: {
-    appHeader,
+    AppHeader,
+    AppFooter,
   },
   computed: {
     routeName() {
