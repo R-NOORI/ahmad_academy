@@ -25,19 +25,17 @@ export default {
 <style lang="less" scoped>
 .page-title-area {
   width: 100%;
-  height: 215px;
+  // height: 215px;
   background-color: red;
-  background-image: url('../assets/bg.jpg');
-  background-size: 100% 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   margin-bottom: 120px;
+  padding: 50px 0px;
+  background-size: 100% 100%;
+  background-image: url('../assets/bg.jpg');
   &-content {
-    min-width: 80%;
-    max-width: 70%;
     text-align: left;
+    max-width: 1100px;
+    margin: 0px auto;
+    padding-left: 20px;
     &-title {
       color: #231f40;
       font-size: 40px;

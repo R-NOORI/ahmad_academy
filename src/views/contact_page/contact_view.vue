@@ -8,30 +8,29 @@
         <div class="contact-container-cards">
           <div class="contact-cards-row" style="margin-bottom: 30px">
             <contact_card
-              :icons="['fas', 'globe']"
-              title="Our Website"
-              text1="www.example.com"
-              text2="www.theme.net"
-            />
-            <contact_card
               :icons="['fas', 'phone-volume']"
               title="Call Us On"
-              text1="+2763 (388) 2930"
-              text2="+4875 (356) 2568"
+              text1="+93 (0) 700073297"
+              text2="+93 (0) 700063298"
             />
-          </div>
-          <div class="contact-cards-row">
             <contact_card
               :icons="['fas', 'envelope-open']"
               title="Email Us"
               text1="eduvibe@example.com"
               text2="contact@eduvibe.com"
             />
+          </div>
+          <div class="contact-cards-row">
             <contact_card
-              :icons="['fas', 'location-dot']"
-              title="Our Location"
-              text1="486 Normana Avenue"
-              text2="Morningtide, 4223"
+              :icons="['fab', 'instagram']"
+              title="Instagram Link"
+              text1="alnoorsafa.onlineacademy"
+            />
+
+            <contact_card
+              :icons="['fab', 'facebook-f']"
+              title="Facebook Link"
+              text1="AlnoorSafaAcademye"
             />
           </div>
         </div>
@@ -47,7 +46,7 @@
     </div>
     <div class="contact-root-map">
       <l-map
-        style="width: 100%; height: 100%"
+        style="width: 100%; height: 100%; z-index: 1"
         ref="map"
         v-model:zoom="zoom"
         :center="[31.619061, 65.724823]"
@@ -90,16 +89,11 @@ export default {
 <style scoped lang="less">
 .contact-root {
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   .contact-page {
     background-color: #ffff;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    min-width: 80%;
-    max-width: 70%;
+    max-width: 1080px;
+    margin: 0px auto;
+    padding: 0px 20px;
     h4 {
       color: @color-secondary;
     }
@@ -155,10 +149,10 @@ export default {
     }
   }
   &-map {
-    min-width: 80%;
-    max-width: 70%;
+    max-width: 1080px;
+    padding: 100px 20px;
+    margin: 0px auto;
     height: 500px;
-    margin-top: 100px;
   }
 }
 </style>

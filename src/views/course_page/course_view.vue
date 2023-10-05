@@ -13,12 +13,12 @@
         </div>
       </div>
       <div class="course-list">
-        <CourseCard />
-        <CourseCard />
-        <CourseCard />
-        <CourseCard />
-        <CourseCard />
-        <CourseCard />
+        <CourseCard @click="this.$router.push('/course-details')" />
+        <CourseCard @click="this.$router.push('/course-details')" />
+        <CourseCard @click="this.$router.push('/course-details')" />
+        <CourseCard @click="this.$router.push('/course-details')" />
+        <CourseCard @click="this.$router.push('/course-details')" />
+        <CourseCard @click="this.$router.push('/course-details')" />
       </div>
       <el-pagination
         style="margin-top: 50px"
@@ -35,6 +35,7 @@
 import CourseCard from './components/course_card.vue'
 import AppPageTitleArea from '@/components/app_page_title_area.vue'
 export default {
+  name: 'course-page',
   components: { CourseCard, AppPageTitleArea },
   data() {
     return {
@@ -61,8 +62,8 @@ export default {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    min-width: 80%;
-    max-width: 70%;
+    max-width: 1080px;
+    padding: 0px 20px;
 
     .search-content {
       display: flex;
@@ -96,11 +97,9 @@ export default {
       }
     }
     .course-list {
-      display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-      justify-content: flex-start;
-      width: 100%;
+      display: grid;
+      grid-template-columns: auto auto auto;
+      grid-gap: 1em;
     }
   }
 }

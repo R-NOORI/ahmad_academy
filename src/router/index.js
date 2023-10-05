@@ -29,6 +29,17 @@ const routes = [
         component: () => import('../views/course_page/course_view.vue'),
       },
       {
+        path: '/course-details',
+        name: 'course details',
+        meta: {
+          access: [],
+          title: 'course details',
+          icon: 'md-build',
+          transition: 'slide-right',
+        },
+        component: () => import('../views/course_page/course_details_view.vue'),
+      },
+      {
         path: '/about',
         name: 'about',
         meta: {
