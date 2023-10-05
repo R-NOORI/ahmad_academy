@@ -1,7 +1,6 @@
 <template>
   <div class="course-card">
     <div class="course-card-image">
-      <div class="course-card-level">Advace</div>
       <img
         src="https://img.freepik.com/free-photo/university-colleagues-talking-library_23-2148844675.jpg?w=996&t=st=1696327612~exp=1696328212~hmac=14ebea81b49bae981d60d7ca30f99fa6f641bc20d7b3cf2fb6c37e1c31849b8b"
       />
@@ -25,13 +24,6 @@
           <div class="new-price">$45.00</div>
           <div class="old-price">$450.00</div>
         </div>
-        <span
-          ><font-awesome-icon
-            class="price-icon"
-            :icon="['fa', 'circle-user']"
-          />
-          229 Students
-        </span>
       </div>
     </div>
   </div>
@@ -46,8 +38,8 @@ export default {
 <style scoped lang="less">
 .course-card {
   // height: 517px;
-  width: 370px;
-  margin: 0px 20px 20px 0px;
+  // width: 330px;
+  // margin: 0px 20px 20px 0px;
   border-radius: 5px;
   overflow: hidden;
   background-color: #f5f5f5;
@@ -81,18 +73,6 @@ export default {
       height: 250px;
       transition: 0.5s;
     }
-    .course-card-level {
-      background-color: #ffffff;
-      color: @color-secondary;
-      border-radius: 2px;
-      padding: 7px 12px;
-      position: absolute;
-      font-size: 14px;
-      font-weight: 600;
-      top: 15px;
-      left: 15px;
-      z-index: 1;
-    }
   }
 
   &-content {
@@ -114,13 +94,6 @@ export default {
     }
     &-price {
       justify-content: space-between;
-      span {
-        color: #6f6b80;
-        font-size: 16px;
-        .price-icon {
-          margin-right: 10px;
-        }
-      }
       .price-content {
         display: flex;
         align-items: center;

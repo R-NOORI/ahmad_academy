@@ -27,6 +27,8 @@ import {
   faCircleUser,
   faBriefcase,
   faGear,
+  faChartSimple,
+  faLanguage,
 } from '@fortawesome/free-solid-svg-icons'
 import { faUser } from '@fortawesome/free-regular-svg-icons'
 import {
@@ -34,6 +36,7 @@ import {
   faLinkedinIn,
   faTwitter,
   faTelegram,
+  faInstagram,
 } from '@fortawesome/free-brands-svg-icons'
 
 /* add icons to the library  magnifying-glass */
@@ -56,7 +59,10 @@ library.add(
   faCircleUser,
   faUser,
   faBriefcase,
-  faGear
+  faGear,
+  faInstagram,
+  faChartSimple,
+  faLanguage
 )
 
 /* add font awesome icon component */
