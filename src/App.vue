@@ -29,14 +29,14 @@ export default {
   methods: {
     handleScroll() {
       // Any code to be executed when the window is scrolled
-      console.log('scrolling', window.scrollY)
+      // console.log('scrolling', window.scrollY)
       if (window.scrollY > 100) {
         this.isScrolled = true
       }
       if (window.scrollY < 100) {
         this.isScrolled = false
       }
-      console.log('is scrolling ', this.isScrolled)
+      // console.log('is scrolling ', this.isScrolled)
     },
   },
   computed: {

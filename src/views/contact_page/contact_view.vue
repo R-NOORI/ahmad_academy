@@ -1,7 +1,14 @@
 <template>
   <div class="contact-root">
     <AppPageTitleArea :currentPath="this.$route.name" />
-    <div class="contact-page">
+    <div
+      class="contact-page"
+      v-motion
+      :initial="{ opacity: 0, y: 300 }"
+      :enter="{ opacity: 1, y: 0 }"
+      :visible-once="{ opacity: 1, y: 0 }"
+      :delay="350"
+    >
       <h4>NEED HELP?</h4>
       <h1>Get In Touch With us</h1>
       <div class="contact-container">

@@ -1,24 +1,366 @@
 <template>
-  <h1>about Page</h1>
-  <div class="grid-list">
-    <div></div>
-    <div></div>
-    <div></div>
+  <AppPageTitleArea :currentPath="this.$route.name" />
+  <div class="who-we-are">
+    <div class="elementor-images">
+      <div class="elementor-images-large">
+        <img
+          class="small"
+          src="https://eduvibe.devsvibe.com/main/wp-content/uploads/2022/10/about-group-02-2.jpg"
+          alt=""
+        />
+        <img
+          ref="infoBox"
+          class="animate"
+          :style="'top: ' + scrollValue + '%'"
+          src="https://eduvibe.devsvibe.com/main/wp-content/uploads/2022/10/about-group-03-2.jpg"
+        />
+      </div>
+    </div>
+    <div class="elementor-container">
+      <h4>WHO WE ARE</h4>
+      <h1>We Offer The Best Carrier</h1>
+      <AboutCard
+        imageIcon="student"
+        title="Industry Expert
+      Instructor"
+        body="Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+      eiusmoded tempor incididunt dolore magna aliqua."
+        backgroundColor="background-color: #ffa41b1a"
+      />
+      <AboutCard
+        imageIcon="book"
+        title="Up-to-Date Course Content"
+        body="Lorem ipsum dolor sit amet, consectetur adipiscing elit, eiusmoded tempor incididunt dolore magna aliqua."
+        backgroundColor="background-color: #525FE11A;"
+      />
+      <AboutCard
+        imageIcon="reward"
+        title="Biggest Student Community"
+        body="Lorem ipsum dolor sit amet, consectetur adipiscing elit, eiusmoded tempor incididunt dolore magna aliqua."
+        backgroundColor="background-color: #FB7C561A;"
+      />
+      <AppButton
+        btnText="Know About Us"
+        :rightIcon="['fas', 'arrow-right']"
+        style="width: 200px"
+      />
+    </div>
+  </div>
+  <div class="what-we-offer">
+    <div class="what-we-offer-content">
+      <h4>WHAT WE OFFER</h4>
+      <h1>How Does EduVibe Work?</h1>
+      <div class="what-we-offer-content-items">
+        <AboutItemCard
+          :imageIcon="['fa', 'book']"
+          title="Choose Any Courses"
+          body="Lorem ipsum dolor amet, consectetur adipiscing elited uspendisse varius enim"
+          backgroundColor="background-color: #F86F03;"
+        />
+        <div class="arrow-image-down">
+          <img src="@/assets/about-page/arrow_down_2.png" />
+        </div>
+
+        <AboutItemCard
+          :imageIcon="['fas', 'basket-shopping']"
+          title="Purchase Your Course"
+          body="Lorem ipsum dolor amet, consectetur adipiscing elited uspendisse varius enim"
+          backgroundColor="background-color: #525FE1;"
+        />
+        <div class="arrow-image-top">
+          <img src="@/assets/about-page/arrow_top_2.png" />
+        </div>
+
+        <AboutItemCard
+          :imageIcon="['fas', 'trophy']"
+          title="Great! Start Learn"
+          body="Lorem ipsum dolor amet, consectetur adipiscing elited uspendisse varius enim"
+          backgroundColor="background-color: #FFA41B"
+        />
+      </div>
+    </div>
+  </div>
+  <div class="scroll-images">
+    <div class="circale-shap"></div>
+    <div class="rectangle-shape"></div>
+    <div class="vector-image">
+      <img src="@/assets/about-page/shape_04_012.png" />
+    </div>
+
+    <img
+      src="https://eduvibe.devsvibe.com/main/wp-content/uploads/2023/02/mission-gallery-01.jpg"
+    />
+    <img
+      src="https://eduvibe.devsvibe.com/main/wp-content/uploads/2023/02/mission-gallery-02.jpg"
+    />
+    <img
+      src="https://eduvibe.devsvibe.com/main/wp-content/uploads/2023/02/mission-gallery-03.jpg"
+    />
+    <img
+      src="https://eduvibe.devsvibe.com/main/wp-content/uploads/2023/02/mission-gallery-04.jpg"
+    />
+  </div>
+  <div class="our-info-content">
+    <div class="our-info-content-mission">
+      <h4>OUR MISSION</h4>
+      <h1>Education In Continuing A Proud Tradition</h1>
+      <p>
+        EduVibe offers a diverse range of courses, spanning various subjects and
+        levels of difficulty, to cater to learners with different interests and
+        skill levels. We leverage innovative technology, such as artificial
+        intelligence and machine learning, to enhance the learning experience,
+        provide personalized feedback and recommendations, and improve the
+        effectiveness of its courses.
+      </p>
+    </div>
+    <div class="our-info-content-vision">
+      <h4>OUR VISION</h4>
+      <h1>Education Is About Creating Leaders For Tomorrow</h1>
+      <p>
+        EduVibe offers a diverse range of courses, spanning various subjects and
+        levels of difficulty, to cater to learners with different interests and
+        skill levels. We leverage innovative technology, such as artificial
+        intelligence and machine learning, to enhance the learning experience,
+        provide personalized feedback and recommendations, and improve the
+        effectiveness of its courses.
+      </p>
+    </div>
   </div>
 </template>
 
-<style lang="less" scoped>
-h1 {
-  background-color: red;
+<script>
+import AppPageTitleArea from '@/components/app_page_title_area.vue'
+import AboutCard from './components/about-card.vue'
+import AppButton from '@/components/app_button.vue'
+import AboutItemCard from './components/about-item-card.vue'
+export default {
+  name: 'course-page',
+  components: { AppPageTitleArea, AboutCard, AppButton, AboutItemCard },
+  data() {
+    return {
+      zoom: 15,
+      scrollValue: 20,
+      imageSize: 0,
+    }
+  },
+
+  // mounted() {
+  //   console.log(this.$route.name)
+  //   console.log(this.$route.path)
+  // },
+  mounted() {
+    window.addEventListener('scroll', this.handleScroll)
+    this.matchHeight()
+
+    // this.$el.addEventListener(
+    //   'scroll',
+    //   function () {
+    //     let scrollTop = this.$el.scrollTop
+    //     let c_height = this.$el.clientHeight
+    //     let s_height = this.$el.scrollHeight
+
+    //     let scrollPer = Math.random(scrollTop / s_height - c_height) * 100
+    //     console.log(scrollPer)
+    //   }.bind(this)
+    // )
+  },
+  unmounted() {
+    window.removeEventListener('scroll', this.handleScroll)
+  },
+  methods: {
+    handleScroll() {
+      // Any code to be executed when the window is scrolled
+      // this.scrollValue = (document.body.scrollHeight / window.scrollY) * 100
+      // console.log('scrolling', window.scrollY)
+      var item =
+        document.body.scrollTop / document.body.scrollHeight -
+        document.body.clientHeight * 100
+      console.log('scrolling', Math.round(item))
+    },
+
+    matchHeight() {
+      this.imageSize = this.$refs.infoBox.clientHeight
+      // console.log('scrolling ===========', this.$refs.infoBox.clientHeight)
+    },
+  },
+  computed: {},
+}
+</script>
+
+<style scoped lang="less">
+.who-we-are {
+  background-color: #ffff;
+  max-width: 1300px;
+  border: 1px solid blacks;
+  display: flex;
+  flex-direction: row;
+  margin: 0px auto;
+  .elementor-container {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    align-content: flex-start;
+    padding: 20px;
+
+    h4 {
+      font-size: 16px;
+      color: @color-secondary;
+      text-align: left;
+      margin: 0px;
+    }
+    h1 {
+      font-size: 40px;
+      text-align: left;
+      color: #231f40;
+      margin: 15px 0px 40px 0px;
+    }
+  }
+  .elementor-images {
+    width: 50%;
+    padding-top: 20px;
+    position: relative;
+    z-index: 0;
+    margin-right: 130px;
+
+    &-large {
+      background-image: url('https://eduvibe.devsvibe.com/main/wp-content/uploads/2022/10/about-group-01-2.jpg');
+      background-size: 100% 100%;
+      height: 100%;
+      max-width: 100%;
+      position: relative;
+      border-radius: 5px;
+      margin-left: 100px;
+      .animate {
+        position: absolute;
+        right: -15%;
+        z-index: 15;
+      }
+      .small {
+        position: absolute;
+        top: 20%;
+        left: -15%;
+        z-index: -1;
+      }
+    }
+    img {
+      border-radius: 5px;
+    }
+  }
 }
 
-.grid-list {
-  background-color: greenyellow;
+.what-we-offer {
+  background-size: 100% 100%;
+  background-image: url('../../assets/bg.jpg');
+  height: 600px;
+  width: 100%;
+  margin: 150px 0px;
+
+  &-content {
+    max-width: 1080px;
+    height: 100%;
+    margin: 0px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    h4 {
+      font-size: 16px;
+      color: @color-secondary;
+      margin: 0px;
+    }
+    h1 {
+      font-size: 40px;
+      color: #231f40;
+      margin: 10px 0px 0px 0px;
+    }
+    &-items {
+      margin-top: 40px;
+      display: flex;
+      flex: row;
+      .arrow-image-down {
+        margin-top: 50px;
+        width: 50px;
+        height: 50px;
+        position: relative;
+        img {
+          position: absolute;
+          right: -200%;
+        }
+      }
+      .arrow-image-top {
+        width: 50px;
+        height: 50px;
+        position: relative;
+        img {
+          position: absolute;
+          right: -200%;
+        }
+      }
+    }
+  }
 }
-.grid-list > div:nth-child(odd) {
-  border: 1px solid black;
+
+.scroll-images {
+  max-width: 1200px;
+  margin: 0px auto;
+  // padding: 130px 0px 0px 0px;
+  position: relative;
+  z-index: 0;
+  .circale-shap {
+    width: 100px;
+    height: 100px;
+    border-radius: 100px;
+    background-color: #fb7c5699;
+    position: absolute;
+    top: 0px;
+    right: -30px;
+    z-index: -1;
+  }
+  .rectangle-shape {
+    width: 150px;
+    height: 150px;
+    border-radius: 5px;
+    background-color: #fac988;
+    position: absolute;
+    top: 100px;
+    left: 200px;
+    z-index: -1;
+  }
+  .vector-image {
+    position: absolute;
+    top: 50px;
+    left: -50px;
+    z-index: -1;
+  }
+  img {
+    border-radius: 5px;
+    margin: 0px 15px;
+  }
 }
-.grid-list > div:nth-child(even) {
-  border: 1px solid red;
+.our-info-content {
+  max-width: 1100px;
+  margin: 0px auto;
+  display: flex;
+  flex-direction: row;
+  text-align: left;
+  &-mission,
+  &-vision {
+    padding: 15px;
+    h4 {
+      font-size: 16px;
+      color: @color-secondary;
+      margin: 0px;
+    }
+    h1 {
+      font-size: 35px;
+      color: #231f40;
+      margin: 15px 0px 40px 0px;
+    }
+    p {
+      color: #6b6b80;
+      font-size: 16px;
+    }
+  }
 }
 </style>
