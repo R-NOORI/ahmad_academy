@@ -1,5 +1,24 @@
 <template>
-  <div class="elementor-container-item">
+  <div
+    class="elementor-container-item"
+    v-motion
+    :initial="{ opacity: 0, y: 100 }"
+    :enter="{
+      opacity: 1,
+      y: 0,
+      transition: {
+        mass: mass,
+      },
+    }"
+    :visible="{
+      opacity: 1,
+      y: 0,
+      transition: {
+        mass: mass,
+      },
+    }"
+    :delay="200"
+  >
     <div class="elementor-container-item-icon" :style="backgroundColor">
       <font-awesome-icon class="search-content-field-icon" :icon="imageIcon" />
     </div>
@@ -13,7 +32,7 @@
 </template>
 <script>
 export default {
-  props: ['title', 'body', 'imageIcon', 'backgroundColor'],
+  props: ['title', 'body', 'imageIcon', 'backgroundColor', 'mass'],
 }
 </script>
 

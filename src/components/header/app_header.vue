@@ -5,7 +5,11 @@
     </div>
     <div class="nav_item">
       <router-link to="/">Home</router-link>
-      <router-link to="/course">Courses</router-link>
+      <router-link
+        to="/course"
+        :class="{ activeNav: this.$route.fullPath == '/course/course-details' }"
+        >Courses</router-link
+      >
       <router-link to="/contact">Contact</router-link>
       <router-link to="/about">About</router-link>
       <div class="header_btn">
@@ -53,6 +57,10 @@ export default {
     // width: 500px;
     justify-content: space-evenly;
     align-items: center;
+    .activeNav {
+      color: @color-orange;
+      border-bottom: 2px solid @color-orange;
+    }
   }
   .header_btn {
     margin-left: 50px;

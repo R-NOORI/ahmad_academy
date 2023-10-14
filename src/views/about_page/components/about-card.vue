@@ -13,7 +13,7 @@
 </template>
 <script>
 export default {
-  props: ['title', 'body', 'imageIcon', 'backgroundColor'],
+  props: ['title', 'body', 'imageIcon', 'backgroundColor', 'mass'],
 }
 </script>
 

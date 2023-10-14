@@ -2,12 +2,16 @@
   <div class="page-title-area">
     <div class="page-title-area-content">
       <div class="page-title-area-content-title">
-        {{ currentPath.toUpperCase() }}
+        {{ title.toUpperCase() }}
       </div>
       <div class="page-title-area-content-path">
         <el-breadcrumb>
-          <el-breadcrumb-item :to="{ path: '/' }">Home</el-breadcrumb-item>
-          <el-breadcrumb-item>{{ currentPath }}</el-breadcrumb-item>
+          <el-breadcrumb-item
+            v-for="items in data"
+            :key="items"
+            :to="{ path: '/' + items }"
+            >{{ items == '' ? 'Home' : items }}</el-breadcrumb-item
+          >
         </el-breadcrumb>
       </div>
     </div>
@@ -16,9 +20,16 @@
 <script>
 export default {
   name: 'app_page_title_area',
-  props: ['currentPath'],
+  props: ['currentPath', 'title'],
   data() {
-    return {}
+    return {
+      data: [],
+    }
+  },
+  mounted() {
+    for (let i = 0; i < this.currentPath.length; i++) {
+      this.data.push(this.currentPath[i])
+    }
   },
 }
 </script>
