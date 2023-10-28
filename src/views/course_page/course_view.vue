@@ -1,6 +1,9 @@
 <template>
   <div class="course-page">
-    <AppPageTitleArea :currentPath="this.$route.name" />
+    <AppPageTitleArea
+      :currentPath="this.$route.fullPath.split('/')"
+      :title="this.$route.name"
+    />
     <div class="course-page-content">
       <div class="search-content">
         <p>Showing 1-6 Of 15 Results</p>
@@ -12,19 +15,13 @@
           />
         </div>
       </div>
-      <div
-        v-motion
-        :initial="{ opacity: 0, y: 100 }"
-        :enter="{ opacity: 1, y: 0 }"
-        :delay="200"
-        class="course-list"
-      >
-        <CourseCard @click="this.$router.push('/course-details')" />
-        <CourseCard @click="this.$router.push('/course-details')" />
-        <CourseCard @click="this.$router.push('/course-details')" />
-        <CourseCard @click="this.$router.push('/course-details')" />
-        <CourseCard @click="this.$router.push('/course-details')" />
-        <CourseCard @click="this.$router.push('/course-details')" />
+      <div class="course-list">
+        <CourseCard @click="this.$router.push('/course/course-details')" />
+        <CourseCard @click="this.$router.push('/course/course-details')" />
+        <CourseCard @click="this.$router.push('/course/course-details')" />
+        <CourseCard @click="this.$router.push('/course/course-details')" />
+        <CourseCard @click="this.$router.push('/course/course-details')" />
+        <CourseCard @click="this.$router.push('/course/course-details')" />
       </div>
       <el-pagination
         style="margin-top: 50px"
@@ -44,13 +41,7 @@ export default {
   name: 'course-page',
   components: { CourseCard, AppPageTitleArea },
   data() {
-    return {
-      zoom: 15,
-    }
-  },
-  mounted() {
-    console.log(this.$route.name)
-    console.log(this.$route.path)
+    return {}
   },
 }
 </script>

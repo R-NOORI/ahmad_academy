@@ -1,11 +1,20 @@
 <template>
   <div class="contact-root">
-    <AppPageTitleArea :currentPath="this.$route.name" />
+    <AppPageTitleArea
+      :currentPath="this.$route.fullPath.split('/')"
+      :title="this.$route.name"
+    />
     <div
       class="contact-page"
       v-motion
       :initial="{ opacity: 0, y: 300 }"
-      :enter="{ opacity: 1, y: 0 }"
+      :enter="{
+        opacity: 1,
+        y: 0,
+        transition: {
+          mass: 1,
+        },
+      }"
       :visible-once="{ opacity: 1, y: 0 }"
       :delay="350"
     >

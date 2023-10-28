@@ -1,6 +1,9 @@
 <template>
   <div class="course-details-page">
-    <AppPageTitleArea :currentPath="this.$route.name" />
+    <AppPageTitleArea
+      :currentPath="this.$route.fullPath.split('/')"
+      :title="this.$route.name"
+    />
     <div class="course-img">
       <img
         src="https://eduvibe.devsvibe.com/main/wp-content/uploads/2023/03/course-32.webp"
@@ -128,10 +131,6 @@ export default {
     return {
       zoom: 15,
     }
-  },
-  mounted() {
-    console.log(this.$route.name)
-    console.log(this.$route.path)
   },
 }
 </script>

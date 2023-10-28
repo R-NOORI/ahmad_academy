@@ -1,22 +1,65 @@
 <template>
-  <AppPageTitleArea :currentPath="this.$route.name" />
+  <AppPageTitleArea
+    :currentPath="this.$route.fullPath.split('/')"
+    :title="this.$route.name"
+  />
   <div class="who-we-are">
     <div class="elementor-images">
       <div class="elementor-images-large">
         <img
+          v-motion
+          :initial="{ opacity: 0, y: 300 }"
+          :enter="{
+            opacity: 1,
+            y: 0,
+            transition: {
+              mass: 1,
+            },
+          }"
+          :visible-once="{ opacity: 1, y: 0 }"
+          :delay="350"
           class="small"
           src="https://eduvibe.devsvibe.com/main/wp-content/uploads/2022/10/about-group-02-2.jpg"
           alt=""
         />
         <img
-          ref="infoBox"
+          v-motion
+          :initial="{ opacity: 0, y: 300 }"
+          :enter="{
+            opacity: 1,
+            y: 0,
+            transition: {
+              mass: 1,
+            },
+          }"
+          :visible-once="{
+            opacity: 1,
+            y: 0,
+            transition: {
+              mass: 1,
+            },
+          }"
+          :delay="350"
           class="animate"
           :style="'top: ' + scrollValue + '%'"
           src="https://eduvibe.devsvibe.com/main/wp-content/uploads/2022/10/about-group-03-2.jpg"
         />
       </div>
     </div>
-    <div class="elementor-container">
+    <div
+      class="elementor-container"
+      v-motion
+      :initial="{ opacity: 0, y: 300 }"
+      :enter="{
+        opacity: 1,
+        y: 0,
+        transition: {
+          mass: 1.5,
+        },
+      }"
+      :visible-once="{ opacity: 1, y: 0 }"
+      :delay="350"
+    >
       <h4>WHO WE ARE</h4>
       <h1>We Offer The Best Carrier</h1>
       <AboutCard
@@ -39,23 +82,62 @@
         body="Lorem ipsum dolor sit amet, consectetur adipiscing elit, eiusmoded tempor incididunt dolore magna aliqua."
         backgroundColor="background-color: #FB7C561A;"
       />
-      <AppButton
-        btnText="Know About Us"
-        :rightIcon="['fas', 'arrow-right']"
-        style="width: 200px"
-      />
+      <AppButton btnText="Know About Us" style="width: 200px" />
     </div>
   </div>
   <div class="what-we-offer">
     <div class="what-we-offer-content">
-      <h4>WHAT WE OFFER</h4>
-      <h1>How Does EduVibe Work?</h1>
+      <h4
+        class="elementor-container-item"
+        v-motion
+        :initial="{ opacity: 0, y: 50 }"
+        :enter="{
+          opacity: 1,
+          y: 0,
+          transition: {
+            mass: mass,
+          },
+        }"
+        :visible="{
+          opacity: 1,
+          y: 0,
+          transition: {
+            mass: 0.5,
+          },
+        }"
+        :delay="200"
+      >
+        WHAT WE OFFER
+      </h4>
+      <h1
+        class="elementor-container-item"
+        v-motion
+        :initial="{ opacity: 0, y: 50 }"
+        :enter="{
+          opacity: 1,
+          y: 0,
+          transition: {
+            mass: mass,
+          },
+        }"
+        :visible="{
+          opacity: 1,
+          y: 0,
+          transition: {
+            mass: 1,
+          },
+        }"
+        :delay="200"
+      >
+        How Does EduVibe Work?
+      </h1>
       <div class="what-we-offer-content-items">
         <AboutItemCard
           :imageIcon="['fa', 'book']"
           title="Choose Any Courses"
           body="Lorem ipsum dolor amet, consectetur adipiscing elited uspendisse varius enim"
           backgroundColor="background-color: #F86F03;"
+          :mass="0.5"
         />
         <div class="arrow-image-down">
           <img src="@/assets/about-page/arrow_down_2.png" />
@@ -66,6 +148,7 @@
           title="Purchase Your Course"
           body="Lorem ipsum dolor amet, consectetur adipiscing elited uspendisse varius enim"
           backgroundColor="background-color: #525FE1;"
+          :mass="1"
         />
         <div class="arrow-image-top">
           <img src="@/assets/about-page/arrow_top_2.png" />
@@ -76,6 +159,7 @@
           title="Great! Start Learn"
           body="Lorem ipsum dolor amet, consectetur adipiscing elited uspendisse varius enim"
           backgroundColor="background-color: #FFA41B"
+          :mass="1.5"
         />
       </div>
     </div>
@@ -88,20 +172,87 @@
     </div>
 
     <img
+      v-motion
+      :initial="{ opacity: 0, y: 100 }"
+      :enter="{
+        opacity: 1,
+        y: 0,
+      }"
+      :visible="{
+        opacity: 1,
+        y: 0,
+        transition: {
+          mass: 1,
+        },
+      }"
       src="https://eduvibe.devsvibe.com/main/wp-content/uploads/2023/02/mission-gallery-01.jpg"
     />
     <img
+      v-motion
+      :initial="{ opacity: 0, y: 100 }"
+      :enter="{
+        opacity: 1,
+        y: 0,
+      }"
+      :visible="{
+        opacity: 1,
+        y: 0,
+        transition: {
+          mass: 0.5,
+        },
+      }"
       src="https://eduvibe.devsvibe.com/main/wp-content/uploads/2023/02/mission-gallery-02.jpg"
     />
     <img
+      v-motion
+      :initial="{ opacity: 0, y: 100 }"
+      :enter="{
+        opacity: 1,
+        y: 0,
+      }"
+      :visible="{
+        opacity: 1,
+        y: 0,
+        transition: {
+          mass: 1,
+        },
+      }"
       src="https://eduvibe.devsvibe.com/main/wp-content/uploads/2023/02/mission-gallery-03.jpg"
     />
     <img
+      v-motion
+      :initial="{ opacity: 0, y: 100 }"
+      :enter="{
+        opacity: 1,
+        y: 0,
+      }"
+      :visible="{
+        opacity: 1,
+        y: 0,
+        transition: {
+          mass: 1.3,
+        },
+      }"
       src="https://eduvibe.devsvibe.com/main/wp-content/uploads/2023/02/mission-gallery-04.jpg"
     />
   </div>
   <div class="our-info-content">
-    <div class="our-info-content-mission">
+    <div
+      class="our-info-content-mission"
+      v-motion
+      :initial="{ opacity: 0, y: 100 }"
+      :enter="{
+        opacity: 1,
+        y: 0,
+      }"
+      :visible="{
+        opacity: 1,
+        y: 0,
+        transition: {
+          mass: 1,
+        },
+      }"
+    >
       <h4>OUR MISSION</h4>
       <h1>Education In Continuing A Proud Tradition</h1>
       <p>
@@ -113,7 +264,22 @@
         effectiveness of its courses.
       </p>
     </div>
-    <div class="our-info-content-vision">
+    <div
+      class="our-info-content-vision"
+      v-motion
+      :initial="{ opacity: 0, y: 100 }"
+      :enter="{
+        opacity: 1,
+        y: 0,
+      }"
+      :visible="{
+        opacity: 1,
+        y: 0,
+        transition: {
+          mass: 1.3,
+        },
+      }"
+    >
       <h4>OUR VISION</h4>
       <h1>Education Is About Creating Leaders For Tomorrow</h1>
       <p>
@@ -138,50 +304,9 @@ export default {
   components: { AppPageTitleArea, AboutCard, AppButton, AboutItemCard },
   data() {
     return {
-      zoom: 15,
       scrollValue: 20,
       imageSize: 0,
     }
-  },
-
-  // mounted() {
-  //   console.log(this.$route.name)
-  //   console.log(this.$route.path)
-  // },
-  mounted() {
-    window.addEventListener('scroll', this.handleScroll)
-    this.matchHeight()
-
-    // this.$el.addEventListener(
-    //   'scroll',
-    //   function () {
-    //     let scrollTop = this.$el.scrollTop
-    //     let c_height = this.$el.clientHeight
-    //     let s_height = this.$el.scrollHeight
-
-    //     let scrollPer = Math.random(scrollTop / s_height - c_height) * 100
-    //     console.log(scrollPer)
-    //   }.bind(this)
-    // )
-  },
-  unmounted() {
-    window.removeEventListener('scroll', this.handleScroll)
-  },
-  methods: {
-    handleScroll() {
-      // Any code to be executed when the window is scrolled
-      // this.scrollValue = (document.body.scrollHeight / window.scrollY) * 100
-      // console.log('scrolling', window.scrollY)
-      var item =
-        document.body.scrollTop / document.body.scrollHeight -
-        document.body.clientHeight * 100
-      console.log('scrolling', Math.round(item))
-    },
-
-    matchHeight() {
-      this.imageSize = this.$refs.infoBox.clientHeight
-      // console.log('scrolling ===========', this.$refs.infoBox.clientHeight)
-    },
   },
   computed: {},
 }
@@ -304,7 +429,7 @@ export default {
 .scroll-images {
   max-width: 1200px;
   margin: 0px auto;
-  // padding: 130px 0px 0px 0px;
+  padding: 0px 0px 100px 0px;
   position: relative;
   z-index: 0;
   .circale-shap {
@@ -338,6 +463,7 @@ export default {
     margin: 0px 15px;
   }
 }
+
 .our-info-content {
   max-width: 1100px;
   margin: 0px auto;
