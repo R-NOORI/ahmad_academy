@@ -61,6 +61,33 @@ const routes = [
         },
         component: () => import('../views/contact_page/contact_view.vue'),
       },
+      {
+        path: '/login',
+        name: 'Login',
+        meta: {
+          access: [],
+          title: 'Login Page',
+        },
+        component: () => import('../views/login_register/loginPage.vue'),
+      },
+      {
+        path: '/register',
+        name: 'Register',
+        meta: {
+          access: [],
+          title: 'Register Page',
+        },
+        component: () => import('../views/login_register/registerPage.vue'),
+      },
+      {
+        path: '/portal',
+        name: 'Portal',
+        meta: {
+          access: [],
+          title: 'Portal Page',
+        },
+        component: () => import('../views/portal/portalPage.vue'),
+      },
     ],
   },
 ]

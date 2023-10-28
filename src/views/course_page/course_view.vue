@@ -12,7 +12,13 @@
           />
         </div>
       </div>
-      <div class="course-list">
+      <div
+        v-motion
+        :initial="{ opacity: 0, y: 100 }"
+        :enter="{ opacity: 1, y: 0 }"
+        :delay="200"
+        class="course-list"
+      >
         <CourseCard @click="this.$router.push('/course-details')" />
         <CourseCard @click="this.$router.push('/course-details')" />
         <CourseCard @click="this.$router.push('/course-details')" />

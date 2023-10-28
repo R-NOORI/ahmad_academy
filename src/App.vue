@@ -1,6 +1,18 @@
 <template>
   <div :class="{ main: routeName == '/' }">
-    <appHeader :isScrolling="isScrolled" />
+    <appHeader
+      v-motion
+      :initial="{ opacity: 0, y: -100 }"
+      :enter="{
+        opacity: 1,
+        y: 0,
+      }"
+      :delay="500"
+      v-motion-slide-top
+      v-if="isScrolled"
+      :isScrolling="isScrolled"
+    />
+    <appHeader v-else :isScrolling="isScrolled" />
     <router-view />
     <AppFooter />
   </div>

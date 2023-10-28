@@ -2,21 +2,24 @@
   <div :class="isScrolling ? 'scrolledNav' : 'nav'">
     <div class="app_icon">
       <img src="@/assets/logo.png" />
+      <span>Alnoor Safa Online Academy</span>
     </div>
     <div class="nav_item">
       <router-link to="/">Home</router-link>
       <router-link to="/course">Courses</router-link>
       <router-link to="/contact">Contact</router-link>
       <router-link to="/about">About</router-link>
-      <div class="header_btn">
-        <el-button color="#525fe1" size="large">
-          <font-awesome-icon
-            :icon="['far', 'user']"
-            style="margin-right: 8px"
-          />
-          <span> Login / Register</span></el-button
-        >
-      </div>
+      <router-link v-if="routeName != '/login'" to="/login">
+        <div class="header_btn">
+          <el-button color="#525fe1" size="large">
+            <font-awesome-icon
+              :icon="['far', 'user']"
+              style="margin-right: 8px"
+            />
+            <span> Login / Register</span></el-button
+          >
+        </div>
+      </router-link>
     </div>
   </div>
 </template>
@@ -24,6 +27,11 @@
 <script>
 export default {
   props: ['isScrolling'],
+  computed: {
+    routeName() {
+      return this.$router.currentRoute.value.path
+    },
+  },
 }
 </script>
 
@@ -37,9 +45,13 @@ export default {
   height: 80px;
   z-index: 2;
   .app_icon {
-    width: 40px;
     height: 40px;
-    // margin-top: 25px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    span {
+      font-weight: 900;
+    }
     img {
       width: 40px;
       height: 40px;
