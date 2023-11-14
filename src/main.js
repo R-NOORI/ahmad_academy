@@ -32,6 +32,10 @@ import {
   faBook,
   faBasketShopping,
   faTrophy,
+  faMoneyCheck,
+  faCloudArrowUp,
+  faTrash,
+  faRightFromBracket,
 } from '@fortawesome/free-solid-svg-icons'
 import { faUser } from '@fortawesome/free-regular-svg-icons'
 import {
@@ -68,7 +72,12 @@ library.add(
   faLanguage,
   faBook,
   faBasketShopping,
-  faTrophy
+  faTrophy,
+  faMoneyCheck,
+  faGear,
+  faCloudArrowUp,
+  faTrash,
+  faRightFromBracket
 )
 
 /* add font awesome icon component */

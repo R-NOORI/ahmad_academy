@@ -1,9 +1,291 @@
 <template>
-  <div>portal page</div>
+  <div
+    v-loading="is_loading"
+    element-loading-text="Loading..."
+    :element-loading-svg="svg"
+    element-loading-svg-view-box="-10, -10, 50, 50"
+    class="loading-div"
+    v-if="is_loading"
+  ></div>
+  <div
+    class="portal"
+    v-else
+    v-motion
+    :initial="{ opacity: 0, y: 300 }"
+    :enter="{
+      opacity: 1,
+      y: 0,
+      transition: {
+        mass: 1,
+      },
+    }"
+    :visible-once="{ opacity: 1, y: 0 }"
+    :delay="350"
+  >
+    <div class="portal-header">
+      <div class="portal-header-user">
+        <el-avatar :size="60" :src="profileImage" @error="errorHandler">
+          <img
+            src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png"
+          />
+        </el-avatar>
+
+        <div class="portal-header-user-info">
+          <p>Welcome</p>
+          <!-- userImage -->
+          <h3>{{ userName }}</h3>
+        </div>
+      </div>
+      <div class="portal-header-items">
+        <div class="portal-header-items-search">
+          <font-awesome-icon
+            class="portal-header-items-search-icon"
+            :icon="['fas', 'magnifying-glass']"
+          />
+          <input placeholder="Search by course title" v-model="search_value" />
+        </div>
+        <button @click="this.$router.push('/portal/setting')">
+          <font-awesome-icon
+            style="margin-right: 5px"
+            :icon="['fas', 'gear']"
+          />
+          Setting
+        </button>
+      </div>
+    </div>
+    <div v-if="classes.length == 0" class="portal-empty">
+      <img src="@/assets/portal-page/empty.png" />
+      <h3>Empty</h3>
+      <p>No class register</p>
+    </div>
+    <div class="portal-body" v-else>
+      <div class="portal-body-bacground-div"></div>
+      <h3>Active Course</h3>
+      <div class="portal-body-active-course">
+        <PortalCourseCard
+          v-for="(item, index) in search_value == '' || search_value == null
+            ? classes
+            : searchCourseValue"
+          :key="index"
+          :courseImageLink="item.image_link"
+          :courseTitle="item.title"
+          :language="item.language"
+          :lessons="item.lessons"
+          :feeAmount="item.fee_amount"
+          :startTime="item.class_start_time"
+          :instructorId="item.instructor_id"
+          :courseId="item.course_id"
+          :zoomLink="item.zoom_link"
+        />
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-export default {}
+import PortalCourseCard from './components/portal_course_card.vue'
+import { db } from '@/firebase/config'
+import dayjs from 'dayjs'
+import store from '@/store'
+export default {
+  components: { PortalCourseCard },
+  data() {
+    return {
+      svg: `
+        <path class="path" d="
+          M 30 15
+          L 28 17
+          M 25.61 25.61
+          A 15 15, 0, 0, 1, 15 30
+          A 15 15, 0, 1, 1, 27.99 7.5
+          L 15 15
+        " style="stroke-width: 4px; fill: rgba(0, 0, 0, 0)"/>
+      `,
+      is_loading: true,
+      search_value: '',
+      userId: '',
+      userName: '',
+      profileImage: '',
+      classes: [],
+    }
+  },
+  async mounted() {
+    await this.getRegisterClass(),
+      (this.userId = store.state.user.userId),
+      (this.userName = store.state.user.userName),
+      (this.profileImage = store.state.user.userImage),
+      console.log(store.state.user.userImage)
+  },
+  computed: {
+    searchCourseValue: function () {
+      return this.classes.filter((value) => {
+        return value.title.toLowerCase().match(this.search_value.toLowerCase())
+      })
+    },
+  },
+  methods: {
+    async getRegisterClass() {
+      this.is_loading = true
+      try {
+        var citiesRef = db
+          .collection('classes')
+          .where('class_status', '==', 'progress')
+          .where('user_id', '==', this.userId)
+        var res = await citiesRef.get()
+        res.forEach(async (doc) => {
+          await this.getCourse(doc.data().course_id, doc)
+        })
+        this.is_loading = false
+      } catch (error) {
+        this.is_loading = false
+        console.log('something went wrong', error)
+      }
+    },
+    async getCourse(id, doc) {
+      console.log(doc.data().fee_amount)
+      try {
+        const userRef = db.collection('course').doc(id)
+        const res = await userRef.get()
+        console.log()
+        this.classes.push({
+          ...doc.data(),
+          id: doc.id,
+          title: res.data().title,
+          image_link: res.data().image_link,
+          language: res.data().language,
+          lessons: res.data().lessons,
+          instructor_id: res.data().instructor_id,
+          class_start_time: dayjs(doc.data().class_start_time).format(
+            'hh:mm A'
+          ),
+        })
+      } catch (error) {
+        console.log(error.message)
+      }
+    },
+  },
+}
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.loading-div {
+  max-width: 1120px;
+  height: 400px;
+  margin: 0px auto;
+}
+.portal {
+  margin: 0px auto;
+  max-width: 1120px;
+  // border: 1px solid red;
+  &-header {
+    height: 100px;
+    width: 100%;
+    border-radius: 20px;
+    margin-bottom: 40px;
+    margin-top: 30px;
+    padding: 0px 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    -webkit-box-shadow: 0px 0px 43px 4px rgba(66, 68, 90, 0.12);
+    -moz-box-shadow: 0px 0px 43px 4px rgba(66, 68, 90, 0.12);
+    box-shadow: 0px 0px 43px 4px rgba(66, 68, 90, 0.12);
+    &-user {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      &-info {
+        margin-left: 10px;
+        p {
+          margin: 0px;
+          padding: 0px;
+          text-align: left;
+        }
+        h3 {
+          margin: 5px 0px 0px 0px;
+          padding: 0px;
+        }
+      }
+    }
+
+    &-items {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      &-search {
+        background-color: #ffffff;
+        margin-right: 20px;
+        padding: 0px 15px;
+        font-size: 14px;
+        height: 40px;
+        width: 300px;
+        border-radius: 10px;
+        font-family: inherit;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        border: 1px solid rgba(128, 128, 128, 0.416);
+        &-icon {
+          font-size: 15px;
+          margin-right: 10px;
+          color: @color-secondary;
+        }
+        input {
+          background-color: transparent;
+          outline: none;
+          border: none;
+          font-size: 14px;
+          width: 100%;
+        }
+      }
+      button {
+        background-color: @color-secondary;
+        color: #ffffff;
+        border: 0px;
+        padding: 10px 15px;
+        font-size: 15px;
+        border-radius: 10px;
+      }
+    }
+  }
+  &-body {
+    width: 100%;
+    position: relative;
+    padding: 0px 35px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+    h3 {
+      margin-top: 30px;
+      text-align: left;
+      width: 100%;
+      color: @color-secondary;
+    }
+    &-bacground-div {
+      background-color: #5361df24;
+      width: 100%;
+      height: 400px;
+      position: absolute;
+      border-radius: 20px;
+      z-index: -1;
+    }
+    &-active-course {
+      box-sizing: border-box;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 32% 32% 32%;
+      grid-gap: 1em;
+    }
+  }
+  &-empty {
+    img {
+      width: 300px;
+      height: 300px;
+    }
+  }
+}
+</style>

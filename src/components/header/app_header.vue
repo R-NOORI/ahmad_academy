@@ -2,7 +2,6 @@
   <div :class="isScrolling ? 'scrolledNav' : 'nav'">
     <div class="app_icon">
       <img src="@/assets/logo.png" />
-      <span>Alnoor Safa Online Academy</span>
     </div>
     <div class="nav_item">
       <router-link to="/">Home</router-link>
@@ -13,27 +12,71 @@
       >
       <router-link to="/contact">Contact</router-link>
       <router-link to="/about">About</router-link>
-      <router-link v-if="routeName != '/login'" to="/login">
-        <div class="header_btn">
-          <el-button color="#525fe1" size="large">
-            <font-awesome-icon
-              :icon="['far', 'user']"
-              style="margin-right: 8px"
-            />
-            <span> Login / Register</span></el-button
-          >
-        </div>
-      </router-link>
+      <router-link
+        to="/portal"
+        :class="{ activeNav: this.$route.fullPath == '/portal/setting' }"
+        v-show="isLoggendIn"
+        >Portal</router-link
+      >
+      <div class="header_btn">
+        <el-button
+          color="#525fe1"
+          size="large"
+          @click="handleSignOut()"
+          v-if="isLoggendIn"
+        >
+          <font-awesome-icon
+            :icon="['fas', 'right-from-bracket']"
+            style="margin-right: 8px"
+          />
+          <span> Sign Out</span>
+        </el-button>
+        <el-button
+          color="#525fe1"
+          size="large"
+          @click="() => this.$router.push('/login')"
+          v-else
+        >
+          <font-awesome-icon
+            :icon="['far', 'user']"
+            style="margin-right: 8px"
+          />
+
+          <span> Login / Register</span>
+        </el-button>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import { auth } from '@/firebase/config'
+import router from '@/router'
+import store from '@/store'
+import { mapActions } from 'vuex'
 export default {
   props: ['isScrolling'],
+  data() {
+    return {}
+  },
   computed: {
-    routeName() {
-      return this.$router.currentRoute.value.path
+    isLoggendIn: () => store.state.user.loggedIn,
+  },
+  methods: {
+    ...mapActions(['removeUserInfo']),
+    getCurrentUser() {
+      return new Promise((resolove, reject) => {
+        const removeListener = auth.onAuthStateChanged((user) => {
+          removeListener()
+          resolove(user)
+        }, reject)
+      })
+    },
+    handleSignOut() {
+      auth.signOut().then(() => {
+        this.removeUserInfo()
+        router.push('/')
+      })
     },
   },
 }
@@ -49,13 +92,9 @@ export default {
   height: 80px;
   z-index: 2;
   .app_icon {
+    width: 40px;
     height: 40px;
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    span {
-      font-weight: 900;
-    }
+    // margin-top: 25px;
     img {
       width: 40px;
       height: 40px;

@@ -1,8 +1,16 @@
 <template>
-  <div class="course-details-page">
+  <div
+    v-loading="is_loading"
+    element-loading-text="Loading..."
+    :element-loading-svg="svg"
+    element-loading-svg-view-box="-10, -10, 50, 50"
+    class="loading-div"
+    v-if="is_loading"
+  ></div>
+  <div class="course-details-page" v-else>
     <AppPageTitleArea
-      :currentPath="this.$route.fullPath.split('/')"
-      :title="this.$route.name"
+      :currentPath="path_value.split('/')"
+      :title="course_title"
     />
     <div class="course-img">
       <img
@@ -12,40 +20,28 @@
     <div class="course-info">
       <div class="course-info-summary">
         <div class="instructor-info">
-          <img
-            src="https://eduvibe.devsvibe.com/main/wp-content/uploads/2022/11/instructor-03-01-2-100x100.webp"
-          />
-          <span>ByJames Carlson</span>
+          <img :src="instructor.image_link" />
+          <span>{{ instructor.name + ' ' + instructor.last_name }}</span>
         </div>
-        <h1>Grow Personal Financial Security Thinking & Principles</h1>
+        <h1>{{ course.title }}</h1>
         <div class="course-description">
           <h3>Course Description</h3>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis
-            ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas
-            accumsan lacus vel facilisis. Lorem ipsum dolor sit amet,
-            consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-            labore et dolore magna aliqua. Quis ipsum suspendisse ultrices
-            gravida. Risus commodo viverra maecenas accumsan lacus vel
-            facilisis.
+            {{ course.description }}
           </p>
           <h3>What You’ll Learn From This Course</h3>
           <ol>
             <li>
-              Neque sodales ut etiam sit amet nisl purus non tellus orci ac
-              auctor
+              {{ course.course_objectives_1 }}
             </li>
             <li>
-              Tristique nulla aliquet enim tortor at auctor urna. Sit amet
-              aliquam id diam maer
+              {{ course.course_objectives_2 }}
             </li>
             <li>
-              Nam libero justo laoreet sit amet. Lacus sed viverra tellus in hac
+              {{ course.course_objectives_3 }}
             </li>
             <li>
-              Tempus imperdiet nulla malesuada pellentesque elit eget gravida
-              cum sociis
+              {{ course.course_objectives_4 }}
             </li>
           </ol>
         </div>
@@ -53,9 +49,7 @@
       <div class="course-info-sidebar">
         <div class="course-info-sidebar-details">
           <div class="sidebar-img">
-            <img
-              src="https://cdn.pixabay.com/photo/2015/07/17/22/43/student-849825_1280.jpg"
-            />
+            <img :src="course.image_link" />
             <div class="sidebar-brn"></div>
           </div>
           <div class="course-details">
@@ -67,7 +61,7 @@
                 />
                 Duration</span
               >
-              <span>17 Weeks</span>
+              <span>{{ course.duration }}</span>
             </div>
             <el-divider style="margin: 0px" />
             <div class="course-details-items">
@@ -78,7 +72,7 @@
                 />
                 Lessons</span
               >
-              <span>18</span>
+              <span>{{ course.lessons }}</span>
             </div>
             <el-divider style="margin: 0px" />
             <div class="course-details-items">
@@ -90,7 +84,7 @@
 
                 Skill level</span
               >
-              <span>Expert</span>
+              <span>{{ course.skill_level }}</span>
             </div>
             <el-divider style="margin: 0px" />
             <div class="course-details-items">
@@ -101,7 +95,7 @@
                 />
                 Language</span
               >
-              <span>English</span>
+              <span>{{ course.language }}</span>
             </div>
             <el-divider style="margin: 0px" />
             <div class="course-details-items">
@@ -112,7 +106,18 @@
                 />
                 Instructor</span
               >
-              <span>James Carlson</span>
+              <span>{{ instructor.name + ' ' + instructor.last_name }}</span>
+            </div>
+            <el-divider style="margin: 0px" />
+            <div class="course-details-items">
+              <span>
+                <font-awesome-icon
+                  style="margin-right: 10px"
+                  :icon="['fas', 'money-check']"
+                />
+                Fees</span
+              >
+              <span>{{ course.new_fees }}</span>
             </div>
             <el-divider style="margin: 0px" />
           </div>
@@ -123,19 +128,69 @@
 </template>
 
 <script>
+import { db } from '@/firebase/config'
 import AppPageTitleArea from '@/components/app_page_title_area.vue'
 export default {
   name: 'course-details-page',
   components: { AppPageTitleArea },
   data() {
     return {
-      zoom: 15,
+      svg: `
+        <path class="path" d="
+          M 30 15
+          L 28 17
+          M 25.61 25.61
+          A 15 15, 0, 0, 1, 15 30
+          A 15 15, 0, 1, 1, 27.99 7.5
+          L 15 15
+        " style="stroke-width: 4px; fill: rgba(0, 0, 0, 0)"/>
+      `,
+      is_loading: true,
+      instructor: {},
+      course: {},
+      path_value: '/course/course details',
+      course_title: '',
     }
+  },
+  async mounted() {
+    await this.getCourse(this.$route.params.course_id)
+    await this.getInstructor(this.$route.params.instructor_id)
+  },
+  methods: {
+    async getCourse(id) {
+      this.is_loading = true
+      try {
+        const userRef = db.collection('course').doc(id)
+        const res = await userRef.get()
+        this.course = res.data()
+        this.course_title = res.data().title
+      } catch (error) {
+        this.is_loading_page = false
+        console.log(error.message)
+      }
+    },
+    async getInstructor(id) {
+      this.is_loading = true
+      try {
+        const userRef = db.collection('instructor').doc(id)
+        const res = await userRef.get()
+        this.instructor = res.data()
+        this.is_loading = false
+      } catch (error) {
+        this.is_loading = false
+        console.log(error.message)
+      }
+    },
   },
 }
 </script>
 
 <style scoped lang="less">
+.loading-div {
+  max-width: 1290px;
+  height: 200px;
+  margin: 0px auto;
+}
 .course-details-page {
   .course-img {
     margin: 0px auto;

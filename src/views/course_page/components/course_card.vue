@@ -1,9 +1,7 @@
 <template>
   <div class="course-card">
     <div class="course-card-image">
-      <img
-        src="https://img.freepik.com/free-photo/university-colleagues-talking-library_23-2148844675.jpg?w=996&t=st=1696327612~exp=1696328212~hmac=14ebea81b49bae981d60d7ca30f99fa6f641bc20d7b3cf2fb6c37e1c31849b8b"
-      />
+      <img :src="courseImageLink" />
     </div>
     <div class="course-card-content">
       <div class="course-card-content-info">
@@ -11,18 +9,22 @@
           <font-awesome-icon
             class="card-icon"
             :icon="['fas', 'clipboard-list']"
-          />16 Lessons
+          />{{ lessons }}
         </span>
         <span style="margin-left: 50px">
-          <font-awesome-icon class="card-icon" :icon="['fa', 'clock']" />15 week
+          <font-awesome-icon class="card-icon" :icon="['fa', 'clock']" />{{
+            duration
+          }}
         </span>
       </div>
-      <h2>The Complete HTML & CSS Bootcamp 2023 Edition</h2>
+      <h2>{{ courseTitle }}</h2>
       <el-divider />
       <div class="course-card-content-price">
         <div class="price-content">
-          <div class="new-price">$45.00</div>
-          <div class="old-price">$450.00</div>
+          <div class="new-price">${{ courseNewPrice }}</div>
+          <div class="old-price" v-show="courseOldPrice == null ? false : true">
+            ${{ courseOldPrice }}
+          </div>
         </div>
       </div>
     </div>
@@ -32,6 +34,14 @@
 <script>
 export default {
   name: 'course-card',
+  props: [
+    'courseImageLink',
+    'courseTitle',
+    'lessons',
+    'duration',
+    'courseNewPrice',
+    'courseOldPrice',
+  ],
 }
 </script>
 

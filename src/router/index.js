@@ -1,100 +1,37 @@
+import routes from './routers'
 import { createRouter, createWebHistory } from 'vue-router'
-const routes = [
-  {
-    path: '/',
-    name: 'home',
-    // redirect: '/',
-    // component: home,
-    children: [
-      {
-        path: '/',
-        name: 'home',
-        meta: {
-          access: [],
-          title: 'home page',
-          icon: 'md-build',
-          transition: 'slide-right',
-        },
-        component: () => import('../views/home_page/home_view.vue'),
-      },
-      {
-        path: '/course',
-        name: 'course',
-        meta: {
-          access: [],
-          title: 'course page',
-          icon: 'md-build',
-          transition: 'slide-right',
-        },
-        component: () => import('../views/course_page/course_view.vue'),
-      },
-      {
-        path: '/course-details',
-        name: 'course details',
-        meta: {
-          access: [],
-          title: 'course details',
-          icon: 'md-build',
-          transition: 'slide-right',
-        },
-        component: () => import('../views/course_page/course_details_view.vue'),
-      },
-      {
-        path: '/about',
-        name: 'about',
-        meta: {
-          access: [],
-          title: 'about page',
-          icon: 'md-build',
-          transition: 'slide-right',
-        },
-        component: () => import('../views/about_page/about_view.vue'),
-      },
-      {
-        path: '/contact',
-        name: 'contact',
-        meta: {
-          access: [],
-          title: 'contact page',
-          icon: 'md-build',
-          transition: 'slide-right',
-        },
-        component: () => import('../views/contact_page/contact_view.vue'),
-      },
-      {
-        path: '/login',
-        name: 'Login',
-        meta: {
-          access: [],
-          title: 'Login Page',
-        },
-        component: () => import('../views/login_register/loginPage.vue'),
-      },
-      {
-        path: '/register',
-        name: 'Register',
-        meta: {
-          access: [],
-          title: 'Register Page',
-        },
-        component: () => import('../views/login_register/registerPage.vue'),
-      },
-      {
-        path: '/portal',
-        name: 'Portal',
-        meta: {
-          access: [],
-          title: 'Portal Page',
-        },
-        component: () => import('../views/portal/portalPage.vue'),
-      },
-    ],
-  },
-]
+import { auth } from '@/firebase/config'
+const getCurrentUser = () => {
+  return new Promise((resolove, reject) => {
+    const removeListener = auth.onAuthStateChanged((user) => {
+      removeListener()
+      resolove(user)
+    }, reject)
+  })
+}
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHistory(),
+  scrollBehavior: () => ({
+    y: 0,
+  }),
   routes,
 })
-
+router.beforeEach(async (to, from, next) => {
+  const authenticatedUser = await getCurrentUser()
+  const requireAuth = to.matched.some((record) => record.meta.requireAuth)
+  if (!['/portal', '/portal/setting'].includes(to.path)) return next()
+  if (requireAuth && !authenticatedUser) {
+    return next({
+      replace: true,
+      path: '/',
+      query: { redirect: to.fullPath },
+    })
+  } else {
+    next()
+  }
+})
+router.afterEach(() => {
+  window.scrollTo(0, 0)
+})
 export default router

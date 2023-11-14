@@ -1,4 +1,3 @@
-Noori Office Number, [10/5/2023 2:01 PM]
 <template>
   <div class="container">
     <div class="main-content">
@@ -92,24 +91,13 @@ Noori Office Number, [10/5/2023 2:01 PM]
       >
       <p class="title_2">Introduce Our Life Coaches</p>
       <div class="instructor">
-        <!-- image 1 -->
-        <div class="image_container">
-          <div class="image_box">
-            <div class="image_content">
-              <img src="@/assets/person.jpg" />
-              <div class="content">
-                <div class="btn">f</div>
-                <div class="btn">in</div>
-              </div>
-            </div>
-          </div>
-          <div class="details">
-            <p class="name">Khalid Noori</p>
-            <p class="occupation">Frontend Developer</p>
-          </div>
-        </div>
-        <!-- image 2  -->
-        <div class="image_container">
+        <!-- if  loading is true -->
+        <div
+          class="image_container"
+          v-for="(item, index) in 3"
+          :key="index"
+          v-show="is_loading"
+        >
           <div class="image_box">
             <div class="image_content">
               <img src="@/assets/person.jpg" />
@@ -124,11 +112,16 @@ Noori Office Number, [10/5/2023 2:01 PM]
             <p class="occupation">UX/UI Designer</p>
           </div>
         </div>
-        <!-- image 3 -->
-        <div class="image_container">
+        <!-- if  loading  is  false-->
+        <div
+          class="image_container"
+          v-for="(item, index) in instructors"
+          :key="index"
+          v-show="!is_loading"
+        >
           <div class="image_box">
             <div class="image_content">
-              <img src="@/assets/person.jpg" />
+              <img :src="item.image_link" />
               <div class="content">
                 <div class="btn">f</div>
                 <div class="btn">in</div>
@@ -136,8 +129,8 @@ Noori Office Number, [10/5/2023 2:01 PM]
             </div>
           </div>
           <div class="details">
-            <p class="name">Navid Ahmad Mubariz</p>
-            <p class="occupation">SEO & Managerr</p>
+            <p class="name">{{ item.name + ' ' + item.last_name }}</p>
+            <p class="occupation">{{ item.profession }}</p>
           </div>
         </div>
       </div>
@@ -147,10 +140,42 @@ Noori Office Number, [10/5/2023 2:01 PM]
 
 <script>
 import AppButon from '@/components/app_button.vue'
-
+import { db } from '@/firebase/config'
 export default {
   components: {
     AppButon,
+  },
+
+  data() {
+    return {
+      is_loading: false,
+      instructors: [],
+    }
+  },
+  async mounted() {
+    await this.getAllInstructor()
+  },
+
+  methods: {
+    async getAllInstructor() {
+      try {
+        this.is_loading = true
+        var citiesRef = db.collection('instructor')
+        var res = await citiesRef.get()
+        let items = []
+        res.forEach((doc) => {
+          items.push({
+            ...doc.data(),
+            id: doc.id,
+          })
+        })
+        this.instructors = items
+        this.is_loading = false
+      } catch (error) {
+        this.is_loading = false
+        console.log('something went wrong', error)
+      }
+    },
   },
 }
 </script>
@@ -201,6 +226,11 @@ export default {
   .sub-content {
     margin-top: 150px;
     padding: 0 50px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
     .title_1 {
       font-size: 16px;
       font-weight: 800;
@@ -216,9 +246,9 @@ export default {
       text-align: center;
     }
     .instructor {
-      display: flex;
-      justify-content: space-evenly;
-      align-items: center;
+      display: grid;
+      grid-template-columns: auto auto auto;
+      grid-gap: 2em;
       .image_container {
         .image_box {
           width: 300px;
