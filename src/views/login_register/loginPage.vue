@@ -229,16 +229,15 @@ export default {
     },
     async onLoginSubmit(value) {
       try {
-        await this.getUserInfo(value.email_address)
-        var res = await signInWithEmailAndPassword(
+        await signInWithEmailAndPassword(
           getAuth(),
           value.email_address,
           value.password
         )
+        await this.getUserInfo(value.email_address)
         this.$router.push('/portal')
-        console.log('==============>', res)
       } catch (error) {
-        console.log(error)
+        console.log(error.FirebaseError)
       }
     },
     validateEmail(value) {

@@ -26,7 +26,7 @@
             <div class="file-upload">
               <div
                 class="file_upload-details"
-                v-if="userForm.profile_image == 'null'"
+                v-if="userForm.profile_image == ''"
               >
                 <div class="file_upload-details-items" v-if="progress == null">
                   <div class="icon-dev">
@@ -83,18 +83,6 @@
             name="phone_number"
             style="color: red; text-align: left; margin-top: 5px"
           />
-          <p>Password</p>
-          <Field
-            v-model="userForm.password"
-            placeholder="Enter password"
-            name="password"
-            type="password"
-            :rules="validatePassword"
-          />
-          <ErrorMessage
-            name="password"
-            style="color: red; text-align: left; margin-top: 5px"
-          />
           <AppButton
             :btnText="is_loading ? 'loading...' : 'save'"
             class="appbutton"
@@ -108,11 +96,10 @@
 <script>
 import AppButton from '@/components/app_button.vue'
 import AppPageTitleArea from '@/components/app_page_title_area.vue'
-import { db, dbStorage, auth } from '@/firebase/config'
+import { db, dbStorage } from '@/firebase/config'
 import { ElMessage } from 'element-plus'
 import { Form, Field, ErrorMessage } from 'vee-validate'
 import store from '@/store'
-import router from '@/router'
 import { mapActions } from 'vuex'
 export default {
   components: {
@@ -132,7 +119,7 @@ export default {
       show_password: false,
       userForm: {
         id: '',
-        profile_image: null,
+        profile_image: '',
         phone_number: '',
         password: '',
       },
@@ -166,7 +153,7 @@ export default {
         this.setUserImage({
           userImage: 'null',
         })
-        this.userForm.profile_image = 'null'
+        this.userForm.profile_image = ''
         this.progress = null
         this.file_data = null
 
@@ -205,30 +192,13 @@ export default {
         console.log('============')
       }
     },
-    handleSignOut() {
-      auth.signOut().then(() => {
-        this.removeUserInfo()
-        router.push('/')
-      })
-    },
-    passwordChange(password) {
-      auth.currentUser
-        .updatePassword(password)
-        .then(function () {
-          // Update successful.
-          this.handleSignOut()
-          console.log('Password change')
-        })
-        .catch(function (error) {
-          // An error happened.
-          console.log(error)
-        })
-    },
+
     async onSubmit(values) {
       console.log(values)
+      console.log(this.userForm)
       this.is_loading = true
       try {
-        if (this.userForm.profile_image != 'null') {
+        if (this.userForm.profile_image != '') {
           const productRef = db.collection('users').doc(store.state.user.userId)
           await productRef.update(this.userForm)
           ElMessage({
@@ -239,8 +209,7 @@ export default {
             userImage: this.userForm.profile_image,
           })
           this.is_loading = false
-          await this.passwordChange(this.userForm.password)
-          // this.$router.go(-1)
+          this.$router.go(-1)
         } else {
           this.is_loading = false
           ElMessage({
