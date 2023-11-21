@@ -51,12 +51,69 @@
           </div>
         </div>
         <div class="contact-form-save">
-          <input placeholder="Name*" />
-          <input placeholder="Email*" />
-          <input placeholder="Phone" />
-          <input placeholder="Subject" />
-          <textarea class="text-area" placeholder="Your Massage" />
-          <AppButton btnText="submit now" :rightIcon="['fas', 'arrow-right']" />
+          <Form @submit="onSubmit" class="contact-form-save">
+            <Field
+              name="name"
+              type="text"
+              placeholder="Name*"
+              :rules="validateName"
+            />
+            <ErrorMessage
+              v-motion
+              :initial="{ opacity: 0, y: -30 }"
+              :enter="{ opacity: 1, y: 0 }"
+              :delay="200"
+              name="name"
+              style="color: red; text-align: left; margin-top: 5px"
+            />
+            <Field
+              type="email"
+              name="email"
+              placeholder="Email*"
+              :rules="validateEmail"
+            />
+            <ErrorMessage
+              v-motion
+              :initial="{ opacity: 0, y: -30 }"
+              :enter="{ opacity: 1, y: 0 }"
+              :delay="200"
+              name="email"
+              style="color: red; text-align: left; margin-top: 5px"
+            />
+            <Field placeholder="Phone number*" name="phone" />
+            <Field
+              placeholder="Subject*"
+              name="subject"
+              :rules="validateSubject"
+            />
+            <ErrorMessage
+              v-motion
+              :initial="{ opacity: 0, y: -30 }"
+              :enter="{ opacity: 1, y: 0 }"
+              :delay="200"
+              name="subject"
+              style="color: red; text-align: left; margin-top: 5px"
+            />
+            <Field v-slot="{ field }" name="message" :rules="validateMessage">
+              <textarea v-bind="field" placeholder="Your Message*" />
+            </Field>
+            <ErrorMessage
+              v-motion
+              :initial="{ opacity: 0, y: -30 }"
+              :enter="{ opacity: 1, y: 0 }"
+              :delay="200"
+              name="message"
+              style="color: red; text-align: left; margin-top: 5px"
+            />
+            <AppButton
+              v-loading="is_loading"
+              :element-loading-svg="svg"
+              element-loading-svg-view-box="-10, -10, 50, 50"
+              btnText="submit now"
+              class="appbutton"
+              :rightIcon="['fas', 'arrow-right-long']"
+            />
+          </Form>
         </div>
       </div>
     </div>
@@ -83,8 +140,10 @@ import 'leaflet/dist/leaflet.css'
 import contact_card from '@/views/contact_page/components/content_card.vue'
 import AppButton from '@/components/app_button.vue'
 import AppPageTitleArea from '@/components/app_page_title_area.vue'
-
+import { Form, Field, ErrorMessage } from 'vee-validate'
 import { LMap, LTileLayer, LMarker } from '@vue-leaflet/vue-leaflet'
+import { db } from '@/firebase/config'
+import { ElMessage } from 'element-plus'
 export default {
   components: {
     LMap,
@@ -93,11 +152,83 @@ export default {
     contact_card,
     AppButton,
     AppPageTitleArea,
+    Form,
+    Field,
+    ErrorMessage,
   },
   data() {
     return {
+      svg: `
+        <path class="path" d="
+          M 30 15
+          L 28 17
+          M 25.61 25.61
+          A 15 15, 0, 0, 1, 15 30
+          A 15 15, 0, 1, 1, 27.99 7.5
+          L 15 15
+        " style="stroke-width: 4px; fill: rgba(0, 0, 0, 0)"/>
+      `,
       zoom: 15,
+      is_loading: false,
     }
+  },
+  methods: {
+    clearAll() {
+      this.userForm.name = ''
+      this.userForm.phone = ''
+      this.userForm.email = ''
+      this.userForm.subject = ''
+      this.userForm.message = ''
+    },
+    async onSubmit(values, { resetForm }) {
+      this.is_loading = true
+      try {
+        console.log(values)
+        const collectionRef = db.collection('emails')
+        await collectionRef.add(values)
+        ElMessage({
+          message: 'Email send successful with for the response.',
+          type: 'success',
+        })
+        resetForm()
+        this.is_loading = false
+      } catch (error) {
+        this.is_loading = false
+        ElMessage({
+          message: 'Internet connection error.',
+          type: 'error',
+        })
+      }
+      this.is_loading = false
+    },
+    validateName(value) {
+      if (!value) {
+        return 'This field is required'
+      }
+      return true
+    },
+    validateEmail(value) {
+      if (!value) {
+        return 'This field is required'
+      }
+      const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
+      if (!regex.test(value)) {
+        return 'This field must be a valid email'
+      }
+      return true
+    },
+    validateSubject(value) {
+      if (!value) {
+        return 'This field is required'
+      }
+      return true
+    },
+    validateMessage(value) {
+      if (!value) {
+        return 'This field is required'
+      }
+      return true
+    },
   },
 }
 </script>
@@ -131,12 +262,12 @@ export default {
         }
       }
       .contact-form-save {
-        width: 60%;
+        width: 100%;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
         input,
-        .text-area {
+        textarea {
           background-color: #f5f5f5;
           outline: 0px solid #ffffff;
           border: 0px solid #ffffff;
@@ -146,16 +277,13 @@ export default {
           border-radius: 5px;
           font-family: inherit;
           transition: 0.8s;
+          margin-bottom: 10px;
+        }
+        textarea {
+          height: 180px;
+          padding: 20px 30px;
         }
         input {
-          &:focus {
-            border: 1px solid @color-secondary;
-            transition: 0.8s;
-          }
-        }
-        .text-area {
-          min-height: 180px;
-          padding-top: 30px;
           &:focus {
             border: 1px solid @color-secondary;
             transition: 0.8s;

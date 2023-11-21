@@ -15,6 +15,7 @@
           education and best instructors.
         </h5>
         <AppButon
+          @click="this.$router.push('/contact')"
           btn-text="Get Started Today"
           :right-icon="['fas', 'arrow-right']"
         />
@@ -123,8 +124,12 @@
             <div class="image_content">
               <img :src="item.image_link" />
               <div class="content">
-                <div class="btn">f</div>
-                <div class="btn">in</div>
+                <div
+                  class="btn"
+                  @click="() => openInNewTab(item.facebook_link)"
+                >
+                  f
+                </div>
               </div>
             </div>
           </div>
@@ -141,6 +146,7 @@
 <script>
 import AppButon from '@/components/app_button.vue'
 import { db } from '@/firebase/config'
+import { ElMessage } from 'element-plus'
 export default {
   components: {
     AppButon,
@@ -157,6 +163,16 @@ export default {
   },
 
   methods: {
+    openInNewTab(url) {
+      if (url == '' || url == null) {
+        ElMessage({
+          message: 'Does not have a facebook account',
+          type: 'warning',
+        })
+      } else {
+        window.open(url, '_blank', 'noreferrer')
+      }
+    },
     async getAllInstructor() {
       try {
         this.is_loading = true

@@ -45,6 +45,22 @@
           <span> Login / Register</span>
         </el-button>
       </div>
+      <el-dropdown @command="handleCommand" style="margin-left: 10px">
+        <el-button color="#525fe1" size="large">
+          {{ $t('language') }}
+          <font-awesome-icon
+            style="margin-left: 10px"
+            :icon="['fas', 'globe']"
+          />
+        </el-button>
+        <template #dropdown>
+          <el-dropdown-menu>
+            <el-dropdown-item command="EN">English</el-dropdown-item>
+            <el-dropdown-item command="PA">پښتو</el-dropdown-item>
+            <el-dropdown-item command="FA">فارسی</el-dropdown-item>
+          </el-dropdown-menu>
+        </template>
+      </el-dropdown>
     </div>
   </div>
 </template>
@@ -54,6 +70,7 @@ import { auth } from '@/firebase/config'
 import router from '@/router'
 import store from '@/store'
 import { mapActions } from 'vuex'
+import { setLocaleLanuage } from '@/lib/utils'
 export default {
   props: ['isScrolling'],
   data() {
@@ -71,6 +88,18 @@ export default {
           resolove(user)
         }, reject)
       })
+    },
+    handleCommand(command) {
+      setLocaleLanuage(command)
+      this.$i18n.locale = command
+      const elems = document.getElementsByTagName('*')
+      for (let elem of elems) {
+        if (command == 'EN') {
+          elem.style.direction = 'ltr'
+        } else {
+          elem.style.direction = 'rtl'
+        }
+      }
     },
     handleSignOut() {
       auth.signOut().then(() => {
@@ -150,5 +179,11 @@ a {
     color: @color-secondary;
     border-bottom: 2px solid @color-secondary;
   }
+}
+.example-showcase .el-dropdown-link {
+  cursor: pointer;
+  color: var(--el-color-primary);
+  display: flex;
+  align-items: center;
 }
 </style>

@@ -5,6 +5,11 @@ import store from './store'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import { MotionPlugin } from '@vueuse/motion'
+import { createI18n } from 'vue-i18n'
+import EN from '@/locale/EN.json'
+import PA from '@/locale/PA.json'
+import FA from '@/locale/FA.json'
+import { getLocaleLanuage } from '@/lib/utils'
 
 /* import the fontawesome core */
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -36,6 +41,9 @@ import {
   faCloudArrowUp,
   faTrash,
   faRightFromBracket,
+  faArrowRightLong,
+  faRightToBracket,
+  faUserPlus,
 } from '@fortawesome/free-solid-svg-icons'
 import { faUser } from '@fortawesome/free-regular-svg-icons'
 import {
@@ -45,7 +53,6 @@ import {
   faTelegram,
   faInstagram,
 } from '@fortawesome/free-brands-svg-icons'
-
 /* add icons to the library  magnifying-glass */
 library.add(
   faGlobe,
@@ -77,12 +84,25 @@ library.add(
   faGear,
   faCloudArrowUp,
   faTrash,
-  faRightFromBracket
+  faRightFromBracket,
+  faArrowRightLong,
+  faRightToBracket,
+  faUserPlus,
+  faGlobe
 )
 
-/* add font awesome icon component */
+const i18n = createI18n({
+  locale: `${getLocaleLanuage()}`,
+  messages: {
+    EN: EN,
+    PA: PA,
+    FA: FA,
+  },
+})
+
 createApp(App)
   .component('font-awesome-icon', FontAwesomeIcon)
+  .use(i18n)
   .use(store)
   .use(router)
   .use(ElementPlus)

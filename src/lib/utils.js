@@ -8,6 +8,15 @@ export const setToken = (token, expires) => {
   Cookies.set(EXPIRES_KEY, expiresTime, { expires: expiresTime })
 }
 
+export const setLocaleLanuage = (value) => {
+  Cookies.set('locale', value)
+}
+export const getLocaleLanuage = () => {
+  const lan = Cookies.get('locale')
+  if (lan) return lan
+  else return 'EN'
+}
+
 export const getToken = () => {
   const token = Cookies.get(TOKEN_KEY)
   if (token) return token

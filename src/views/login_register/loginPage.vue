@@ -30,6 +30,10 @@
               :rules="validateEmail"
             />
             <ErrorMessage
+              v-motion
+              :initial="{ opacity: 0, y: -30 }"
+              :enter="{ opacity: 1, y: 0 }"
+              :delay="200"
               name="email_address"
               style="color: red; text-align: left; margin-top: 5px"
             />
@@ -41,10 +45,26 @@
               :rules="validatePassword"
             />
             <ErrorMessage
+              v-motion
+              :initial="{ opacity: 0, y: -30 }"
+              :enter="{ opacity: 1, y: 0 }"
+              :delay="200"
               name="password"
               style="color: red; text-align: left; margin-top: 5px"
             />
-            <AppButton btnText="Login" class="appbutton" />
+            <AppButton
+              btnText="Login"
+              class="appbutton"
+              v-loading="login_loading"
+              :element-loading-svg="svg"
+              element-loading-svg-view-box="-10, -10, 50, 50"
+              :leftIcon="['fas', 'right-to-bracket']"
+            />
+            <a
+              class="forget-password"
+              @click="this.$router.push('/login/forget-password')"
+              >Forget password</a
+            >
           </Form>
         </div>
       </div>
@@ -73,6 +93,10 @@
               :rules="validateEmail"
             />
             <ErrorMessage
+              v-motion
+              :initial="{ opacity: 0, y: -30 }"
+              :enter="{ opacity: 1, y: 0 }"
+              :delay="200"
               name="email"
               style="color: red; text-align: left; margin-top: 5px"
             />
@@ -91,6 +115,10 @@
               :rules="validateName"
             />
             <ErrorMessage
+              v-motion
+              :initial="{ opacity: 0, y: -30 }"
+              :enter="{ opacity: 1, y: 0 }"
+              :delay="200"
               name="username"
               style="color: red; text-align: left; margin-top: 5px"
             />
@@ -108,12 +136,20 @@
               :rules="validatePhone"
             />
             <ErrorMessage
+              v-motion
+              :initial="{ opacity: 0, y: -30 }"
+              :enter="{ opacity: 1, y: 0 }"
+              :delay="200"
               name="phone"
               style="color: red; text-align: left; margin-top: 5px"
             />
             <AppButton
-              :btnText="is_loading ? 'loading...' : 'Register'"
+              v-loading="is_loading"
+              :element-loading-svg="svg"
+              element-loading-svg-view-box="-10, -10, 50, 50"
+              btnText="Register"
               class="appbutton"
+              :leftIcon="['fas', 'user-plus']"
             />
           </Form>
         </div>
@@ -140,7 +176,18 @@ export default {
   },
   data() {
     return {
+      svg: `
+        <path class="path" d="
+          M 30 15
+          L 28 17
+          M 25.61 25.61
+          A 15 15, 0, 0, 1, 15 30
+          A 15 15, 0, 1, 1, 27.99 7.5
+          L 15 15
+        " style="stroke-width: 4px; fill: rgba(0, 0, 0, 0)"/>
+      `,
       is_loading: false,
+      login_loading: false,
       email_is_exist: false,
       user_name_is_exist: false,
     }
@@ -175,7 +222,7 @@ export default {
         console.log(error)
       }
     },
-    async onSubmit(values) {
+    async onSubmit(values, { resetForm }) {
       this.is_loading = true
       await this.checkEmail(values.email)
       this.validateEmail(this.email_is_exist)
@@ -193,8 +240,9 @@ export default {
             register_date: timestamp(),
             user_name: values.username.toLowerCase(),
           })
+          resetForm()
           ElMessage({
-            message: 'Data save successful.',
+            message: 'Register successful.',
             type: 'success',
           })
           this.is_loading = false
@@ -228,6 +276,7 @@ export default {
       }
     },
     async onLoginSubmit(value) {
+      this.login_loading = true
       try {
         await signInWithEmailAndPassword(
           getAuth(),
@@ -235,9 +284,11 @@ export default {
           value.password
         )
         await this.getUserInfo(value.email_address)
+        this.login_loading = false
         this.$router.push('/portal')
       } catch (error) {
         console.log(error.FirebaseError)
+        this.login_loading = false
       }
     },
     validateEmail(value) {
@@ -347,6 +398,15 @@ export default {
         }
         .appbutton {
           margin-top: 40px;
+        }
+        .forget-password {
+          font-size: 14px;
+          margin: 20px;
+          text-decoration: underline;
+          &:hover {
+            color: @color-secondary;
+            cursor: pointer;
+          }
         }
       }
     }

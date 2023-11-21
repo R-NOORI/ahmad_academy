@@ -70,6 +70,15 @@ export default [
         component: () => import('../views/login_register/loginPage.vue'),
       },
       {
+        path: '/login/forget-password',
+        name: 'Forget password',
+        meta: {
+          access: [],
+          title: 'Forget password',
+        },
+        component: () => import('../views/login_register/reset_password.vue'),
+      },
+      {
         path: '/portal',
         name: 'Portal',
         meta: {
