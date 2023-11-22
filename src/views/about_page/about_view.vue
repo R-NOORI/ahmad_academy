@@ -12,9 +12,6 @@
           :enter="{
             opacity: 1,
             y: 0,
-            transition: {
-              mass: 1,
-            },
           }"
           :visible-once="{ opacity: 1, y: 0 }"
           :delay="350"
@@ -28,16 +25,10 @@
           :enter="{
             opacity: 1,
             y: 0,
-            transition: {
-              mass: 1,
-            },
           }"
           :visible-once="{
             opacity: 1,
             y: 0,
-            transition: {
-              mass: 1,
-            },
           }"
           :delay="350"
           class="animate"
@@ -53,9 +44,6 @@
       :enter="{
         opacity: 1,
         y: 0,
-        transition: {
-          mass: 1.5,
-        },
       }"
       :visible-once="{ opacity: 1, y: 0 }"
       :delay="350"
@@ -82,7 +70,6 @@
         body="Lorem ipsum dolor sit amet, consectetur adipiscing elit, eiusmoded tempor incididunt dolore magna aliqua."
         backgroundColor="background-color: #FB7C561A;"
       />
-      <AppButton btnText="Know About Us" style="width: 200px" />
     </div>
   </div>
   <div class="what-we-offer">
@@ -94,16 +81,10 @@
         :enter="{
           opacity: 1,
           y: 0,
-          transition: {
-            mass: mass,
-          },
         }"
         :visible="{
           opacity: 1,
           y: 0,
-          transition: {
-            mass: 0.5,
-          },
         }"
         :delay="200"
       >
@@ -116,16 +97,10 @@
         :enter="{
           opacity: 1,
           y: 0,
-          transition: {
-            mass: mass,
-          },
         }"
         :visible="{
           opacity: 1,
           y: 0,
-          transition: {
-            mass: 1,
-          },
         }"
         :delay="200"
       >
@@ -181,9 +156,6 @@
       :visible="{
         opacity: 1,
         y: 0,
-        transition: {
-          mass: 1,
-        },
       }"
       src="https://eduvibe.devsvibe.com/main/wp-content/uploads/2023/02/mission-gallery-01.jpg"
     />
@@ -197,9 +169,6 @@
       :visible="{
         opacity: 1,
         y: 0,
-        transition: {
-          mass: 0.5,
-        },
       }"
       src="https://eduvibe.devsvibe.com/main/wp-content/uploads/2023/02/mission-gallery-02.jpg"
     />
@@ -213,9 +182,6 @@
       :visible="{
         opacity: 1,
         y: 0,
-        transition: {
-          mass: 1,
-        },
       }"
       src="https://eduvibe.devsvibe.com/main/wp-content/uploads/2023/02/mission-gallery-03.jpg"
     />
@@ -229,14 +195,17 @@
       :visible="{
         opacity: 1,
         y: 0,
-        transition: {
-          mass: 1.3,
-        },
       }"
       src="https://eduvibe.devsvibe.com/main/wp-content/uploads/2023/02/mission-gallery-04.jpg"
     />
   </div>
-  <div class="our-info-content">
+  <div
+    :class="
+      localLanguage == 'EN'
+        ? 'our-info-content align-text-left'
+        : 'our-info-content align-text-right'
+    "
+  >
     <div
       class="our-info-content-mission"
       v-motion
@@ -253,15 +222,10 @@
         },
       }"
     >
-      <h4>OUR MISSION</h4>
-      <h1>Education In Continuing A Proud Tradition</h1>
+      <h4>{{ $t('about.mission') }}</h4>
+      <h1>{{ $t('about.missionTitle') }}</h1>
       <p>
-        EduVibe offers a diverse range of courses, spanning various subjects and
-        levels of difficulty, to cater to learners with different interests and
-        skill levels. We leverage innovative technology, such as artificial
-        intelligence and machine learning, to enhance the learning experience,
-        provide personalized feedback and recommendations, and improve the
-        effectiveness of its courses.
+        {{ $t('about.missionDetails') }}
       </p>
     </div>
     <div
@@ -280,15 +244,10 @@
         },
       }"
     >
-      <h4>OUR VISION</h4>
-      <h1>Education Is About Creating Leaders For Tomorrow</h1>
+      <h4>{{ $t('about.vision') }}</h4>
+      <h1>{{ $t('about.visionTitle') }}</h1>
       <p>
-        EduVibe offers a diverse range of courses, spanning various subjects and
-        levels of difficulty, to cater to learners with different interests and
-        skill levels. We leverage innovative technology, such as artificial
-        intelligence and machine learning, to enhance the learning experience,
-        provide personalized feedback and recommendations, and improve the
-        effectiveness of its courses.
+        {{ $t('about.visionDetails') }}
       </p>
     </div>
   </div>
@@ -297,18 +256,23 @@
 <script>
 import AppPageTitleArea from '@/components/app_page_title_area.vue'
 import AboutCard from './components/about-card.vue'
-import AppButton from '@/components/app_button.vue'
 import AboutItemCard from './components/about-item-card.vue'
 export default {
   name: 'course-page',
-  components: { AppPageTitleArea, AboutCard, AppButton, AboutItemCard },
+  components: { AppPageTitleArea, AboutCard, AboutItemCard },
   data() {
     return {
+      localLanguage: '',
       scrollValue: 20,
       imageSize: 0,
     }
   },
-  computed: {},
+  mounted() {
+    this.localLanguage = this.$i18n.locale
+  },
+  updated() {
+    this.localLanguage = this.$i18n.locale
+  },
 }
 </script>
 
@@ -464,12 +428,17 @@ export default {
   }
 }
 
+.align-text-left {
+  text-align: left;
+}
+.align-text-right {
+  text-align: right;
+}
 .our-info-content {
   max-width: 1100px;
   margin: 0px auto;
   display: flex;
   flex-direction: row;
-  text-align: left;
   &-mission,
   &-vision {
     padding: 15px;
@@ -482,6 +451,7 @@ export default {
       font-size: 35px;
       color: #231f40;
       margin: 15px 0px 40px 0px;
+      width: 100%;
     }
     p {
       color: #6b6b80;

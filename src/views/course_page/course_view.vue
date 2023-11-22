@@ -12,9 +12,15 @@
       element-loading-svg-view-box="-10, -10, 50, 50"
     >
       <div class="search-content">
-        <p>Total {{ total_records }} courses</p>
+        <p>
+          {{ $t('courses.total') }} {{ total_records }}
+          {{ $t('courses.courses') }}
+        </p>
         <div class="search-content-field">
-          <input placeholder="Name*" v-model="search_value" />
+          <input
+            :placeholder="$t('courses.search_by_name') + '*'"
+            v-model="search_value"
+          />
           <font-awesome-icon
             class="search-content-field-icon"
             :icon="['fas', 'magnifying-glass']"

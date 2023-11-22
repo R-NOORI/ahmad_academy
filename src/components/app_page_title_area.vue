@@ -43,10 +43,12 @@ export default {
   background-size: 100% 100%;
   background-image: url('../assets/bg.jpg');
   &-content {
-    text-align: left;
     max-width: 1100px;
     margin: 0px auto;
     padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
     &-title {
       color: #231f40;
       font-size: 40px;

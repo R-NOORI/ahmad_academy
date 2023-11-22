@@ -36,6 +36,7 @@
       >
       <p class="title_2">Learn New Skills When And Where You Like</p>
       <div class="offers">
+        <!-- card 1 -->
         <div class="offers_card">
           <div class="offers_icon_container">
             <font-awesome-icon

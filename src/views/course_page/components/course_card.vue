@@ -9,12 +9,13 @@
           <font-awesome-icon
             class="card-icon"
             :icon="['fas', 'clipboard-list']"
-          />{{ lessons }}
+          />
+          &nbsp;{{ lessons }}
         </span>
+        &nbsp; &nbsp;
         <span style="margin-left: 50px">
-          <font-awesome-icon class="card-icon" :icon="['fa', 'clock']" />{{
-            duration
-          }}
+          <font-awesome-icon class="card-icon" :icon="['fa', 'clock']" />
+          &nbsp;{{ duration }}
         </span>
       </div>
       <h2>{{ courseTitle }}</h2>
@@ -97,9 +98,6 @@ export default {
       span {
         color: #6f6b80;
         font-size: 16px;
-        .card-icon {
-          margin-right: 10px;
-        }
       }
     }
     &-price {
@@ -113,7 +111,7 @@ export default {
           color: @color-secondary;
         }
         .old-price {
-          margin-left: 20px;
+          margin: 0px 20px;
           font-size: 16px;
           color: #6f6b80;
           text-decoration-line: line-through;
@@ -121,7 +119,9 @@ export default {
       }
     }
     h2 {
-      text-align: left;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
       color: #231f40;
       font-size: 20px;
       font-weight: 600;
