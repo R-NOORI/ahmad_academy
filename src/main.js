@@ -88,7 +88,8 @@ library.add(
   faArrowRightLong,
   faRightToBracket,
   faUserPlus,
-  faGlobe
+  faGlobe,
+  faLanguage
 )
 
 const i18n = createI18n({

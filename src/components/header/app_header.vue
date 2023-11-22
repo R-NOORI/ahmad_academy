@@ -4,19 +4,19 @@
       <img src="@/assets/logo.png" />
     </div>
     <div class="nav_item">
-      <router-link to="/">Home</router-link>
+      <router-link to="/">{{ $t('header.home') }}</router-link>
       <router-link
         to="/course"
         :class="{ activeNav: this.$route.fullPath == '/course/course-details' }"
-        >Courses</router-link
+        >{{ $t('header.course') }}</router-link
       >
-      <router-link to="/contact">Contact</router-link>
-      <router-link to="/about">About</router-link>
+      <router-link to="/contact">{{ $t('header.contact') }}</router-link>
+      <router-link to="/about">{{ $t('header.about') }}</router-link>
       <router-link
         to="/portal"
         :class="{ activeNav: this.$route.fullPath == '/portal/setting' }"
         v-show="isLoggendIn"
-        >Portal</router-link
+        >{{ $t('header.portal') }}</router-link
       >
       <div class="header_btn">
         <el-button
@@ -29,7 +29,7 @@
             :icon="['fas', 'right-from-bracket']"
             style="margin-right: 8px"
           />
-          <span> Sign Out</span>
+          <span>{{ $t('header.signout') }}</span>
         </el-button>
         <el-button
           color="#525fe1"
@@ -42,16 +42,12 @@
             style="margin-right: 8px"
           />
 
-          <span> Login / Register</span>
+          <span>{{ $t('header.loginRegister') }}</span>
         </el-button>
       </div>
       <el-dropdown @command="handleCommand" style="margin-left: 10px">
-        <el-button color="#525fe1" size="large">
-          {{ $t('language') }}
-          <font-awesome-icon
-            style="margin-left: 10px"
-            :icon="['fas', 'globe']"
-          />
+        <el-button circle color="#000" size="large">
+          <font-awesome-icon :icon="['fas', 'globe']" size="xl" />
         </el-button>
         <template #dropdown>
           <el-dropdown-menu>

@@ -1,3 +1,28 @@
 {
-  "language": "پـښـتـو"
+  "language": "پـښـتـو",
+  "home": {
+    "title1": "نوی څه زده کړئ",
+    "title2": "تعلیم په ژوند کي د پرمختګ لار ده",
+    "title3": "د آنلاین زده کړې او غوره ښوونکو له لارې ترلاسه شوي پوهې او مهارتونو سره ځان ځواکمن کړئ.",
+    "getStarted": "همدانن ئی شروع کړئ",
+    "title4": "موږ څه وړاندی کوو",
+    "offerTitle1": "نوی مهارتونه زده کړی هروخت او هرځای چي وغواړئ",
+    "expretsTitle": "د متخصص لارښوونی",
+    "expertsDetails": "موږ یو لوړ ماهر او تجربه لرونکی ښوونکی لرو چې تاسو سره ستاسو د اهدافو ترلاسه کولو کې مرسته کولی شي",
+    "offerTitle2": "د ویډیو زده کړه",
+    "offer2Details": "We have a highly expert and experience instructor that can you help you acheieve your goals",
+    "offerTitle3": "له هر ځای څخه زده کړئ",
+    "offer3Details": "We have a highly expert and experience instructor that can you help you acheieve your goals",
+    "instructor": "مهارت لرونکی ښوونکی",
+    "lifeCoaches": "زموږ د ژوند روزونکي"
+  },
+  "header": {
+    "home": "کورپاڼه",
+    "course": "کورسونه",
+    "contact": "اړیکه",
+    "about": "زموږ په اړه",
+    "portal": "پورټل",
+    "signout": "وتون",
+    "loginRegister": "ننوتل / راجستر کړئ"
+  }
 }

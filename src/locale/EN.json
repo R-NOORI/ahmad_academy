@@ -1,3 +1,28 @@
 {
-  "language": "English"
+  "language": "English",
+  "home": {
+    "title1": "LEARN NEW THINGS DAILY",
+    "title2": "Education Is A Path To Success In Life",
+    "title3": "Empower yourself with the knowledge and skills gained through onlineeducation and best instructors.",
+    "getStarted": "Get Started Today",
+    "title4": "WHAT WE OFFER",
+    "offerTitle1": "Learn New Skills When And Where You Like",
+    "expretsTitle": "Expert Instructions",
+    "expertsDetails": "We have a highly expert and experience instructor that can you help you acheieve your goals",
+    "offerTitle2": "Video Tutorials",
+    "offer2Details": "We have a highly expert and experience instructor that can you help you acheieve your goals",
+    "offerTitle3": "Learn From Anywhere",
+    "offer3Details": "We have a highly expert and experience instructor that can you help you acheieve your goals",
+    "instructor": "SKILLED INSTRUCTOR",
+    "lifeCoaches": " Introduce Our Life Coaches"
+  },
+  "header": {
+    "home": "Home",
+    "course": "Courses",
+    "contact": "Contact",
+    "about": "About",
+    "portal": "Portal",
+    "signout": "Sign Out",
+    "loginRegister": "Login / Register"
+  }
 }

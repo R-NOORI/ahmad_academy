@@ -8,15 +8,14 @@
         :delay="200"
         class="hero_text"
       >
-        <h4>LEARN NEW THINGS DAILY</h4>
-        <h1>Education Is A Path To Success In Life</h1>
+        <h4>{{ $t('home.title1') }}</h4>
+        <h1>{{ $t('home.title2') }}</h1>
         <h5>
-          Empower yourself with the knowledge and skills gained through online
-          education and best instructors.
+          {{ $t('home.title3') }}
         </h5>
         <AppButon
           @click="this.$router.push('/contact')"
-          btn-text="Get Started Today"
+          :btn-text="$t('home.getStarted')"
           :right-icon="['fas', 'arrow-right']"
         />
       </div>
@@ -32,9 +31,9 @@
     </div>
     <div class="sub-content">
       <el-divider content-position="center"
-        ><p class="title_1">WHAT WE OFFER</p></el-divider
+        ><p class="title_1">{{ $t('home.title4') }}</p></el-divider
       >
-      <p class="title_2">Learn New Skills When And Where You Like</p>
+      <p class="title_2">{{ $t('home.offerTitle1') }}</p>
       <div class="offers">
         <div class="offers_card">
           <div class="offers_icon_container">
@@ -44,10 +43,9 @@
               size="lg"
             />
           </div>
-          <h3>Expert Instructions</h3>
+          <h3>{{ $t('home.expretsTitle') }}</h3>
           <p>
-            We have a highly expert and experience instructor that can you help
-            you acheieve your goals
+            {{ $t('home.expertsDetails') }}
           </p>
         </div>
         <!-- card 2 -->
@@ -59,10 +57,9 @@
               size="lg"
             />
           </div>
-          <h3>Video Tutorials</h3>
+          <h3>{{ $t('home.offerTitle2') }}</h3>
           <p>
-            We have a highly expert and experience instructor that can you help
-            you acheieve your goals
+            {{ $t('home.offer2Details') }}
           </p>
         </div>
         <!-- card 3 -->
@@ -70,10 +67,9 @@
           <div class="offers_icon_container">
             <font-awesome-icon class="icon" :icon="['fas', 'gear']" size="lg" />
           </div>
-          <h3>Learn From Anywhere</h3>
+          <h3>{{ $t('home.offerTitle3') }}</h3>
           <p>
-            We have a highly expert and experience instructor that can you help
-            you acheieve your goals
+            {{ $t('home.offer3Details') }}
           </p>
         </div>
       </div>
@@ -88,9 +84,9 @@
       class="sub-content"
     >
       <el-divider content-position="center"
-        ><p class="title_1">SKILLED INSTRUCTOR</p></el-divider
+        ><p class="title_1">{{ $t('home.instructor') }}</p></el-divider
       >
-      <p class="title_2">Introduce Our Life Coaches</p>
+      <p class="title_2">{{ $t('home.lifeCoaches') }}</p>
       <div class="instructor">
         <!-- if  loading is true -->
         <div
@@ -98,21 +94,7 @@
           v-for="(item, index) in 3"
           :key="index"
           v-show="is_loading"
-        >
-          <div class="image_box">
-            <div class="image_content">
-              <img src="@/assets/person.jpg" />
-              <div class="content">
-                <div class="btn">f</div>
-                <div class="btn">in</div>
-              </div>
-            </div>
-          </div>
-          <div class="details">
-            <p class="name">Jamil Ahmad Qurishi</p>
-            <p class="occupation">UX/UI Designer</p>
-          </div>
-        </div>
+        ></div>
         <!-- if  loading  is  false-->
         <div
           class="image_container"
