@@ -24,5 +24,44 @@
     "portal": "Portal",
     "signout": "Sign Out",
     "loginRegister": "Login / Register"
+  },
+  "courses": {
+    "total": "total",
+    "courses": "courses",
+    "search_by_name": "search by name"
+  },
+  "courseDetails": {
+    "duration": "Duration",
+    "lessons": "Lessons",
+    "skillLevel": "Skill level",
+    "language": "Language",
+    "instructor": "Instructor",
+    "fee": "Fee",
+    "courseDescription": "Course Description",
+    "course1Details": "What You’ll Learn From This Course"
+  },
+  "contact": {
+    "contact1Details": "NEED HELP?",
+    "contact2Details": "Get In Touch With us",
+    "socialMediaTitle1": "Call Us On",
+    "socialMediaTitle2": "Email Us",
+    "socialMediaTitle3": "Instagram Link",
+    "socialMediaTitle4": "Facebook Link",
+    "name": "Name*",
+    "email": "Email*",
+    "phoneNumber": "Phone Number",
+    "subject": "Subject*",
+    "yourMessage": "Your Message*",
+    "bnt": "Sumbmit now",
+    "inputTitle1": "This field is required",
+    "inputTitle2": "This field must be a valid email"
+  },
+  "about": {
+    "mission": "OUR MISSION",
+    "missionTitle": "Education In Continuing A Proud Tradition",
+    "missionDetails": "Al Noor Safa Academy wants; To train the country's children in the light of national and Islamic values, work on their important skills and teach them in their mother language.",
+    "vision": "OUR VISION",
+    "visionTitle": "Education Is About Creating Leaders For Tomorrow",
+    "visionDetails": "Al Noor Safa Academy wants to have good people with national and religious pride inside and outside the country so that they can participate in the society in a positive way."
   }
 }

@@ -1,3 +1,42 @@
 {
-  "language": "فـارسـی"
+  "languageType": "فـارسـی",
+  "courses": {
+    "total": "در مجموع",
+    "courses": "دوره",
+    "search_by_name": "جستجو براساس نام"
+  },
+  "courseDetails": {
+    "duration": "مدت زمان",
+    "lessons": "درس ها",
+    "skillLevel": "سطح مهارت",
+    "language": "زبان",
+    "instructor": "معلم",
+    "fee": "هزینه",
+    "courseDescription": "شرح دوره",
+    "course1Details": "آنچه از این دوره خواهید آموخت"
+  },
+  "contact": {
+    "contact1Details": "کمک خواستن؟",
+    "contact2Details": "با ما در تماس باشید",
+    "socialMediaTitle1": "با ما تماس بگیرید",
+    "socialMediaTitle2": "به ما ایمیل بزنید",
+    "socialMediaTitle3": "لینک اینستاگرام",
+    "socialMediaTitle4": "لینک فیس بوک",
+    "name": "نام*",
+    "email": "ایمیل*",
+    "phoneNumber": "شماره تلفن",
+    "subject": "موضوع*",
+    "yourMessage": "پیغام تو*",
+    "bnt": "اکنون ارسال کنید",
+    "inputTitle1": "این فیلد الزامی است",
+    "inputTitle2": "این فیلد باید یک ایمیل معتبر باشد"
+  },
+  "about": {
+    "mission": "ماموریت",
+    "missionTitle": "آموزش در ادامه یک سنت افتخارآمیز",
+    "missionDetails": "آکادمی النور صفا برای تربیت فرزندان کشور در پرتو ارزش‌های ملی و اسلامی، روی مهارت‌های مهم آن‌ها کار کنید و به زبان مادری به آنها آموزش دهید.",
+    "vision": "لرلید",
+    "visionTitle": "آموزش در مورد ایجاد رهبران برای فردا است",
+    "visionDetails": "آکادمی النور صفا می خواهد افراد خوب با غرور ملی و اسلامی در داخل و خارج از کشور داشته باشد تا بتوانند در جامعه مشارکت مثبت داشته باشند"
+    }
 }

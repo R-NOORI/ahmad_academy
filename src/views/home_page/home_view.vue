@@ -35,6 +35,7 @@
       >
       <p class="title_2">{{ $t('home.offerTitle1') }}</p>
       <div class="offers">
+        <!-- card 1 -->
         <div class="offers_card">
           <div class="offers_icon_container">
             <font-awesome-icon

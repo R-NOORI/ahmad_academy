@@ -18,20 +18,20 @@
       :visible-once="{ opacity: 1, y: 0 }"
       :delay="350"
     >
-      <h4>NEED HELP?</h4>
-      <h1>Get In Touch With us</h1>
+      <h4>{{ $t('contact.contact1Details') }}</h4>
+      <h1>{{ $t('contact.contact2Details') }}</h1>
       <div class="contact-container">
         <div class="contact-container-cards">
           <div class="contact-cards-row" style="margin-bottom: 30px">
             <contact_card
               :icons="['fas', 'phone-volume']"
-              title="Call Us On"
+              :title="$t('contact.socialMediaTitle1')"
               text1="+93 (0) 700073297"
               text2="+93 (0) 700063298"
             />
             <contact_card
               :icons="['fas', 'envelope-open']"
-              title="Email Us"
+              :title="$t('contact.socialMediaTitle2')"
               text1="eduvibe@example.com"
               text2="contact@eduvibe.com"
             />
@@ -39,14 +39,26 @@
           <div class="contact-cards-row">
             <contact_card
               :icons="['fab', 'instagram']"
-              title="Instagram Link"
+              :title="$t('contact.socialMediaTitle3')"
               text1="alnoorsafa.onlineacademy"
+              @click="
+                () =>
+                  openInNewTab(
+                    'https://instagram.com/alnoorsafa.onlineacademy?igshid=OGQ5ZDc2ODk2ZA=='
+                  )
+              "
             />
 
             <contact_card
               :icons="['fab', 'facebook-f']"
-              title="Facebook Link"
+              :title="$t('contact.socialMediaTitle4')"
               text1="AlnoorSafaAcademye"
+              @click="
+                () =>
+                  openInNewTab(
+                    'https://www.facebook.com/AlnoorSafaAcademy?mibextid=ZbWKwL'
+                  )
+              "
             />
           </div>
         </div>
@@ -55,7 +67,7 @@
             <Field
               name="name"
               type="text"
-              placeholder="Name*"
+              :placeholder="$t('contact.name')"
               :rules="validateName"
             />
             <ErrorMessage
@@ -67,9 +79,8 @@
               style="color: red; text-align: left; margin-top: 5px"
             />
             <Field
-              type="email"
               name="email"
-              placeholder="Email*"
+              :placeholder="$t('contact.email')"
               :rules="validateEmail"
             />
             <ErrorMessage
@@ -80,9 +91,9 @@
               name="email"
               style="color: red; text-align: left; margin-top: 5px"
             />
-            <Field placeholder="Phone number*" name="phone" />
+            <Field :placeholder="$t('contact.phoneNumber')" name="phone" />
             <Field
-              placeholder="Subject*"
+              :placeholder="$t('contact.subject')"
               name="subject"
               :rules="validateSubject"
             />
@@ -95,7 +106,10 @@
               style="color: red; text-align: left; margin-top: 5px"
             />
             <Field v-slot="{ field }" name="message" :rules="validateMessage">
-              <textarea v-bind="field" placeholder="Your Message*" />
+              <textarea
+                v-bind="field"
+                :placeholder="$t('contact.yourMessage')"
+              />
             </Field>
             <ErrorMessage
               v-motion
@@ -109,7 +123,7 @@
               v-loading="is_loading"
               :element-loading-svg="svg"
               element-loading-svg-view-box="-10, -10, 50, 50"
-              btnText="submit now"
+              :btnText="$t('contact.bnt')"
               class="appbutton"
               :rightIcon="['fas', 'arrow-right-long']"
             />
@@ -173,12 +187,8 @@ export default {
     }
   },
   methods: {
-    clearAll() {
-      this.userForm.name = ''
-      this.userForm.phone = ''
-      this.userForm.email = ''
-      this.userForm.subject = ''
-      this.userForm.message = ''
+    openInNewTab(url) {
+      window.open(url, '_blank', 'noreferrer')
     },
     async onSubmit(values, { resetForm }) {
       this.is_loading = true
@@ -203,29 +213,29 @@ export default {
     },
     validateName(value) {
       if (!value) {
-        return 'This field is required'
+        return this.$t('contact.inputTitle1')
       }
       return true
     },
     validateEmail(value) {
       if (!value) {
-        return 'This field is required'
+        return this.$t('contact.inputTitle1')
       }
       const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
       if (!regex.test(value)) {
-        return 'This field must be a valid email'
+        return this.$t('contact.inputTitle2')
       }
       return true
     },
     validateSubject(value) {
       if (!value) {
-        return 'This field is required'
+        return this.$t('contact.inputTitle1')
       }
       return true
     },
     validateMessage(value) {
       if (!value) {
-        return 'This field is required'
+        return this.$t('contact.inputTitle1')
       }
       return true
     },
@@ -252,10 +262,9 @@ export default {
       width: 100%;
       .contact-container-cards {
         width: 50%;
-        padding-right: 50px;
-
         display: flex;
         flex-direction: column;
+        margin: 0px 15px;
         .contact-cards-row {
           display: flex;
           flex-direction: row;
@@ -266,6 +275,7 @@ export default {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+        margin: 0px 15px;
         input,
         textarea {
           background-color: #f5f5f5;

@@ -25,11 +25,11 @@
         </div>
         <h1>{{ course.title }}</h1>
         <div class="course-description">
-          <h3>Course Description</h3>
+          <h3>{{ $t('courseDetails.courseDescription') }}</h3>
           <p>
             {{ course.description }}
           </p>
-          <h3>What You’ll Learn From This Course</h3>
+          <h3>{{ $t('courseDetails.course1Details') }}</h3>
           <ol>
             <li>
               {{ course.course_objectives_1 }}
@@ -59,7 +59,7 @@
                   style="margin-right: 10px"
                   :icon="['fa', 'clock']"
                 />
-                Duration</span
+                &nbsp; {{ $t('courseDetails.duration') }}</span
               >
               <span>{{ course.duration }}</span>
             </div>
@@ -70,7 +70,7 @@
                   style="margin-right: 10px"
                   :icon="['fas', 'clipboard-list']"
                 />
-                Lessons</span
+                &nbsp; {{ $t('courseDetails.lessons') }}</span
               >
               <span>{{ course.lessons }}</span>
             </div>
@@ -81,8 +81,7 @@
                   style="margin-right: 10px"
                   :icon="['fas', 'chart-simple']"
                 />
-
-                Skill level</span
+                &nbsp; {{ $t('courseDetails.skillLevel') }}</span
               >
               <span>{{ course.skill_level }}</span>
             </div>
@@ -93,7 +92,7 @@
                   style="margin-right: 10px"
                   :icon="['fas', 'language']"
                 />
-                Language</span
+                &nbsp; {{ $t('courseDetails.language') }}</span
               >
               <span>{{ course.language }}</span>
             </div>
@@ -104,7 +103,7 @@
                   style="margin-right: 10px"
                   :icon="['far', 'user']"
                 />
-                Instructor</span
+                &nbsp; {{ $t('courseDetails.instructor') }}</span
               >
               <span>{{ instructor.name + ' ' + instructor.last_name }}</span>
             </div>
@@ -115,7 +114,7 @@
                   style="margin-right: 10px"
                   :icon="['fas', 'money-check']"
                 />
-                Fees</span
+                &nbsp; {{ $t('courseDetails.fee') }}</span
               >
               <span>{{ course.new_fees }}</span>
             </div>
@@ -212,27 +211,30 @@ export default {
     flex-direction: row;
     &-summary {
       width: 100%;
-      margin: 0px 10px;
+      margin: 0px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
       .instructor-info {
         display: flex;
         flex-direction: row;
         align-items: center;
+        justify-content: flex-start;
         margin: 60px 0px 30px 0px;
         img {
           width: 40px;
           height: 40px;
           border-radius: 100%;
-          margin-right: 10px;
         }
         span {
           font-size: 16px;
           color: #231f40;
           font-weight: 600;
+          margin: 0px 10px;
         }
       }
       h1 {
         color: #231f40;
-        text-align: left;
         font-size: 40px;
         margin: 0px 0px 50px 0px;
       }
@@ -242,15 +244,16 @@ export default {
         border-radius: 8px;
         border: 1px solid #eeeeee;
         padding: 30px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
         h3 {
-          text-align: left;
           margin: 0px;
           color: #231f40;
           font-size: 24px;
           margin: 0px 0px 20px 0px;
         }
         p {
-          text-align: left;
           font-size: 16px;
           color: #6f6b80;
           line-height: 1.7em;
@@ -258,13 +261,12 @@ export default {
         }
         ol {
           padding: 0px 0px 0px 20px;
-          margin: 0px 0px 30px 0px;
+          margin: 0px 18px 30px 0px;
         }
         ol li {
           font-size: 16px;
           color: #6f6b80;
           margin: 10px 0px;
-          text-align: left;
         }
       }
     }
