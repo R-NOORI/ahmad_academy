@@ -201,7 +201,7 @@
   </div>
   <div
     :class="
-      localLanguage == 'EN'
+      getLanguage == 'EN'
         ? 'our-info-content align-text-left'
         : 'our-info-content align-text-right'
     "
@@ -257,21 +257,18 @@
 import AppPageTitleArea from '@/components/app_page_title_area.vue'
 import AboutCard from './components/about-card.vue'
 import AboutItemCard from './components/about-item-card.vue'
+import store from '@/store'
 export default {
   name: 'course-page',
   components: { AppPageTitleArea, AboutCard, AboutItemCard },
   data() {
     return {
-      localLanguage: '',
       scrollValue: 20,
       imageSize: 0,
     }
   },
-  mounted() {
-    this.localLanguage = this.$i18n.locale
-  },
-  updated() {
-    this.localLanguage = this.$i18n.locale
+  computed: {
+    getLanguage: () => store.state.user.language,
   },
 }
 </script>

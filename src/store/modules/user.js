@@ -1,4 +1,11 @@
-import { getToken, localSave, localRead, localRemove } from '@/lib/utils'
+import {
+  getToken,
+  localSave,
+  localRead,
+  localRemove,
+  getLocaleLanguage,
+  setLocaleLanguage,
+} from '@/lib/utils'
 export default {
   state: {
     token: getToken(),
@@ -6,6 +13,7 @@ export default {
     userId: localRead('userId'),
     userName: localRead('userName'),
     userImage: localRead('userImage'),
+    language: getLocaleLanguage(),
   },
   mutations: {
     updateLoginStatus(state, payload) {
@@ -19,6 +27,9 @@ export default {
     },
     updateUserImage(state, payload) {
       state.userImage = payload
+    },
+    updateLocaleLanguage(state, payload) {
+      state.language = payload
     },
   },
   getters: {
@@ -45,7 +56,12 @@ export default {
       commit('updateUserImage', userImage)
       localSave('userImage', userImage)
     },
-
+    setLocaleLanguage(ctx, param) {
+      let { commit } = ctx
+      let { lan } = param
+      commit('updateLocaleLanguage', lan)
+      setLocaleLanguage(lan)
+    },
     removeUserInfo(ctx) {
       let { commit } = ctx
       commit('updateUserId', null)

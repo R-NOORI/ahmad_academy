@@ -18,6 +18,7 @@
         v-show="isLoggendIn"
         >{{ $t('header.portal') }}</router-link
       >
+      <div style="width: 50px"></div>
       <div class="header_btn">
         <el-button
           color="#525fe1"
@@ -27,7 +28,7 @@
         >
           <font-awesome-icon
             :icon="['fas', 'right-from-bracket']"
-            style="margin-right: 8px"
+            style="margin: 0px 8px"
           />
           <span>{{ $t('header.signout') }}</span>
         </el-button>
@@ -37,15 +38,12 @@
           @click="() => this.$router.push('/login')"
           v-else
         >
-          <font-awesome-icon
-            :icon="['far', 'user']"
-            style="margin-right: 8px"
-          />
+          <font-awesome-icon :icon="['far', 'user']" style="margin: 0px 8px" />
 
           <span>{{ $t('header.loginRegister') }}</span>
         </el-button>
       </div>
-      <el-dropdown @command="handleCommand" style="margin-left: 10px">
+      <el-dropdown @command="handleCommand" style="margin: 0px 10px">
         <el-button circle color="#000" size="large">
           <font-awesome-icon :icon="['fas', 'globe']" size="xl" />
         </el-button>
@@ -66,7 +64,7 @@ import { auth } from '@/firebase/config'
 import router from '@/router'
 import store from '@/store'
 import { mapActions } from 'vuex'
-import { setLocaleLanuage } from '@/lib/utils'
+import { getLocaleLanguage } from '@/lib/utils'
 export default {
   props: ['isScrolling'],
   data() {
@@ -75,8 +73,11 @@ export default {
   computed: {
     isLoggendIn: () => store.state.user.loggedIn,
   },
+  mounted() {
+    this.handleCommand(getLocaleLanguage())
+  },
   methods: {
-    ...mapActions(['removeUserInfo']),
+    ...mapActions(['removeUserInfo', 'setLocaleLanguage']),
     getCurrentUser() {
       return new Promise((resolove, reject) => {
         const removeListener = auth.onAuthStateChanged((user) => {
@@ -86,8 +87,8 @@ export default {
       })
     },
     handleCommand(command) {
-      setLocaleLanuage(command)
       this.$i18n.locale = command
+      this.setLocaleLanguage({ lan: command })
       const elems = document.getElementsByTagName('*')
       for (let elem of elems) {
         if (command == 'EN') {
@@ -119,7 +120,6 @@ export default {
   .app_icon {
     width: 40px;
     height: 40px;
-    // margin-top: 25px;
     img {
       width: 40px;
       height: 40px;
@@ -127,10 +127,7 @@ export default {
   }
 
   .nav_item {
-    // flex-grow: 1;
-    // margin-top: 30px;
     display: flex;
-    // width: 500px;
     justify-content: space-evenly;
     align-items: center;
     .activeNav {
@@ -139,7 +136,6 @@ export default {
     }
   }
   .header_btn {
-    margin-left: 50px;
     color: white;
     span {
       color: white;

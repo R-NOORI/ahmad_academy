@@ -9,7 +9,7 @@ import { createI18n } from 'vue-i18n'
 import EN from '@/locale/EN.json'
 import PA from '@/locale/PA.json'
 import FA from '@/locale/FA.json'
-import { getLocaleLanuage } from '@/lib/utils'
+import { getLocaleLanguage } from '@/lib/utils'
 
 /* import the fontawesome core */
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -44,6 +44,8 @@ import {
   faArrowRightLong,
   faRightToBracket,
   faUserPlus,
+  faArrowLeft,
+  faArrowLeftLong,
 } from '@fortawesome/free-solid-svg-icons'
 import { faUser } from '@fortawesome/free-regular-svg-icons'
 import {
@@ -86,14 +88,16 @@ library.add(
   faTrash,
   faRightFromBracket,
   faArrowRightLong,
+  faArrowLeftLong,
   faRightToBracket,
   faUserPlus,
   faGlobe,
-  faLanguage
+  faLanguage,
+  faArrowLeft
 )
 
 const i18n = createI18n({
-  locale: `${getLocaleLanuage()}`,
+  locale: `${getLocaleLanguage()}`,
   messages: {
     EN: EN,
     PA: PA,

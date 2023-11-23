@@ -6,7 +6,11 @@
         :initial="{ opacity: 0, y: 100 }"
         :enter="{ opacity: 1, y: 0 }"
         :delay="200"
-        class="hero_text"
+        :class="
+          getLanguage == 'EN'
+            ? 'hero_text hero_text_left'
+            : 'hero_text hero_text_right'
+        "
       >
         <h4>{{ $t('home.title1') }}</h4>
         <h1>{{ $t('home.title2') }}</h1>
@@ -16,7 +20,10 @@
         <AppButon
           @click="this.$router.push('/contact')"
           :btn-text="$t('home.getStarted')"
-          :right-icon="['fas', 'arrow-right']"
+          :right-icon="[
+            'fas',
+            getLanguage == 'EN' ? 'arrow-right' : 'arrow-left',
+          ]"
         />
       </div>
       <div
@@ -45,7 +52,7 @@
             />
           </div>
           <h3>{{ $t('home.expretsTitle') }}</h3>
-          <p>
+          <p :class="getLanguage == 'EN' ? 'text_left' : 'text_right'">
             {{ $t('home.expertsDetails') }}
           </p>
         </div>
@@ -59,7 +66,7 @@
             />
           </div>
           <h3>{{ $t('home.offerTitle2') }}</h3>
-          <p>
+          <p :class="getLanguage == 'EN' ? 'text_left' : 'text_right'">
             {{ $t('home.offer2Details') }}
           </p>
         </div>
@@ -69,7 +76,7 @@
             <font-awesome-icon class="icon" :icon="['fas', 'gear']" size="lg" />
           </div>
           <h3>{{ $t('home.offerTitle3') }}</h3>
-          <p>
+          <p :class="getLanguage == 'EN' ? 'text_left' : 'text_right'">
             {{ $t('home.offer3Details') }}
           </p>
         </div>
@@ -130,6 +137,7 @@
 import AppButon from '@/components/app_button.vue'
 import { db } from '@/firebase/config'
 import { ElMessage } from 'element-plus'
+import store from '@/store'
 export default {
   components: {
     AppButon,
@@ -144,7 +152,9 @@ export default {
   async mounted() {
     await this.getAllInstructor()
   },
-
+  computed: {
+    getLanguage: () => store.state.user.language,
+  },
   methods: {
     openInNewTab(url) {
       if (url == '' || url == null) {
@@ -187,29 +197,31 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    // width: 1450px;
+    .hero_text_left {
+      text-align: left;
+    }
+    .hero_text_right {
+      text-align: right;
+    }
     .hero_text {
       width: 600px;
       display: flex;
+      flex-direction: column;
       align-items: flex-start;
       justify-content: center;
-      flex-direction: column;
       margin-right: 40px;
       h4 {
         font-weight: 800;
         font-size: 16px;
         color: #525fe1;
-        text-align: left;
       }
       h1 {
         font-size: 72px;
-        text-align: left;
         margin: 0;
       }
       h5 {
         font-size: 16px;
         color: #54595f;
-        text-align: left;
       }
     }
 
@@ -352,6 +364,7 @@ export default {
       display: flex;
       justify-content: center;
       align-items: center;
+
       .offers_card {
         width: 252px;
         height: 274px;
@@ -373,12 +386,13 @@ export default {
           top: -20px;
           .offers_icon_container {
             background-color: @color-secondary;
-
             .icon {
+              text-align: center;
               color: white;
             }
           }
         }
+
         .offers_icon_container {
           width: 70px;
           height: 70px;
@@ -391,11 +405,11 @@ export default {
             color: @color-secondary;
           }
         }
-        h3 {
+        .text_left {
           text-align: left;
         }
-        p {
-          text-align: left;
+        .text_right {
+          text-align: right;
         }
       }
     }

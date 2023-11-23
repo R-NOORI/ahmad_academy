@@ -1,5 +1,30 @@
 {
   "languageType": "فـارسـی",
+  "home": {
+    "title1": "هر روز چیزهای جدید یاد بگیرید",
+    "title2": "آموزش راهی برای موفقیت در زندگی است",
+    "title3": "خود را با دانش و مهارت هایی که از طریق آموزش آنلاین و بهترین مربیان به دست آورده اید، توانمند کنید.",
+    "getStarted": "امروز شروع کنید",
+    "title4": "آنچه ما ارائه می دهیم",
+    "offerTitle1": "مهارت های جدید را در زمان و مکانی که دوست دارید بیاموزید",
+    "expretsTitle": "دستورالعمل های تخصصی",
+    "expertsDetails": "ما یک مربی بسیار متخصص و با تجربه داریم که می تواند شما را در رسیدن به اهدافتان یاری کند",
+    "offerTitle2": "آموزش های تصویری",
+    "offer2Details": "We have a highly expert and experience instructor that can you help you acheieve your goals",
+    "offerTitle3": "از هر کجا یاد بگیرید",
+    "offer3Details": "We have a highly expert and experience instructor that can you help you acheieve your goals",
+    "instructor": "معلم ماهر",
+    "lifeCoaches": "مربیان زندگی ما"
+  },
+  "header": {
+    "home": "Home",
+    "course": "Courses",
+    "contact": "Contact",
+    "about": "About",
+    "portal": "Portal",
+    "signout": "Sign Out",
+    "loginRegister": "Login / Register"
+  },
   "courses": {
     "total": "در مجموع",
     "courses": "دوره",

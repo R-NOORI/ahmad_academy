@@ -125,7 +125,10 @@
               element-loading-svg-view-box="-10, -10, 50, 50"
               :btnText="$t('contact.bnt')"
               class="appbutton"
-              :rightIcon="['fas', 'arrow-right-long']"
+              :rightIcon="[
+                'fas',
+                getLanguage == 'EN' ? 'arrow-right-long' : 'arrow-left-long',
+              ]"
             />
           </Form>
         </div>
@@ -158,6 +161,7 @@ import { Form, Field, ErrorMessage } from 'vee-validate'
 import { LMap, LTileLayer, LMarker } from '@vue-leaflet/vue-leaflet'
 import { db } from '@/firebase/config'
 import { ElMessage } from 'element-plus'
+import store from '@/store'
 export default {
   components: {
     LMap,
@@ -185,6 +189,9 @@ export default {
       zoom: 15,
       is_loading: false,
     }
+  },
+  computed: {
+    getLanguage: () => store.state.user.language,
   },
   methods: {
     openInNewTab(url) {
