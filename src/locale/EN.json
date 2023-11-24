@@ -1,6 +1,6 @@
 {
   "language": "English",
-  "home": {
+  "homePage": {
     "title1": "LEARN NEW THINGS DAILY",
     "title2": "Education Is A Path To Success In Life",
     "title3": "Empower yourself with the knowledge and skills gained through onlineeducation and best instructors.",
@@ -25,12 +25,23 @@
     "signout": "Sign Out",
     "loginRegister": "Login / Register"
   },
-  "courses": {
+  "footer": {
+    "title1": "EduVibe",
+    "titleDetails": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum.",
+    "title2": "Useful Links",
+    "ourCourse": "Our Courses",
+    "contactUs": "Contact Us",
+    "aboutUs": "About Us",
+    "newAccount": "New Account",
+    "title3": "Contact Info",
+    "address": "275 Quadra Street Victoria Road, New York"
+  },
+  "coursesPage": {
     "total": "total",
     "courses": "courses",
     "search_by_name": "search by name"
   },
-  "courseDetails": {
+  "courseDetailsPage": {
     "duration": "Duration",
     "lessons": "Lessons",
     "skillLevel": "Skill level",
@@ -40,7 +51,7 @@
     "courseDescription": "Course Description",
     "course1Details": "What You’ll Learn From This Course"
   },
-  "contact": {
+  "contactPage": {
     "contact1Details": "NEED HELP?",
     "contact2Details": "Get In Touch With us",
     "socialMediaTitle1": "Call Us On",
@@ -56,12 +67,31 @@
     "inputTitle1": "This field is required",
     "inputTitle2": "This field must be a valid email"
   },
-  "about": {
+  "aboutPage": {
     "mission": "OUR MISSION",
     "missionTitle": "Education In Continuing A Proud Tradition",
     "missionDetails": "Al Noor Safa Academy wants; To train the country's children in the light of national and Islamic values, work on their important skills and teach them in their mother language.",
     "vision": "OUR VISION",
     "visionTitle": "Education Is About Creating Leaders For Tomorrow",
     "visionDetails": "Al Noor Safa Academy wants to have good people with national and religious pride inside and outside the country so that they can participate in the society in a positive way."
+  },
+  "loginPage": {
+    "register": "Register",
+    "login": "Login",
+    "email": "Email *",
+    "userName": "User Name*",
+    "phoneNumber": "Phone Number*",
+    "password": "password*",
+    "title1": "Forget Password",
+    "inputTitle1": "Enter email address",
+    "inputTitle2": "Enter password",
+    "inputTitle3": "Enter phone number",
+    "inputTitle4": "Enter user name",
+    "inputTitle5": "Email is already existse",
+    "inputTitle6": "User name is already exists",
+    "inputTitle7": "This field is required",
+    "inputTitle8": "This field must be a valid email",
+    "inputTitle9": "The phone number must be 10 digits",
+    "inputTitle10": "Password moust be 6 character"
   }
 }

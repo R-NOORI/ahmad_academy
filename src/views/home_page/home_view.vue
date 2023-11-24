@@ -12,14 +12,14 @@
             : 'hero_text hero_text_right'
         "
       >
-        <h4>{{ $t('home.title1') }}</h4>
-        <h1>{{ $t('home.title2') }}</h1>
+        <h4>{{ $t('homePage.title1') }}</h4>
+        <h1>{{ $t('homePage.title2') }}</h1>
         <h5>
-          {{ $t('home.title3') }}
+          {{ $t('homePage.title3') }}
         </h5>
         <AppButon
           @click="this.$router.push('/contact')"
-          :btn-text="$t('home.getStarted')"
+          :btn-text="$t('homePage.getStarted')"
           :right-icon="[
             'fas',
             getLanguage == 'EN' ? 'arrow-right' : 'arrow-left',
@@ -38,9 +38,9 @@
     </div>
     <div class="sub-content">
       <el-divider content-position="center"
-        ><p class="title_1">{{ $t('home.title4') }}</p></el-divider
+        ><p class="title_1">{{ $t('homePage.title4') }}</p></el-divider
       >
-      <p class="title_2">{{ $t('home.offerTitle1') }}</p>
+      <p class="title_2">{{ $t('homePage.offerTitle1') }}</p>
       <div class="offers">
         <!-- card 1 -->
         <div class="offers_card">
@@ -51,9 +51,9 @@
               size="lg"
             />
           </div>
-          <h3>{{ $t('home.expretsTitle') }}</h3>
+          <h3>{{ $t('homePage.expretsTitle') }}</h3>
           <p :class="getLanguage == 'EN' ? 'text_left' : 'text_right'">
-            {{ $t('home.expertsDetails') }}
+            {{ $t('homePage.expertsDetails') }}
           </p>
         </div>
         <!-- card 2 -->
@@ -65,9 +65,9 @@
               size="lg"
             />
           </div>
-          <h3>{{ $t('home.offerTitle2') }}</h3>
+          <h3>{{ $t('homePage.offerTitle2') }}</h3>
           <p :class="getLanguage == 'EN' ? 'text_left' : 'text_right'">
-            {{ $t('home.offer2Details') }}
+            {{ $t('homePage.offer2Details') }}
           </p>
         </div>
         <!-- card 3 -->
@@ -75,9 +75,9 @@
           <div class="offers_icon_container">
             <font-awesome-icon class="icon" :icon="['fas', 'gear']" size="lg" />
           </div>
-          <h3>{{ $t('home.offerTitle3') }}</h3>
+          <h3>{{ $t('homePage.offerTitle3') }}</h3>
           <p :class="getLanguage == 'EN' ? 'text_left' : 'text_right'">
-            {{ $t('home.offer3Details') }}
+            {{ $t('homePage.offer3Details') }}
           </p>
         </div>
       </div>
@@ -92,9 +92,9 @@
       class="sub-content"
     >
       <el-divider content-position="center"
-        ><p class="title_1">{{ $t('home.instructor') }}</p></el-divider
+        ><p class="title_1">{{ $t('homePage.instructor') }}</p></el-divider
       >
-      <p class="title_2">{{ $t('home.lifeCoaches') }}</p>
+      <p class="title_2">{{ $t('homePage.lifeCoaches') }}</p>
       <div class="instructor">
         <!-- if  loading is true -->
         <div

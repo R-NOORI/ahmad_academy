@@ -1,6 +1,6 @@
 {
   "language": "پـښـتـو",
-  "home": {
+  "homePage": {
     "title1": "نوی څه زده کړئ",
     "title2": "تعلیم په ژوند کي د پرمختګ لار ده",
     "title3": "د آنلاین زده کړې او غوره ښوونکو له لارې ترلاسه شوي پوهې او مهارتونو سره ځان ځواکمن کړئ.",
@@ -25,12 +25,23 @@
     "signout": "وتون",
     "loginRegister": "ننوتل / راجستر کړئ"
   },
-  "courses": {
+  "footer": {
+    "title1": "EduVibe",
+    "titleDetails": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum.",
+    "title2": "اړین لینکونه",
+    "ourCourse": "زموږ کورسونه",
+    "contactUs": "موږ سره اړیکه ونیسئ",
+    "aboutUs": "زموږ په اړه",
+    "newAccount": "نوی حساب",
+    "title3": "د اړیکو معلومات",
+    "address": "275 Quadra Street Victoria Road, New York"
+  },
+  "coursesPage": {
     "total": "ټول",
     "courses": "کورسونه",
     "search_by_name": "نوم په اساس پلټنه"
   },
-  "courseDetails": {
+  "courseDetailsPage": {
     "duration": "موده",
     "lessons": "درسونه",
     "skillLevel": "د مهارت کچه",
@@ -40,28 +51,47 @@
     "courseDescription": "د کورس تفصیل",
     "course1Details": "هغه څه چې تاسو به د دې کورس څخه زده کړئ"
   },
-  "contact": {
+  "contactPage": {
     "contact1Details": "مرستې ته اړتیا لرئ؟",
     "contact2Details": "له موږ سره په اړیکه کې شئ",
     "socialMediaTitle1": "موږ ته زنګ ووهئ",
     "socialMediaTitle2": "موږ ته بریښنالیک",
     "socialMediaTitle3": "د انسټاګرام لینک",
     "socialMediaTitle4": "د فیسبوک لینک",
-    "name": "نوم*",
-    "email": "ایمیل*",
+    "name": "نوم *",
+    "email": "ایمیل *",
     "phoneNumber": "د تلیفون شمیره",
-    "subject": "موضوع*",
-    "yourMessage": "ستا پیغام*",
+    "subject": "موضوع *",
+    "yourMessage": "ستا پیغام *",
     "bnt": "همدا اوس وسپارئ",
     "inputTitle1": "دغه سیمی ته اړتیا ده",
     "inputTitle2": "دا ساحه باید یو باوري بریښنالیک وي"
   },
-  "about": {
+  "aboutPage": {
     "mission": "ماموریت",
     "missionTitle": "د ویاړلي دود په دوام کې تعلیم",
     "missionDetails": "النور انلاین اکاډمي غواړي په ښه ډول؛ د ملي او اسلامي ارزښتونو په رڼا کي د هیواد د بچیانو روزنه وکړي، د هغوي پر مهمو مهارتونو کار وکړي او هغوي ته په خپله مورنۍ ژبه درسونه وړاندي کړي.",
     "vision": "لرلید",
     "visionTitle": "زده کړه د سبا لپاره د رهبرانو د جوړولو په اړه ده",
     "visionDetails": "النور صفا اکاډمي غواړي چي د هیواد دننه او د باندي په ملي او ایماني غرور ښایسته شخصتونه ولري تر څو په ټولنه کي په مثبت ډول برخه واخلي."
+  },
+  "loginPage": {
+    "register": "راجستر کړئ",
+    "login": "ننوتل",
+    "email": "ایمیل *",
+    "userName": "یوزر نوم *",
+    "phoneNumber": "د تلیفون شمیره",
+    "password": "فاسورډ *",
+    "title1": "فاسورډ هېر کړئ",
+    "inputTitle1": "د بریښنالیک پته دننه کړئ",
+    "inputTitle2": "فاسورډ دننه کړئ",
+    "inputTitle3": "د تلیفون شمیره دننه کړئ",
+    "inputTitle4": "د یوزر نوم دننه کړئ",
+    "inputTitle5": "بریښنالیک لا دمخه شتون لري",
+    "inputTitle6": "د یوزر نوم لا دمخه شتون لري",
+    "inputTitle7": "دا معلومات اړین دي",
+    "inputTitle8": "دا ساحه باید یو باوري بریښنالیک وي",
+    "inputTitle9": "د تلیفون شمیره باید 10 عدده وي",
+    "inputTitle10": "پاسورډ باید د 6 کریکټره وي"
   }
 }

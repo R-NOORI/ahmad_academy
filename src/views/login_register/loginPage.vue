@@ -6,7 +6,9 @@
     />
     <div class="account-container">
       <div
-        class="login_form"
+        :class="
+          language == 'EN' ? 'login_form text_left' : 'login_form text_right'
+        "
         v-motion
         :initial="{ opacity: 0, y: 300 }"
         :enter="{
@@ -19,12 +21,12 @@
         :visible-once="{ opacity: 1, y: 0 }"
         :delay="350"
       >
-        <h3>Login</h3>
+        <h3>{{ $t('loginPage.login') }}</h3>
         <div>
           <Form @submit="onLoginSubmit" class="form_content">
-            <P>Email *</P>
+            <P>{{ $t('loginPage.email') }}</P>
             <Field
-              placeholder="Email "
+              :placeholder="$t('loginPage.inputTitle1')"
               type="email"
               name="email_address"
               :rules="validateEmail"
@@ -37,9 +39,9 @@
               name="email_address"
               style="color: red; text-align: left; margin-top: 5px"
             />
-            <p>Password *</p>
+            <p>{{ $t('loginPage.password') }}</p>
             <Field
-              placeholder="Password"
+              :placeholder="$t('loginPage.inputTitle2')"
               type="password"
               name="password"
               :rules="validatePassword"
@@ -53,7 +55,7 @@
               style="color: red; text-align: left; margin-top: 5px"
             />
             <AppButton
-              btnText="Login"
+              :btnText="$t('loginPage.login')"
               class="appbutton"
               v-loading="login_loading"
               :element-loading-svg="svg"
@@ -63,13 +65,17 @@
             <a
               class="forget-password"
               @click="this.$router.push('/login/forget-password')"
-              >Forget password</a
+              >{{ $t('loginPage.title1') }}</a
             >
           </Form>
         </div>
       </div>
       <div
-        class="register_form"
+        :class="
+          language == 'EN'
+            ? 'register_form text_left'
+            : 'register_form text_right'
+        "
         v-motion
         :initial="{ opacity: 0, y: 300 }"
         :enter="{
@@ -82,14 +88,14 @@
         :visible-once="{ opacity: 1, y: 0 }"
         :delay="500"
       >
-        <h3>Register</h3>
+        <h3>{{ $t('loginPage.register') }}</h3>
         <div>
           <Form @submit="onSubmit" class="form_content">
-            <p>Email *</p>
+            <p>{{ $t('loginPage.email') }}</p>
             <Field
               name="email"
               type="email"
-              placeholder="Enter email address"
+              :placeholder="$t('loginPage.inputTitle1')"
               :rules="validateEmail"
             />
             <ErrorMessage
@@ -100,18 +106,19 @@
               name="email"
               style="color: red; text-align: left; margin-top: 5px"
             />
+            <!-- Email is already exists-->
             <p
               v-show="email_is_exist == true ? true : false"
               style="color: red; text-align: left; margin-top: 5px"
             >
-              Email is already exists
+              {{ $t('loginPage.inputTitle5') }}
             </p>
 
-            <p>Username *</p>
+            <p>{{ $t('loginPage.userName') }}</p>
             <Field
               type="text"
               name="username"
-              placeholder="Enter username"
+              :placeholder="$t('loginPage.inputTitle4')"
               :rules="validateName"
             />
             <ErrorMessage
@@ -122,15 +129,16 @@
               name="username"
               style="color: red; text-align: left; margin-top: 5px"
             />
+            <!-- User name is already exists-->
             <p
               v-show="user_name_is_exist == true ? true : false"
               style="color: red; text-align: left; margin-top: 5px"
             >
-              User name is already exists
+              {{ $t('loginPage.inputTitle6') }}
             </p>
-            <p>Phone Number *</p>
+            <p>{{ $t('loginPage.phoneNumber') }}</p>
             <Field
-              placeholder="Enter phone number"
+              :placeholder="$t('loginPage.inputTitle3')"
               name="phone"
               max="10"
               :rules="validatePhone"
@@ -147,7 +155,7 @@
               v-loading="is_loading"
               :element-loading-svg="svg"
               element-loading-svg-view-box="-10, -10, 50, 50"
-              btnText="Register"
+              :btnText="$t('loginPage.register')"
               class="appbutton"
               :leftIcon="['fas', 'user-plus']"
             />
@@ -166,6 +174,7 @@ import { ElMessage } from 'element-plus'
 import { Form, Field, ErrorMessage } from 'vee-validate'
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
 import { mapActions } from 'vuex'
+import store from '@/store'
 export default {
   components: {
     AppButton,
@@ -191,6 +200,9 @@ export default {
       email_is_exist: false,
       user_name_is_exist: false,
     }
+  },
+  computed: {
+    language: () => store.state.user.language,
   },
   methods: {
     ...mapActions(['setUserInfo']),
@@ -294,12 +306,12 @@ export default {
     validateEmail(value) {
       // if the field is empty
       if (!value) {
-        return 'This field is required'
+        return this.$t('loginPage.inputTitle7')
       }
       // if the field is not a valid email
       const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
       if (!regex.test(value)) {
-        return 'This field must be a valid email'
+        return this.$t('loginPage.inputTitle8')
       }
       // All is good
       return true
@@ -307,7 +319,7 @@ export default {
     validateName(value) {
       // if the field is empty
       if (!value) {
-        return 'This field is required'
+        return this.$t('loginPage.inputTitle7')
       }
       // All is good
       return true
@@ -315,10 +327,10 @@ export default {
     validatePhone(value) {
       // if the field is empty
       if (!value) {
-        return 'This field is required'
+        return this.$t('loginPage.inputTitle7')
       }
       if (value.toString().length > 10 || value.toString().length < 10) {
-        return 'The phone number must be 10 digits'
+        return this.$t('loginPage.inputTitle9')
       }
       console.log(value)
       // All is good
@@ -327,7 +339,7 @@ export default {
     validateUser(value) {
       // if the field is empty
       if (!value) {
-        return 'This field is required'
+        return this.$t('loginPage.inputTitle7')
       }
       // All is good
       return true
@@ -335,9 +347,9 @@ export default {
     validatePassword(value) {
       // if the field is empty
       if (!value) {
-        return 'This field is required'
+        return this.$t('loginPage.inputTitle7')
       } else if (value.length < 6) {
-        return 'password moust be 6 character'
+        return this.$t('loginPage.inputTitle10')
       }
       // All is good
       return true
@@ -359,11 +371,17 @@ export default {
     justify-content: center;
     max-width: 1080px;
     gap: 40px;
+    .text_left {
+      text-align: left;
+    }
+    .text_right {
+      text-align: right;
+    }
+
     .login_form {
       width: 50%;
       h3 {
         font-size: 30px;
-        text-align: left;
       }
       .form_content {
         display: flex;
@@ -393,9 +411,6 @@ export default {
             transition: 0.8s;
           }
         }
-        p {
-          text-align: left;
-        }
         .appbutton {
           margin-top: 40px;
         }
@@ -414,7 +429,6 @@ export default {
       width: 50%;
       h3 {
         font-size: 30px;
-        text-align: left;
       }
       .form_content {
         display: flex;
@@ -423,9 +437,6 @@ export default {
         border: 1px solid rgb(232, 232, 232);
         padding: 20px;
         border-radius: 12px;
-        p {
-          text-align: left;
-        }
         input {
           background-color: #f5f5f5;
           outline: 0px solid #ffffff;

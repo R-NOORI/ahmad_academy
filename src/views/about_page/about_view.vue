@@ -222,10 +222,10 @@
         },
       }"
     >
-      <h4>{{ $t('about.mission') }}</h4>
-      <h1>{{ $t('about.missionTitle') }}</h1>
+      <h4>{{ $t('aboutPage.mission') }}</h4>
+      <h1>{{ $t('aboutPage.missionTitle') }}</h1>
       <p>
-        {{ $t('about.missionDetails') }}
+        {{ $t('aboutPage.missionDetails') }}
       </p>
     </div>
     <div
@@ -244,10 +244,10 @@
         },
       }"
     >
-      <h4>{{ $t('about.vision') }}</h4>
-      <h1>{{ $t('about.visionTitle') }}</h1>
+      <h4>{{ $t('aboutPage.vision') }}</h4>
+      <h1>{{ $t('aboutPage.visionTitle') }}</h1>
       <p>
-        {{ $t('about.visionDetails') }}
+        {{ $t('aboutPage.visionDetails') }}
       </p>
     </div>
   </div>

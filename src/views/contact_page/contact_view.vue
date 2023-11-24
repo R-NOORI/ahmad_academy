@@ -18,20 +18,20 @@
       :visible-once="{ opacity: 1, y: 0 }"
       :delay="350"
     >
-      <h4>{{ $t('contact.contact1Details') }}</h4>
-      <h1>{{ $t('contact.contact2Details') }}</h1>
+      <h4>{{ $t('contactPage.contact1Details') }}</h4>
+      <h1>{{ $t('contactPage.contact2Details') }}</h1>
       <div class="contact-container">
         <div class="contact-container-cards">
           <div class="contact-cards-row" style="margin-bottom: 30px">
             <contact_card
               :icons="['fas', 'phone-volume']"
-              :title="$t('contact.socialMediaTitle1')"
+              :title="$t('contactPage.socialMediaTitle1')"
               text1="+93 (0) 700073297"
               text2="+93 (0) 700063298"
             />
             <contact_card
               :icons="['fas', 'envelope-open']"
-              :title="$t('contact.socialMediaTitle2')"
+              :title="$t('contactPage.socialMediaTitle2')"
               text1="eduvibe@example.com"
               text2="contact@eduvibe.com"
             />
@@ -39,7 +39,7 @@
           <div class="contact-cards-row">
             <contact_card
               :icons="['fab', 'instagram']"
-              :title="$t('contact.socialMediaTitle3')"
+              :title="$t('contactPage.socialMediaTitle3')"
               text1="alnoorsafa.onlineacademy"
               @click="
                 () =>
@@ -51,7 +51,7 @@
 
             <contact_card
               :icons="['fab', 'facebook-f']"
-              :title="$t('contact.socialMediaTitle4')"
+              :title="$t('contactPage.socialMediaTitle4')"
               text1="AlnoorSafaAcademye"
               @click="
                 () =>
@@ -67,7 +67,7 @@
             <Field
               name="name"
               type="text"
-              :placeholder="$t('contact.name')"
+              :placeholder="$t('contactPage.name')"
               :rules="validateName"
             />
             <ErrorMessage
@@ -80,7 +80,7 @@
             />
             <Field
               name="email"
-              :placeholder="$t('contact.email')"
+              :placeholder="$t('contactPage.email')"
               :rules="validateEmail"
             />
             <ErrorMessage
@@ -91,9 +91,9 @@
               name="email"
               style="color: red; text-align: left; margin-top: 5px"
             />
-            <Field :placeholder="$t('contact.phoneNumber')" name="phone" />
+            <Field :placeholder="$t('contactPage.phoneNumber')" name="phone" />
             <Field
-              :placeholder="$t('contact.subject')"
+              :placeholder="$t('contactPage.subject')"
               name="subject"
               :rules="validateSubject"
             />
@@ -108,7 +108,7 @@
             <Field v-slot="{ field }" name="message" :rules="validateMessage">
               <textarea
                 v-bind="field"
-                :placeholder="$t('contact.yourMessage')"
+                :placeholder="$t('contactPage.yourMessage')"
               />
             </Field>
             <ErrorMessage
@@ -123,7 +123,7 @@
               v-loading="is_loading"
               :element-loading-svg="svg"
               element-loading-svg-view-box="-10, -10, 50, 50"
-              :btnText="$t('contact.bnt')"
+              :btnText="$t('contactPage.bnt')"
               class="appbutton"
               :rightIcon="[
                 'fas',
@@ -220,23 +220,23 @@ export default {
     },
     validateName(value) {
       if (!value) {
-        return this.$t('contact.inputTitle1')
+        return this.$t('contactPage.inputTitle1')
       }
       return true
     },
     validateEmail(value) {
       if (!value) {
-        return this.$t('contact.inputTitle1')
+        return this.$t('contactPage.inputTitle1')
       }
       const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
       if (!regex.test(value)) {
-        return this.$t('contact.inputTitle2')
+        return this.$t('contactPage.inputTitle2')
       }
       return true
     },
     validateSubject(value) {
       if (!value) {
-        return this.$t('contact.inputTitle1')
+        return this.$t('contactPage.inputTitle1')
       }
       return true
     },

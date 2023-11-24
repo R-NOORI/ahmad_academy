@@ -25,11 +25,11 @@
         </div>
         <h1>{{ course.title }}</h1>
         <div class="course-description">
-          <h3>{{ $t('courseDetails.courseDescription') }}</h3>
+          <h3>{{ $t('courseDetailsPage.courseDescription') }}</h3>
           <p>
             {{ course.description }}
           </p>
-          <h3>{{ $t('courseDetails.course1Details') }}</h3>
+          <h3>{{ $t('courseDetailsPage.course1Details') }}</h3>
           <ol>
             <li>
               {{ course.course_objectives_1 }}
@@ -59,7 +59,7 @@
                   style="margin-right: 10px"
                   :icon="['fa', 'clock']"
                 />
-                &nbsp; {{ $t('courseDetails.duration') }}</span
+                &nbsp; {{ $t('courseDetailsPage.duration') }}</span
               >
               <span>{{ course.duration }}</span>
             </div>
@@ -70,7 +70,7 @@
                   style="margin-right: 10px"
                   :icon="['fas', 'clipboard-list']"
                 />
-                &nbsp; {{ $t('courseDetails.lessons') }}</span
+                &nbsp; {{ $t('courseDetailsPage.lessons') }}</span
               >
               <span>{{ course.lessons }}</span>
             </div>
@@ -81,7 +81,7 @@
                   style="margin-right: 10px"
                   :icon="['fas', 'chart-simple']"
                 />
-                &nbsp; {{ $t('courseDetails.skillLevel') }}</span
+                &nbsp; {{ $t('courseDetailsPage.skillLevel') }}</span
               >
               <span>{{ course.skill_level }}</span>
             </div>
@@ -92,7 +92,7 @@
                   style="margin-right: 10px"
                   :icon="['fas', 'language']"
                 />
-                &nbsp; {{ $t('courseDetails.language') }}</span
+                &nbsp; {{ $t('courseDetailsPage.language') }}</span
               >
               <span>{{ course.language }}</span>
             </div>
@@ -103,7 +103,7 @@
                   style="margin-right: 10px"
                   :icon="['far', 'user']"
                 />
-                &nbsp; {{ $t('courseDetails.instructor') }}</span
+                &nbsp; {{ $t('courseDetailsPage.instructor') }}</span
               >
               <span>{{ instructor.name + ' ' + instructor.last_name }}</span>
             </div>
@@ -114,7 +114,7 @@
                   style="margin-right: 10px"
                   :icon="['fas', 'money-check']"
                 />
-                &nbsp; {{ $t('courseDetails.fee') }}</span
+                &nbsp; {{ $t('courseDetailsPage.fee') }}</span
               >
               <span>{{ course.new_fees }}</span>
             </div>

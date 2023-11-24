@@ -13,12 +13,12 @@
     >
       <div class="search-content">
         <p>
-          {{ $t('courses.total') }} {{ total_records }}
-          {{ $t('courses.courses') }}
+          {{ $t('coursesPage.total') }} {{ total_records }}
+          {{ $t('coursesPage.courses') }}
         </p>
         <div class="search-content-field">
           <input
-            :placeholder="$t('courses.search_by_name') + '*'"
+            :placeholder="$t('coursesPage.search_by_name') + '*'"
             v-model="search_value"
           />
           <font-awesome-icon

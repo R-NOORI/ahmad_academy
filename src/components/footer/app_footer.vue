@@ -1,32 +1,53 @@
 <template>
   <div class="footer-container">
-    <div class="content-info">
+    <div
+      :class="
+        language == 'EN' ? 'content-info text-left' : 'content-info text-right'
+      "
+    >
       <div class="socail-madia">
-        <h2>EduVibe</h2>
+        <h2>{{ $t('footer.title1') }}</h2>
         <p>
-          It is a long established fact that a reader will be distracted by the
-          readable content of a page when looking at its layout. The point of
-          using Lorem Ipsum.
+          {{ $t('footer.titleDetails') }}
         </p>
         <div class="socail-madia-info">
-          <div class="socail-madia-info-card">
+          <div
+            class="socail-madia-info-card"
+            @click="
+              () =>
+                openInNewTab(
+                  'https://www.facebook.com/AlnoorSafaAcademy?mibextid=ZbWKwL '
+                )
+            "
+          >
             <font-awesome-icon
               style="font-size: 25px"
               :icon="['fab', 'facebook-f']"
             />
           </div>
+          <!-- &nbsp; &nbsp;
           <div class="socail-madia-info-card">
             <font-awesome-icon
               style="font-size: 25px"
               :icon="['fab', 'linkedin-in']"
             />
-          </div>
-          <div class="socail-madia-info-card">
+          </div> -->
+          &nbsp; &nbsp;
+          <div
+            class="socail-madia-info-card"
+            @click="
+              () =>
+                openInNewTab(
+                  'https://instagram.com/alnoorsafa.onlineacademy?igshid=OGQ5ZDc2ODk2ZA=='
+                )
+            "
+          >
             <font-awesome-icon
               style="font-size: 25px"
-              :icon="['fab', 'telegram']"
+              :icon="['fab', 'instagram']"
             />
           </div>
+          &nbsp; &nbsp;
           <div class="socail-madia-info-card">
             <font-awesome-icon
               style="font-size: 25px"
@@ -36,55 +57,61 @@
         </div>
       </div>
       <div class="content-info-list">
-        <h2>Useful Links</h2>
-        <div class="content-info-list-nav">
+        <h2>{{ $t('footer.title2') }}</h2>
+        <div
+          class="content-info-list-nav"
+          @click="() => this.$router.push('/contact')"
+        >
           <font-awesome-icon
             style="font-size: 13px"
-            :icon="['fas', 'angles-right']"
+            :icon="['fas', angleIcon]"
           />
-          <span>Contact Us</span>
+          <span>{{ $t('footer.contactUs') }}</span>
         </div>
-        <div class="content-info-list-nav">
+        <div
+          class="content-info-list-nav"
+          @click="() => this.$router.push('/about')"
+        >
           <font-awesome-icon
             style="font-size: 13px"
-            :icon="['fas', 'angles-right']"
+            :icon="['fas', angleIcon]"
           />
-          <span>Pricing Plan</span>
+          <span>{{ $t('footer.aboutUs') }}</span>
         </div>
-        <div class="content-info-list-nav">
+        <div
+          class="content-info-list-nav"
+          @click="() => this.$router.push('/course')"
+        >
           <font-awesome-icon
             style="font-size: 13px"
-            :icon="['fas', 'angles-right']"
+            :icon="['fas', angleIcon]"
           />
-          <span>Gallery</span>
+          <span>{{ $t('footer.ourCourse') }}</span>
         </div>
-        <div class="content-info-list-nav">
+
+        <div
+          class="content-info-list-nav"
+          @click="() => this.$router.push('/login')"
+        >
           <font-awesome-icon
             style="font-size: 13px"
-            :icon="['fas', 'angles-right']"
+            :icon="['fas', angleIcon]"
           />
-          <span>Instructor</span>
-        </div>
-        <div class="content-info-list-nav">
-          <font-awesome-icon
-            style="font-size: 13px"
-            :icon="['fas', 'angles-right']"
-          />
-          <span>Purchase Guide</span>
+          <span>{{ $t('footer.newAccount') }}</span>
         </div>
       </div>
       <div class="content-info-list">
-        <h2>Contact Info</h2>
+        <h2>{{ $t('footer.title3') }}</h2>
         <div class="content-info-list-nav">
           <font-awesome-icon
             style="font-size: 15px"
             :icon="['fas', 'location-dot']"
           />
-          <span>275 Quadra Street Victoria Road, New York</span>
+          <span>{{ $t('footer.address') }}</span>
         </div>
         <div class="content-info-list-nav">
           <font-awesome-icon style="font-size: 15px" :icon="['fas', 'phone']" />
-          <span>+93(0)70 0073297 </span>
+          <span>+93(0)70 0073297</span>
         </div>
         <div class="content-info-list-nav">
           <font-awesome-icon style="font-size: 15px" :icon="['fas', 'phone']" />
@@ -102,6 +129,21 @@
     <p>Copyright 2023 EduVibe | Developed By DevsVibe. All Rights Reserved</p>
   </div>
 </template>
+<script>
+import store from '@/store'
+export default {
+  computed: {
+    language: () => store.state.user.language,
+    angleIcon: () =>
+      store.state.user.language == 'EN' ? 'angles-right' : 'angles-left',
+  },
+  methods: {
+    openInNewTab(url) {
+      window.open(url, '_blank', 'noreferrer')
+    },
+  },
+}
+</script>
 
 <style lang="less" scoped>
 .footer-container {
@@ -113,24 +155,30 @@
   width: 100%;
   margin-top: 130px;
   padding-top: 30px;
+  .text-right {
+    text-align: right;
+  }
+  .text-left {
+    text-align: left;
+  }
   .content-info {
     display: flex;
     flex-direction: row;
     align-content: center;
     justify-content: space-between;
+    align-items: flex-start;
     margin-top: 30px;
     min-width: 71%;
     flex-wrap: wrap;
     .socail-madia {
       display: flex;
       flex-direction: column;
-      align-items: start;
+      align-items: flex-start;
       color: #fff;
       h2 {
         font-size: 25px;
       }
       p {
-        text-align: left;
         font-size: 16px;
         max-width: 250px;
         margin: 0px 0px 20px 0px;
@@ -142,7 +190,7 @@
           width: 50px;
           height: 50px;
           background-color: #393755;
-          margin: 0px 15px 15px 0px;
+          margin: 0px;
           border-radius: 5px;
           transition: 0.5s;
           display: flex;
@@ -158,8 +206,6 @@
     &-list {
       display: flex;
       flex-direction: column;
-      align-content: flex-start;
-      text-align: left;
       color: #fff;
       margin: 0px 10px 0px 20px;
 
@@ -175,7 +221,7 @@
           transition: 0.5s;
         }
         span {
-          margin-left: 10px;
+          margin: 0px 10px;
           font-size: 15px;
         }
       }
