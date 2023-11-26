@@ -3,8 +3,21 @@
     :currentPath="this.$route.fullPath.split('/')"
     :title="this.$route.name"
   />
-  <div class="who-we-are">
-    <div class="elementor-images">
+  <div
+    :class="
+      getLanguage == 'EN'
+        ? 'who-we-are align-text-left'
+        : 'who-we-are align-text-right'
+    "
+  >
+    <div
+      class=""
+      :class="
+        getLanguage == 'EN'
+          ? 'elementor-images margin-right'
+          : 'elementor-images margin-left'
+      "
+    >
       <div class="elementor-images-large">
         <img
           v-motion
@@ -16,7 +29,7 @@
           :visible-once="{ opacity: 1, y: 0 }"
           :delay="350"
           class="small"
-          src="https://eduvibe.devsvibe.com/main/wp-content/uploads/2022/10/about-group-02-2.jpg"
+          src="@/assets/about-page/image_4.png"
           alt=""
         />
         <img
@@ -33,7 +46,7 @@
           :delay="350"
           class="animate"
           :style="'top: ' + scrollValue + '%'"
-          src="https://eduvibe.devsvibe.com/main/wp-content/uploads/2022/10/about-group-03-2.jpg"
+          src="@/assets/about-page/image_2.png"
         />
       </div>
     </div>
@@ -48,28 +61,10 @@
       :visible-once="{ opacity: 1, y: 0 }"
       :delay="350"
     >
-      <h4>WHO WE ARE</h4>
-      <h1>We Offer The Best Carrier</h1>
-      <AboutCard
-        imageIcon="student"
-        title="Industry Expert
-      Instructor"
-        body="Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-      eiusmoded tempor incididunt dolore magna aliqua."
-        backgroundColor="background-color: #ffa41b1a"
-      />
-      <AboutCard
-        imageIcon="book"
-        title="Up-to-Date Course Content"
-        body="Lorem ipsum dolor sit amet, consectetur adipiscing elit, eiusmoded tempor incididunt dolore magna aliqua."
-        backgroundColor="background-color: #525FE11A;"
-      />
-      <AboutCard
-        imageIcon="reward"
-        title="Biggest Student Community"
-        body="Lorem ipsum dolor sit amet, consectetur adipiscing elit, eiusmoded tempor incididunt dolore magna aliqua."
-        backgroundColor="background-color: #FB7C561A;"
-      />
+      <h1>{{ $t('aboutPage.title1') }}</h1>
+      <p>
+        {{ $t('aboutPage.title1Details') }}
+      </p>
     </div>
   </div>
   <div class="what-we-offer">
@@ -88,7 +83,7 @@
         }"
         :delay="200"
       >
-        WHAT WE OFFER
+        {{ $t('aboutPage.title7') }}
       </h4>
       <h1
         class="elementor-container-item"
@@ -104,13 +99,13 @@
         }"
         :delay="200"
       >
-        How Does EduVibe Work?
+        {{ $t('aboutPage.title8') }}
       </h1>
       <div class="what-we-offer-content-items">
         <AboutItemCard
           :imageIcon="['fa', 'book']"
-          title="Choose Any Courses"
-          body="Lorem ipsum dolor amet, consectetur adipiscing elited uspendisse varius enim"
+          :title="$t('aboutPage.title9')"
+          :body="$t('aboutPage.title9Details')"
           backgroundColor="background-color: #F86F03;"
           :mass="0.5"
         />
@@ -120,8 +115,8 @@
 
         <AboutItemCard
           :imageIcon="['fas', 'basket-shopping']"
-          title="Purchase Your Course"
-          body="Lorem ipsum dolor amet, consectetur adipiscing elited uspendisse varius enim"
+          :title="$t('aboutPage.title10')"
+          :body="$t('aboutPage.title10Details')"
           backgroundColor="background-color: #525FE1;"
           :mass="1"
         />
@@ -131,8 +126,8 @@
 
         <AboutItemCard
           :imageIcon="['fas', 'trophy']"
-          title="Great! Start Learn"
-          body="Lorem ipsum dolor amet, consectetur adipiscing elited uspendisse varius enim"
+          :title="$t('aboutPage.title11')"
+          :body="$t('aboutPage.title11Details')"
           backgroundColor="background-color: #FFA41B"
           :mass="1.5"
         />
@@ -157,7 +152,8 @@
         opacity: 1,
         y: 0,
       }"
-      src="https://eduvibe.devsvibe.com/main/wp-content/uploads/2023/02/mission-gallery-01.jpg"
+      src="@/assets/about-page/image_6.png"
+      style="height: 180px; width: 270px"
     />
     <img
       v-motion
@@ -170,7 +166,8 @@
         opacity: 1,
         y: 0,
       }"
-      src="https://eduvibe.devsvibe.com/main/wp-content/uploads/2023/02/mission-gallery-02.jpg"
+      style="height: 370px; width: 270px"
+      src="@/assets/about-page/image_11.png"
     />
     <img
       v-motion
@@ -183,7 +180,8 @@
         opacity: 1,
         y: 0,
       }"
-      src="https://eduvibe.devsvibe.com/main/wp-content/uploads/2023/02/mission-gallery-03.jpg"
+      style="height: 200px; width: 270px"
+      src="@/assets/about-page/image_8.png"
     />
     <img
       v-motion
@@ -196,7 +194,8 @@
         opacity: 1,
         y: 0,
       }"
-      src="https://eduvibe.devsvibe.com/main/wp-content/uploads/2023/02/mission-gallery-04.jpg"
+      style="height: 300px; width: 270px"
+      src="@/assets/about-page/image_9.png"
     />
   </div>
   <div
@@ -255,12 +254,11 @@
 
 <script>
 import AppPageTitleArea from '@/components/app_page_title_area.vue'
-import AboutCard from './components/about-card.vue'
 import AboutItemCard from './components/about-item-card.vue'
 import store from '@/store'
 export default {
   name: 'course-page',
-  components: { AppPageTitleArea, AboutCard, AboutItemCard },
+  components: { AppPageTitleArea, AboutItemCard },
   data() {
     return {
       scrollValue: 20,
@@ -274,57 +272,77 @@ export default {
 </script>
 
 <style scoped lang="less">
+.align-text-left {
+  text-align: left;
+}
+.align-text-right {
+  text-align: right;
+}
 .who-we-are {
   background-color: #ffff;
-  max-width: 1300px;
+  max-width: 1090px;
   border: 1px solid blacks;
   display: flex;
   flex-direction: row;
+  align-content: space-between;
+  justify-content: space-between;
   margin: 0px auto;
+
   .elementor-container {
-    width: 40%;
+    width: 50%;
     display: flex;
     flex-direction: column;
     align-content: flex-start;
-    padding: 20px;
 
     h4 {
       font-size: 16px;
-      color: @color-secondary;
-      text-align: left;
       margin: 0px;
+    }
+    p {
+      line-height: 1.5;
+      color: #6b6b80;
+      font-size: 20px;
+      text-align: justify;
+      text-justify: inter-word;
     }
     h1 {
       font-size: 40px;
-      text-align: left;
-      color: #231f40;
-      margin: 15px 0px 40px 0px;
+      // color: @color-secondary;
+      margin: 0px;
     }
   }
+  .margin-left {
+    margin-left: 130px;
+  }
+  .margin-right {
+    margin-right: 130px;
+  }
   .elementor-images {
-    width: 50%;
+    width: 40%;
     padding-top: 20px;
     position: relative;
     z-index: 0;
-    margin-right: 130px;
-
     &-large {
-      background-image: url('https://eduvibe.devsvibe.com/main/wp-content/uploads/2022/10/about-group-01-2.jpg');
+      background-image: url('@/assets/about-page/image_3.png');
       background-size: 100% 100%;
       height: 100%;
       max-width: 100%;
       position: relative;
       border-radius: 5px;
-      margin-left: 100px;
       .animate {
         position: absolute;
         right: -15%;
         z-index: 15;
+        width: 200px;
+        height: 250px;
+        border: 3px solid white;
       }
       .small {
         position: absolute;
+        width: 250px;
+        height: 250px;
         top: 20%;
-        left: -15%;
+        left: -25%;
         z-index: -1;
       }
     }
@@ -425,12 +443,6 @@ export default {
   }
 }
 
-.align-text-left {
-  text-align: left;
-}
-.align-text-right {
-  text-align: right;
-}
 .our-info-content {
   max-width: 1100px;
   margin: 0px auto;
@@ -453,6 +465,8 @@ export default {
     p {
       color: #6b6b80;
       font-size: 16px;
+      text-align: justify;
+      text-justify: inter-word;
     }
   }
 }

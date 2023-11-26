@@ -13,9 +13,7 @@
       :title="course_title"
     />
     <div class="course-img">
-      <img
-        src="https://eduvibe.devsvibe.com/main/wp-content/uploads/2023/03/course-32.webp"
-      />
+      <img src="@/assets/about-page/image_5.png" />
     </div>
     <div class="course-info">
       <div class="course-info-summary">
@@ -147,7 +145,7 @@ export default {
       is_loading: true,
       instructor: {},
       course: {},
-      path_value: '/course/course details',
+      path_value: '/course/courseDetails',
       course_title: '',
     }
   },
@@ -200,6 +198,7 @@ export default {
     img {
       width: 100%;
       height: 100%;
+      background-size: 100% 100%;
     }
   }
   .course-info {

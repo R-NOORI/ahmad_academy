@@ -5,7 +5,9 @@
       :title="this.$route.name"
     />
     <div
-      class="register_form"
+      :class="
+        language == 'EN' ? 'setting_form text-left' : 'setting_form text-right'
+      "
       v-motion
       :initial="{ opacity: 0, y: 300 }"
       :enter="{
@@ -18,11 +20,17 @@
       :visible-once="{ opacity: 1, y: 0 }"
       :delay="500"
     >
-      <h3>Update Profile</h3>
+      <h3 @click="() => $router.go(-1)">
+        <font-awesome-icon
+          class="icon-btn"
+          :icon="['fas', language == 'EN' ? 'angle-left' : 'angle-right']"
+        />
+        {{ $t('settingPage.updateProfile') }}
+      </h3>
       <div>
         <Form @submit="onSubmit" class="form_content">
           <label for="select-file"
-            >Add Images *
+            >{{ $t('settingPage.title1') }}
             <div class="file-upload">
               <div
                 class="file_upload-details"
@@ -33,10 +41,10 @@
                     <font-awesome-icon :icon="['fas', 'cloud-arrow-up']" />
                   </div>
                   <div class="file-info">
-                    <h1>Browse file from your computer</h1>
-                    <h2>You can select only one image</h2>
-                    <p>Support .jpg, .gif, .png</p>
-                    <el-button disabled>Add Image</el-button>
+                    <h1>{{ $t('settingPage.message1Details') }}</h1>
+                    <h2>{{ $t('settingPage.message2Details') }}</h2>
+                    <p>{{ $t('settingPage.message3Details') }}</p>
+                    <el-button disabled>{{ $t('settingPage.btn1') }}</el-button>
                   </div>
                   <input
                     type="file"
@@ -71,20 +79,27 @@
               </div>
             </div>
           </label>
-          <p>Phone Number *</p>
+          <p>{{ $t('settingPage.title2') }}</p>
           <Field
             v-model="userForm.phone_number"
-            placeholder="Enter phone number"
+            :placeholder="$t('settingPage.message10Details')"
             name="phone_number"
             max="10"
             :rules="validatePhone"
           />
           <ErrorMessage
             name="phone_number"
-            style="color: red; text-align: left; margin-top: 5px"
+            :style="
+              language == 'EN'
+                ? 'color: red; text-align: left; margin-top: 5px'
+                : 'color: red; text-align: rgiht; margin-top: 5px'
+            "
           />
           <AppButton
-            :btnText="is_loading ? 'loading...' : 'save'"
+            v-loading="is_loading"
+            :element-loading-svg="svg"
+            element-loading-svg-view-box="-10, -10, 50, 50"
+            :btnText="$t('settingPage.btn2')"
             class="appbutton"
           />
         </Form>
@@ -111,6 +126,16 @@ export default {
   },
   data() {
     return {
+      svg: `
+        <path class="path" d="
+          M 30 15
+          L 28 17
+          M 25.61 25.61
+          A 15 15, 0, 0, 1, 15 30
+          A 15 15, 0, 1, 1, 27.99 7.5
+          L 15 15
+        " style="stroke-width: 4px; fill: rgba(0, 0, 0, 0)"/>
+      `,
       file_data: null,
       progress: null,
       is_delete: false,
@@ -125,6 +150,9 @@ export default {
       },
     }
   },
+  computed: {
+    language: () => store.state.user.language,
+  },
   async mounted() {
     await this.getUserInfo(store.state.user.userId)
     console.log(this.userForm)
@@ -138,6 +166,10 @@ export default {
         this.userForm = res.data()
         console.log(res.data())
       } catch (error) {
+        ElMessage({
+          message: this.$t('settingPage.message11Details'),
+          type: 'warning',
+        })
         console.log(error.message)
       }
     },
@@ -147,7 +179,7 @@ export default {
         let pictureRef = dbStorage.refFromURL(this.userForm.profile_image)
         await pictureRef.delete()
         ElMessage({
-          message: 'Image delete successful.',
+          message: this.$t('settingPage.message4Details'),
           type: 'success',
         })
         this.setUserImage({
@@ -161,6 +193,10 @@ export default {
       } catch (error) {
         this.is_delete = false
         console.log(error)
+        ElMessage({
+          message: this.$t('settingPage.message11Details'),
+          type: 'warning',
+        })
       }
     },
     uploadImage(e) {
@@ -181,6 +217,10 @@ export default {
           },
           (err) => {
             console.log(err)
+            ElMessage({
+              message: this.$t('settingPage.message11Details'),
+              type: 'warning',
+            })
             this.progress = null
           },
           async () => {
@@ -189,7 +229,10 @@ export default {
           }
         )
       } else {
-        console.log('============')
+        ElMessage({
+          message: this.$t('settingPage.message7Details'),
+          type: 'warning',
+        })
       }
     },
 
@@ -202,7 +245,7 @@ export default {
           const productRef = db.collection('users').doc(store.state.user.userId)
           await productRef.update(this.userForm)
           ElMessage({
-            message: 'update successful.',
+            message: this.$t('settingPage.message5Details'),
             type: 'success',
           })
           this.setUserImage({
@@ -213,7 +256,7 @@ export default {
         } else {
           this.is_loading = false
           ElMessage({
-            message: 'Image is required.',
+            message: this.$t('settingPage.message6Details'),
             type: 'warning',
           })
         }
@@ -221,7 +264,7 @@ export default {
         this.is_loading = false
         console.log(error)
         ElMessage({
-          message: 'Internet connection error.',
+          message: this.$t('settingPage.message11Details'),
           type: 'warning',
         })
       }
@@ -229,7 +272,7 @@ export default {
     validatePassword(value) {
       // if the field is empty
       if (!value) {
-        return 'This field is required'
+        return this.$t('settingPage.message8Details')
       }
       // All is good
       return true
@@ -237,12 +280,11 @@ export default {
     validatePhone(value) {
       // if the field is empty
       if (!value) {
-        return 'This field is required'
+        return this.$t('settingPage.message8Details')
       }
       if (value.toString().length > 10 || value.toString().length < 10) {
-        return 'The phone number must be 10 digits'
+        return this.$t('settingPage.message9Details')
       }
-      console.log(value)
       // All is good
       return true
     },
@@ -252,8 +294,14 @@ export default {
 
 <style lang="less" scoped>
 .setting {
-  text-align: left;
-  .register_form {
+  text-align: right;
+  .text-left {
+    text-align: left;
+  }
+  .text-right {
+    text-align: right;
+  }
+  .setting_form {
     max-width: 1120px;
     margin: 0px auto;
     .file-upload {
@@ -333,7 +381,12 @@ export default {
     }
     h3 {
       font-size: 30px;
-      text-align: left;
+      &:hover {
+        cursor: pointer;
+        .icon-btn {
+          color: @color-secondary;
+        }
+      }
     }
     .form_content {
       display: flex;
@@ -342,9 +395,6 @@ export default {
       border: 1px solid rgb(232, 232, 232);
       padding: 20px;
       border-radius: 12px;
-      p {
-        text-align: left;
-      }
       input {
         background-color: #f5f5f5;
         outline: 0px solid #ffffff;

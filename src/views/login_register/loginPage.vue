@@ -37,7 +37,11 @@
               :enter="{ opacity: 1, y: 0 }"
               :delay="200"
               name="email_address"
-              style="color: red; text-align: left; margin-top: 5px"
+              :style="
+                language == 'EN'
+                  ? 'color: red; text-align: left; margin-top: 5px'
+                  : 'color: red; text-align: rgiht; margin-top: 5px'
+              "
             />
             <p>{{ $t('loginPage.password') }}</p>
             <Field
@@ -52,7 +56,11 @@
               :enter="{ opacity: 1, y: 0 }"
               :delay="200"
               name="password"
-              style="color: red; text-align: left; margin-top: 5px"
+              :style="
+                language == 'EN'
+                  ? 'color: red; text-align: left; margin-top: 5px'
+                  : 'color: red; text-align: rgiht; margin-top: 5px'
+              "
             />
             <AppButton
               :btnText="$t('loginPage.login')"
@@ -104,12 +112,20 @@
               :enter="{ opacity: 1, y: 0 }"
               :delay="200"
               name="email"
-              style="color: red; text-align: left; margin-top: 5px"
+              :style="
+                language == 'EN'
+                  ? 'color: red; text-align: left; margin-top: 5px'
+                  : 'color: red; text-align: right; margin-top: 5px'
+              "
             />
             <!-- Email is already exists-->
             <p
               v-show="email_is_exist == true ? true : false"
-              style="color: red; text-align: left; margin-top: 5px"
+              :style="
+                language == 'EN'
+                  ? 'color: red; text-align: left; margin-top: 5px'
+                  : 'color: red; text-align: right; margin-top: 5px'
+              "
             >
               {{ $t('loginPage.inputTitle5') }}
             </p>
@@ -127,12 +143,20 @@
               :enter="{ opacity: 1, y: 0 }"
               :delay="200"
               name="username"
-              style="color: red; text-align: left; margin-top: 5px"
+              :style="
+                language == 'EN'
+                  ? 'color: red; text-align: left; margin-top: 5px'
+                  : 'color: red; text-align: rgiht; margin-top: 5px'
+              "
             />
             <!-- User name is already exists-->
             <p
               v-show="user_name_is_exist == true ? true : false"
-              style="color: red; text-align: left; margin-top: 5px"
+              :style="
+                language == 'EN'
+                  ? 'color: red; text-align: left; margin-top: 5px'
+                  : 'color: red; text-align: rgiht; margin-top: 5px'
+              "
             >
               {{ $t('loginPage.inputTitle6') }}
             </p>
@@ -149,7 +173,11 @@
               :enter="{ opacity: 1, y: 0 }"
               :delay="200"
               name="phone"
-              style="color: red; text-align: left; margin-top: 5px"
+              :style="
+                language == 'EN'
+                  ? 'color: red; text-align: left; margin-top: 5px'
+                  : 'color: red; text-align: rgiht; margin-top: 5px'
+              "
             />
             <AppButton
               v-loading="is_loading"
@@ -173,6 +201,7 @@ import { db, timestamp } from '@/firebase/config'
 import { ElMessage } from 'element-plus'
 import { Form, Field, ErrorMessage } from 'vee-validate'
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
+// import { auth } from '@/firebase/config'
 import { mapActions } from 'vuex'
 import store from '@/store'
 export default {
@@ -248,20 +277,21 @@ export default {
             account_status: 'deactive',
             email_address: values.email,
             password: '',
+            profile_image: '',
             phone_number: values.phone,
             register_date: timestamp(),
             user_name: values.username.toLowerCase(),
           })
           resetForm()
           ElMessage({
-            message: 'Register successful.',
+            message: this.$t('loginPage.message3Details'),
             type: 'success',
           })
           this.is_loading = false
         } catch (error) {
           this.is_loading = false
           ElMessage({
-            message: 'Internet connection error.',
+            message: this.$t('loginPage.message2Details'),
             type: 'error',
           })
         }
@@ -289,19 +319,32 @@ export default {
     },
     async onLoginSubmit(value) {
       this.login_loading = true
-      try {
-        await signInWithEmailAndPassword(
-          getAuth(),
-          value.email_address,
-          value.password
-        )
-        await this.getUserInfo(value.email_address)
-        this.login_loading = false
-        this.$router.push('/portal')
-      } catch (error) {
-        console.log(error.FirebaseError)
-        this.login_loading = false
-      }
+      const auth = getAuth()
+      signInWithEmailAndPassword(auth, value.email_address, value.password)
+        .then(async (userCredential) => {
+          const user = userCredential.user
+          console.log(user)
+          await this.getUserInfo(value.email_address)
+          this.login_loading = false
+          this.$router.push('/portal')
+        })
+        .catch((error) => {
+          this.login_loading = false
+          switch (error.code) {
+            case 'auth/invalid-login-credentials':
+              ElMessage({
+                message: this.$t('loginPage.message1Details'),
+                type: 'warning',
+              })
+              break
+            default:
+              ElMessage({
+                message: this.$t('loginPage.message2Details'),
+                type: 'error',
+              })
+              break
+          }
+        })
     },
     validateEmail(value) {
       // if the field is empty

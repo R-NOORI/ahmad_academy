@@ -29,7 +29,7 @@ export default [
       },
       {
         path: '/course/course-details/:course_id/:instructor_id',
-        name: 'course details',
+        name: 'courseDetails',
         meta: {
           access: [],
           title: 'course details',
@@ -62,7 +62,7 @@ export default [
       },
       {
         path: '/login',
-        name: 'Login',
+        name: 'login',
         meta: {
           access: [],
           title: 'Login Page',
@@ -71,7 +71,7 @@ export default [
       },
       {
         path: '/login/forget-password',
-        name: 'Forget password',
+        name: 'forgetPassword',
         meta: {
           access: [],
           title: 'Forget password',
@@ -80,7 +80,7 @@ export default [
       },
       {
         path: '/portal',
-        name: 'Portal',
+        name: 'portal',
         meta: {
           requireAuth: true,
           access: [],

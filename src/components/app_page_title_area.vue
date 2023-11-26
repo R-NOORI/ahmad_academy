@@ -2,15 +2,19 @@
   <div class="page-title-area">
     <div class="page-title-area-content">
       <div class="page-title-area-content-title">
-        {{ title.toUpperCase() }}
+        {{ $t(`pageTitleArea.${title}`).toUpperCase() }}
       </div>
-      <div class="page-title-area-content-path">
+      <div class="page-title-area-content-path changeDirection">
         <el-breadcrumb>
           <el-breadcrumb-item
             v-for="items in data"
             :key="items"
             :to="{ path: '/' + items }"
-            >{{ items == '' ? 'Home' : items }}</el-breadcrumb-item
+            >{{
+              items == ''
+                ? $t('pageTitleArea.home')
+                : $t(`pageTitleArea.${items}`)
+            }}</el-breadcrumb-item
           >
         </el-breadcrumb>
       </div>
@@ -18,6 +22,7 @@
   </div>
 </template>
 <script>
+import store from '@/store'
 export default {
   name: 'app_page_title_area',
   props: ['currentPath', 'title'],
@@ -26,10 +31,26 @@ export default {
       data: [],
     }
   },
+  computed: {
+    language: () => store.state.user.language,
+  },
   mounted() {
     for (let i = 0; i < this.currentPath.length; i++) {
       this.data.push(this.currentPath[i])
     }
+  },
+  watch: {
+    language: {
+      handler: function (search) {
+        console.log(search)
+        const elems2 = document.getElementsByClassName('changeDirection')
+
+        for (let elem of elems2) {
+          elem.style.direction = 'ltr'
+        }
+      },
+      deep: true,
+    },
   },
 }
 </script>
@@ -58,6 +79,8 @@ export default {
     &-path {
       font-size: 14px;
       color: #6f6b80;
+      direction: ltr;
+      unicode-bidi: embed;
     }
   }
 }

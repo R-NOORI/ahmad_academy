@@ -31,7 +31,9 @@
         </el-avatar>
 
         <div class="portal-header-user-info">
-          <p>Welcome</p>
+          <p :class="language == 'EN' ? 'text-left' : 'text-right'">
+            {{ $t('portalPage.welcome') }}
+          </p>
           <!-- userImage -->
           <h3>{{ userName }}</h3>
         </div>
@@ -42,25 +44,29 @@
             class="portal-header-items-search-icon"
             :icon="['fas', 'magnifying-glass']"
           />
-          <input placeholder="Search by course title" v-model="search_value" />
+          <input
+            :placeholder="$t('portalPage.message1Details')"
+            v-model="search_value"
+          />
         </div>
         <button @click="this.$router.push('/portal/setting')">
-          <font-awesome-icon
-            style="margin-right: 5px"
-            :icon="['fas', 'gear']"
-          />
-          Setting
+          <font-awesome-icon style="margin: 0px 5px" :icon="['fas', 'gear']" />
+          {{ $t('portalPage.btn1') }}
         </button>
       </div>
     </div>
     <div v-if="classes.length == 0" class="portal-empty">
       <img src="@/assets/portal-page/empty.png" />
-      <h3>Empty</h3>
-      <p>No class register</p>
+      <h3>{{ $t('portalPage.message4Details') }}</h3>
+      <p>
+        {{ $t('portalPage.message5Details') }}
+      </p>
     </div>
     <div class="portal-body" v-else>
       <div class="portal-body-bacground-div"></div>
-      <h3>Active Course</h3>
+      <h3 :class="language == 'EN' ? 'text-left' : 'text-right'">
+        {{ $t('portalPage.message2Details') }}
+      </h3>
       <div class="portal-body-active-course">
         <PortalCourseCard
           v-for="(item, index) in search_value == '' || search_value == null
@@ -117,6 +123,7 @@ export default {
       console.log(store.state.user.userImage)
   },
   computed: {
+    language: () => store.state.user.language,
     searchCourseValue: function () {
       return this.classes.filter((value) => {
         return value.title.toLowerCase().match(this.search_value.toLowerCase())
@@ -127,10 +134,11 @@ export default {
     async getRegisterClass() {
       this.is_loading = true
       try {
+        const id = await store.state.user.userId
         var citiesRef = db
           .collection('classes')
           .where('class_status', '==', 'progress')
-          .where('user_id', '==', this.userId)
+          .where('user_id', '==', id)
         var res = await citiesRef.get()
         res.forEach(async (doc) => {
           await this.getCourse(doc.data().course_id, doc)
@@ -168,6 +176,14 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
 .loading-div {
   max-width: 1120px;
   height: 400px;
@@ -197,11 +213,10 @@ export default {
       flex-direction: row;
       align-items: center;
       &-info {
-        margin-left: 10px;
+        margin: 0px 10px;
         p {
           margin: 0px;
           padding: 0px;
-          text-align: left;
         }
         h3 {
           margin: 5px 0px 0px 0px;
@@ -216,7 +231,7 @@ export default {
       align-items: center;
       &-search {
         background-color: #ffffff;
-        margin-right: 20px;
+        margin: 0px 20px;
         padding: 0px 15px;
         font-size: 14px;
         height: 40px;
@@ -230,7 +245,7 @@ export default {
         border: 1px solid rgba(128, 128, 128, 0.416);
         &-icon {
           font-size: 15px;
-          margin-right: 10px;
+          margin: 0px 10px;
           color: @color-secondary;
         }
         input {
@@ -261,7 +276,6 @@ export default {
     box-sizing: border-box;
     h3 {
       margin-top: 30px;
-      text-align: left;
       width: 100%;
       color: @color-secondary;
     }

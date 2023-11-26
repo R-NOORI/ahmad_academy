@@ -62,76 +62,90 @@
             />
           </div>
         </div>
-        <div class="contact-form-save">
-          <Form @submit="onSubmit" class="contact-form-save">
-            <Field
-              name="name"
-              type="text"
-              :placeholder="$t('contactPage.name')"
-              :rules="validateName"
+        <Form @submit="onSubmit" class="contact-form-save">
+          <Field
+            name="name"
+            type="text"
+            :placeholder="$t('contactPage.name')"
+            :rules="validateName"
+          />
+          <ErrorMessage
+            v-motion
+            :initial="{ opacity: 0, y: -30 }"
+            :enter="{ opacity: 1, y: 0 }"
+            :delay="200"
+            name="name"
+            :style="
+              language == 'EN'
+                ? 'color: red; text-align: left; margin-top: 5px'
+                : 'color: red; text-align: right; margin-top: 5px'
+            "
+          />
+          <Field
+            name="email"
+            :placeholder="$t('contactPage.email')"
+            :rules="validateEmail"
+          />
+          <ErrorMessage
+            v-motion
+            :initial="{ opacity: 0, y: -30 }"
+            :enter="{ opacity: 1, y: 0 }"
+            :delay="200"
+            name="email"
+            :style="
+              language == 'EN'
+                ? 'color: red; text-align: left; margin-top: 5px'
+                : 'color: red; text-align: right; margin-top: 5px'
+            "
+          />
+          <Field :placeholder="$t('contactPage.phoneNumber')" name="phone" />
+          <Field
+            :placeholder="$t('contactPage.subject')"
+            name="subject"
+            :rules="validateSubject"
+          />
+          <ErrorMessage
+            v-motion
+            :initial="{ opacity: 0, y: -30 }"
+            :enter="{ opacity: 1, y: 0 }"
+            :delay="200"
+            name="subject"
+            :style="
+              language == 'EN'
+                ? 'color: red; text-align: left; margin-top: 5px'
+                : 'color: red; text-align: right; margin-top: 5px'
+            "
+          />
+          <Field v-slot="{ field }" name="message" :rules="validateMessage">
+            <textarea
+              v-bind="field"
+              :placeholder="$t('contactPage.yourMessage')"
             />
-            <ErrorMessage
-              v-motion
-              :initial="{ opacity: 0, y: -30 }"
-              :enter="{ opacity: 1, y: 0 }"
-              :delay="200"
-              name="name"
-              style="color: red; text-align: left; margin-top: 5px"
-            />
-            <Field
-              name="email"
-              :placeholder="$t('contactPage.email')"
-              :rules="validateEmail"
-            />
-            <ErrorMessage
-              v-motion
-              :initial="{ opacity: 0, y: -30 }"
-              :enter="{ opacity: 1, y: 0 }"
-              :delay="200"
-              name="email"
-              style="color: red; text-align: left; margin-top: 5px"
-            />
-            <Field :placeholder="$t('contactPage.phoneNumber')" name="phone" />
-            <Field
-              :placeholder="$t('contactPage.subject')"
-              name="subject"
-              :rules="validateSubject"
-            />
-            <ErrorMessage
-              v-motion
-              :initial="{ opacity: 0, y: -30 }"
-              :enter="{ opacity: 1, y: 0 }"
-              :delay="200"
-              name="subject"
-              style="color: red; text-align: left; margin-top: 5px"
-            />
-            <Field v-slot="{ field }" name="message" :rules="validateMessage">
-              <textarea
-                v-bind="field"
-                :placeholder="$t('contactPage.yourMessage')"
-              />
-            </Field>
-            <ErrorMessage
-              v-motion
-              :initial="{ opacity: 0, y: -30 }"
-              :enter="{ opacity: 1, y: 0 }"
-              :delay="200"
-              name="message"
-              style="color: red; text-align: left; margin-top: 5px"
-            />
-            <AppButton
-              v-loading="is_loading"
-              :element-loading-svg="svg"
-              element-loading-svg-view-box="-10, -10, 50, 50"
-              :btnText="$t('contactPage.bnt')"
-              class="appbutton"
-              :rightIcon="[
-                'fas',
-                getLanguage == 'EN' ? 'arrow-right-long' : 'arrow-left-long',
-              ]"
-            />
-          </Form>
-        </div>
+          </Field>
+          <ErrorMessage
+            v-motion
+            :initial="{ opacity: 0, y: -30 }"
+            :enter="{ opacity: 1, y: 0 }"
+            :delay="200"
+            name="message"
+            :style="
+              language == 'EN'
+                ? 'color: red; text-align: left; margin-top: 5px'
+                : 'color: red; text-align: right; margin-top: 5px'
+            "
+          />
+          <AppButton
+            v-loading="is_loading"
+            :element-loading-svg="svg"
+            element-loading-svg-view-box="-10, -10, 50, 50"
+            :btnText="$t('contactPage.bnt')"
+            class="appbutton"
+            :rightIcon="[
+              'fas',
+              language == 'EN' ? 'arrow-right-long' : 'arrow-left-long',
+            ]"
+          />
+        </Form>
       </div>
     </div>
     <div class="contact-root-map">
@@ -191,7 +205,7 @@ export default {
     }
   },
   computed: {
-    getLanguage: () => store.state.user.language,
+    language: () => store.state.user.language,
   },
   methods: {
     openInNewTab(url) {
@@ -204,7 +218,7 @@ export default {
         const collectionRef = db.collection('emails')
         await collectionRef.add(values)
         ElMessage({
-          message: 'Email send successful with for the response.',
+          message: this.$t('contactPage.messageDetails'),
           type: 'success',
         })
         resetForm()
@@ -242,7 +256,7 @@ export default {
     },
     validateMessage(value) {
       if (!value) {
-        return this.$t('contact.inputTitle1')
+        return this.$t('contactPage.inputTitle1')
       }
       return true
     },

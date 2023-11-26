@@ -99,9 +99,11 @@
         <!-- if  loading is true -->
         <div
           class="image_container"
-          v-for="(item, index) in 3"
-          :key="index"
           v-show="is_loading"
+          v-loading="is_loading"
+          element-loading-text="Loading..."
+          :element-loading-svg="svg"
+          element-loading-svg-view-box="-10, -10, 50, 50"
         ></div>
         <!-- if  loading  is  false-->
         <div
@@ -146,6 +148,16 @@ export default {
   data() {
     return {
       is_loading: false,
+      svg: `
+        <path class="path" d="
+          M 30 15
+          L 28 17
+          M 25.61 25.61
+          A 15 15, 0, 0, 1, 15 30
+          A 15 15, 0, 1, 1, 27.99 7.5
+          L 15 15
+        " style="stroke-width: 4px; fill: rgba(0, 0, 0, 0)"/>
+      `,
       instructors: [],
     }
   },
@@ -261,6 +273,7 @@ export default {
       grid-template-columns: auto auto auto;
       grid-gap: 2em;
       .image_container {
+        min-height: 300px;
         .image_box {
           width: 300px;
           height: 300px;

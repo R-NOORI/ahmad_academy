@@ -1,5 +1,36 @@
 {
   "language": "English",
+  "header": {
+    "home": "Home",
+    "course": "Courses",
+    "contact": "Contact",
+    "about": "About",
+    "portal": "Portal",
+    "signout": "Sign Out",
+    "loginRegister": "Login / Register"
+  },
+  "footer": {
+    "title1": "Alnoor Safa Academy",
+    "titleDetails": "Welcome to Alnoor Safa Academy, it is an online education institution that specializes in providing various subjects according to the needs of students from 1st to 6th grade",
+    "title2": "Useful Links",
+    "ourCourse": "Our Courses",
+    "contactUs": "Contact Us",
+    "aboutUs": "About Us",
+    "newAccount": "New Account",
+    "title3": "Contact Info",
+    "address": "275 Quadra Street Victoria Road, New York"
+  },
+  "pageTitleArea": {
+    "home": "Home",
+    "course": "courses",
+    "courseDetails": "courses details",
+    "contact": "contact",
+    "about": "about",
+    "portal": "portal",
+    "setting": "setting",
+    "login": "login",
+    "forgetPassword": "forget password"
+  },
   "homePage": {
     "title1": "LEARN NEW THINGS DAILY",
     "title2": "Education Is A Path To Success In Life",
@@ -15,26 +46,6 @@
     "offer3Details": "Our courses are totally online; you can follow and learn from anywhere in the world",
     "instructor": "SKILLED INSTRUCTOR",
     "lifeCoaches": " Introduce Our Life Coaches"
-  },
-  "header": {
-    "home": "Home",
-    "course": "Courses",
-    "contact": "Contact",
-    "about": "About",
-    "portal": "Portal",
-    "signout": "Sign Out",
-    "loginRegister": "Login / Register"
-  },
-  "footer": {
-    "title1": "EduVibe",
-    "titleDetails": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum.",
-    "title2": "Useful Links",
-    "ourCourse": "Our Courses",
-    "contactUs": "Contact Us",
-    "aboutUs": "About Us",
-    "newAccount": "New Account",
-    "title3": "Contact Info",
-    "address": "275 Quadra Street Victoria Road, New York"
   },
   "coursesPage": {
     "total": "total",
@@ -65,9 +76,20 @@
     "yourMessage": "Your Message*",
     "bnt": "Sumbmit now",
     "inputTitle1": "This field is required",
-    "inputTitle2": "This field must be a valid email"
+    "inputTitle2": "This field must be a valid email",
+    "messageDetails": "Email send successful wait for the response."
   },
   "aboutPage": {
+    "title1": "WHO WE ARE?",
+    "title1Details": "Welcome to Alnoor Safa Academy, it is an online education institution that specializes in providing various subjects according to the needs of students from 1st to 6th grade. Our curriculum includes learning Islam, (Noorani Qaida, Quran, Tajwid, Hadith, Fiqh, Aqidah) as well as more languages. Like Pashto, Dari, English, Arabic. We also cover topics such as Islamic and national history, geography and culture. And more our short-specialized courses expand your knowledge in a particular subject. We offer easy Islamic and modern education through our unique platform.",
+    "title7":"WHAT WE OFFER?",
+    "title8":"How Does Alnoor Safa Academy Work?",
+    "title9":"Register",
+    "title9Details": "First of all you have to register in order to enroll in a course",
+    "title10":"Enroll in a course",
+    "title10Details": "After successfull registring enroll in any course you wish to learn",
+    "title11":"Start at any time",
+    "title11Details": "start your course any time in the day you like",
     "mission": "OUR MISSION",
     "missionTitle": "Education In Continuing A Proud Tradition",
     "missionDetails": "Al Noor Safa Academy wants; To train the country's children in the light of national and Islamic values, work on their important skills and teach them in their mother language.",
@@ -92,6 +114,50 @@
     "inputTitle7": "This field is required",
     "inputTitle8": "This field must be a valid email",
     "inputTitle9": "The phone number must be 10 digits",
-    "inputTitle10": "Password moust be 6 character"
+    "inputTitle10": "Password moust be 6 character",
+    "message1Details": "Email or Password is incorrect",
+    "message2Details": "Network Connection Refused",
+    "message3Details": "Register successful."
+  },
+  "resetPassowrdPage": {
+    "resetPassowrd": "Reset password",
+    "email": "Email *",
+    "inputTitle1": "Enter email address",
+    "inputTitle2": "This field is required",
+    "inputTitle3": "This field must be a valid email",
+    "btn": "Send",
+    "message1Details": "Email send successful.",
+    "message2Details": "Network Connection Refused"
+  },
+  "portalPage": {
+    "btn1": "Setting",
+    "btn2": "Zoom Link",
+    "message1Details": "Search by course title",
+    "message2Details": "Active Courses",
+    "message3Details": "More Info...",
+    "message4Details": "Empty",
+    "message5Details": "No course register",
+    "message6Details": "You haven't paid yet",
+    "message7Details": "You paid the fee",
+    "message8Details": "You Moust pay the fee.",
+    "welcome": "Welcome"
+  },
+  "settingPage": {
+    "updateProfile": "Update Profile",
+    "title1": "Add Images *",
+    "title2": "Phone Number *",
+    "message1Details": "Browse file from your computer",
+    "message2Details": "You can select only one image",
+    "message3Details": "Support .jpg, .gif, .png",
+    "message4Details": "Image delete successful.",
+    "message5Details": "Update successful.",
+    "message6Details": "Image is required.",
+    "message7Details": "Plase select image only",
+    "message8Details": "This field is required",
+    "message9Details": "The phone number must be 10 digits",
+    "message10Details": "Enter phone number",
+    "message11Details": "Network Connection Refused",
+    "btn1": "Add image",
+    "btn2": "Save"
   }
 }

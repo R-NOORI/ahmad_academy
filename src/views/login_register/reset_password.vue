@@ -1,12 +1,14 @@
 <template>
   <div class="container">
     <AppPageTitleArea
-      :currentPath="this.$route.fullPath.split('/')"
+      :currentPath="path_value.split('/')"
       :title="this.$route.name"
     />
     <div class="account-container">
       <div
-        class="reset_form"
+        :class="
+          language == 'EN' ? 'reset_form text_left' : 'reset_form text_right'
+        "
         v-motion
         :initial="{ opacity: 0, y: 300 }"
         :enter="{
@@ -19,12 +21,12 @@
         :visible-once="{ opacity: 1, y: 0 }"
         :delay="350"
       >
-        <h3>Reset password</h3>
+        <h3>{{ $t('resetPassowrdPage.resetPassowrd') }}</h3>
         <div>
           <Form @submit="onSubmit" class="form_content">
-            <P>Email *</P>
+            <P>{{ $t('resetPassowrdPage.email') }}</P>
             <Field
-              placeholder="Email "
+              :placeholder="$t('resetPassowrdPage.inputTitle1')"
               type="email"
               name="email_address"
               :rules="validateEmail"
@@ -35,15 +37,19 @@
               :enter="{ opacity: 1, y: 0 }"
               :delay="200"
               name="email_address"
-              style="color: red; text-align: left; margin-top: 5px"
+              :style="
+                language == 'EN'
+                  ? 'color: red; text-align: left; margin-top: 5px'
+                  : 'color: red; text-align: right; margin-top: 5px'
+              "
             />
             <AppButton
               v-loading="is_loading"
               :element-loading-svg="svg"
               element-loading-svg-view-box="-10, -10, 50, 50"
-              btnText="Send"
+              :btnText="$t('resetPassowrdPage.btn')"
               class="appbutton"
-              :rightIcon="['fas', 'arrow-right-long']"
+              :rightIcon="['fas', angleIcon]"
             />
           </Form>
         </div>
@@ -58,6 +64,7 @@ import AppPageTitleArea from '@/components/app_page_title_area.vue'
 import { ElMessage } from 'element-plus'
 import { Form, Field, ErrorMessage } from 'vee-validate'
 import { auth } from '@/firebase/config'
+import store from '@/store'
 export default {
   components: {
     AppButton,
@@ -68,6 +75,7 @@ export default {
   },
   data() {
     return {
+      is_loading: false,
       svg: `
         <path class="path" d="
           M 30 15
@@ -78,39 +86,49 @@ export default {
           L 15 15
         " style="stroke-width: 4px; fill: rgba(0, 0, 0, 0)"/>
       `,
-      is_loading: false,
+      path_value: '/login/forgetPassword',
     }
   },
+  computed: {
+    language: () => store.state.user.language,
+    angleIcon: () =>
+      store.state.user.language == 'EN'
+        ? 'arrow-right-long'
+        : 'arrow-left-long',
+  },
   methods: {
-    async onSubmit(values) {
+    async onSubmit(values, { resetForm }) {
       this.is_loading = true
-      console.log(values.email_address)
       auth
         .sendPasswordResetEmail(values.email_address)
         .then(() => {
-          console.log('===================> ok: ')
           ElMessage({
-            message: 'Email send.',
+            message: this.$t('resetPassowrdPage.message1Details'),
             type: 'success',
           })
+          resetForm()
           this.is_loading = false
         })
         .catch((error) => {
           console.log(error.code)
           console.log(error.message)
           this.is_loading = false
+          resetForm()
+          ElMessage({
+            message: this.$t('resetPassowrdPage.message2Details'),
+            type: 'error',
+          })
         })
-      this.is_loading = false
     },
     validateEmail(value) {
       // if the field is empty
       if (!value) {
-        return 'This field is required'
+        return this.$t('resetPassowrdPage.inputTitle2')
       }
       // if the field is not a valid email
       const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
       if (!regex.test(value)) {
-        return 'This field must be a valid email'
+        return this.$t('resetPassowrdPage.inputTitle3')
       }
       // All is good
       return true
@@ -134,14 +152,17 @@ export default {
     max-width: 1080px;
     gap: 40px;
 
+    .text_left {
+      text-align: left;
+    }
+    .text_right {
+      text-align: right;
+    }
     .reset_form {
       width: 50%;
-
       h3 {
         font-size: 30px;
-        text-align: left;
       }
-
       .form_content {
         display: flex;
         flex-direction: column;
@@ -149,7 +170,6 @@ export default {
         border: 1px solid rgb(232, 232, 232);
         padding: 20px;
         border-radius: 12px;
-
         .errorMessage {
           color: red;
         }
@@ -173,11 +193,6 @@ export default {
             transition: 0.8s;
           }
         }
-
-        p {
-          text-align: left;
-        }
-
         .appbutton {
           margin-top: 40px;
         }

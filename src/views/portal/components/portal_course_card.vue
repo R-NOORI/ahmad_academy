@@ -1,7 +1,13 @@
 <template>
   <div class="portal-course-card">
     <img class="card-image" :src="courseImageLink" />
-    <div class="portal-course-card-content">
+    <div
+      :class="
+        isLanguage == 'EN'
+          ? 'portal-course-card-content text-left'
+          : 'portal-course-card-content text-right'
+      "
+    >
       <h3>{{ courseTitle }}</h3>
       <div class="portal-course-card-content-items">
         <div class="portal-course-card-content-items-info">
@@ -16,7 +22,10 @@
             />
             {{ lessons }}
           </p>
-
+          <p>
+            <font-awesome-icon class="card-icon" :icon="['fa', 'clock']" />
+            {{ startTime }}
+          </p>
           <p>
             <font-awesome-icon
               class="card-icon"
@@ -24,13 +33,9 @@
             />
             {{
               feeAmount == '' || feeAmount == null
-                ? "You don't pay"
-                : ' You pay'
+                ? $t('portalPage.message6Details')
+                : $t('portalPage.message7Details')
             }}
-          </p>
-          <p>
-            <font-awesome-icon class="card-icon" :icon="['fa', 'clock']" />
-            {{ startTime }}
           </p>
         </div>
         <img
@@ -39,7 +44,9 @@
         />
         <img v-else src="@/assets/portal-page/pay.png" />
       </div>
-      <button @click="openInNewTab(zoomLink)">Zoom Link</button>
+      <button @click="openInNewTab(zoomLink)">
+        {{ $t('portalPage.btn2') }}
+      </button>
       <div
         class="portal-course-card-content-link"
         @click="
@@ -48,7 +55,7 @@
           )
         "
       >
-        More Info...
+        {{ $t('portalPage.message3Details') }}
       </div>
     </div>
   </div>
@@ -56,6 +63,7 @@
 
 <script>
 import { ElMessage } from 'element-plus'
+import store from '@/store'
 export default {
   name: 'course-card',
   props: [
@@ -69,11 +77,14 @@ export default {
     'startTime',
     'zoomLink',
   ],
+  computed: {
+    isLanguage: () => store.state.user.language,
+  },
   methods: {
     openInNewTab(url) {
       if (this.feeAmount == '' || this.feeAmount == null) {
         ElMessage({
-          message: 'You Moust pay the fee.',
+          message: this.$t('portalPage.message8Details'),
           type: 'warning',
         })
       } else {
@@ -92,7 +103,7 @@ export default {
   -webkit-box-shadow: 0px 0px 43px 4px rgba(66, 68, 90, 0.12);
   -moz-box-shadow: 0px 0px 43px 4px rgba(66, 68, 90, 0.12);
   box-shadow: 0px 0px 43px 4px rgba(66, 68, 90, 0.12);
-  text-align: center;
+  // text-align: center;
   padding: 0px 15px 20px 15px;
   box-sizing: border-box;
   .card-image {
@@ -101,8 +112,13 @@ export default {
     margin-top: -40px;
     border-radius: 20px;
   }
-  &-content {
+  .text-left {
     text-align: left;
+  }
+  .text-right {
+    text-align: right;
+  }
+  &-content {
     &-items {
       display: flex;
       flex-direction: row;
@@ -121,7 +137,7 @@ export default {
           margin: 0px;
           padding: 0px;
           .card-icon {
-            margin-right: 10px;
+            margin: 0px 10px;
             width: 17px;
           }
         }
