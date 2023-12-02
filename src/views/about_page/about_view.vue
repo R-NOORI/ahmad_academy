@@ -265,10 +265,6 @@ export default {
       imageSize: 0,
     }
   },
-  // "title1Details": "Welcome to Alnoor Safa Academy, it is an online education institution that specializes in providing various subjects according to the needs of students from 1st to 6th grade. Our curriculum includes learning Islam, (Noorani Qaida, Quran, Tajwid, Hadith, Fiqh, Aqidah) as well as more languages. Like Pashto, Dari, English, Arabic. We also cover topics such as Islamic and national history, geography and culture. And more our short-specialized courses expand your knowledge in a particular subject. We offer easy Islamic and modern education through our unique platform.",
-  // "title1Details": "النور صفا اکاډمي ته ښه راغلاست، دا آنلاین زده کړو یوه غوره اداره ده چي د لومړي څخه تر شپږم ټولګي پوري د زده کونکو د اړتیاو سره سم د مختلفو مضامینو په وړاندي کولو کي تخصص لري. زموږ په نصاب کي اسلامي زده کړي، ( نوراني قاعده، قرآن کریم، تجوید، عقیده، فقه) او همدارنګه نوري ژبي شاملي دي. لکه پښتو، دري، انګلیسي، عربي. موږ د اسلامي او ملي تاریخ، جغرافیې او کلتور په څیر موضوعاتو ته هم پام کوو. او همدا ډول زموږ لنډ تخصصي کورسونه ستاسو پوهي ته په یوه ځانکړي مضمون کي پراختیا ورکوي.  زموږ د یوه ځانګړي فلټ فارم له مخي اسانه اسلامي او عصري زده‌کړي وړاندي کوو.",
-  // "title1Details": "به آکادمی النور صفا خوش آمدید، این یک موسسه آموزش آنلاین است که در ارائه موضوعات مختلف با توجه به نیاز دانش آموزان صنف اول تا ششم تخصص دارد. برنامه درسی ما شامل یادگیری اسلام، (قاعده نورانی، قرآن، تجوید، فقه، حدیث، عقیده) و همچنین زبان های مختلف است. مانند پشتو، دری، انگلیسی، عربی. ما همچنین موضوعاتی مانند تاریخ اسلامی و ملی، جغرافیا و فرهنگ را پوشش می دهیم. و همچنین دوره های تخصصی کوتاه ما دانش شما را در یک موضوع خاص گسترش می دهد. ما آموزش آسان اسلامی و مدرن را از طریق ویبساست خوب به دانش اموز  ارائه می دهیم.",
-
   computed: {
     getLanguage: () => store.state.user.language,
   },
