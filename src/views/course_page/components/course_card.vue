@@ -1,30 +1,30 @@
 <template>
   <div class="course-card">
     <div class="course-card-image">
-      <img :src="courseImageLink" />
+      <img :src="require(`@/assets/course-page/${imageName}`)" />
     </div>
     <div class="course-card-content">
       <div class="course-card-content-info">
         <span>
-          <font-awesome-icon
-            class="card-icon"
-            :icon="['fas', 'clipboard-list']"
-          />
-          &nbsp;{{ lessons }}
-        </span>
-        &nbsp; &nbsp;
-        <span style="margin-left: 50px">
-          <font-awesome-icon class="card-icon" :icon="['fa', 'clock']" />
+          <font-awesome-icon :icon="['fa', 'clock']" />
           &nbsp;{{ duration }}
+        </span>
+        <span>
+          <font-awesome-icon :icon="['fas', 'language']" />
+          &nbsp;{{ language }}
         </span>
       </div>
       <h2>{{ courseTitle }}</h2>
       <el-divider />
       <div class="course-card-content-price">
         <div class="price-content">
-          <div class="new-price">${{ courseNewPrice }}</div>
-          <div class="old-price" v-show="courseOldPrice == null ? false : true">
-            ${{ courseOldPrice }}
+          <div class="new-price">
+            {{
+              type == 'course'
+                ? $t('coursesPage.title2')
+                : $t('coursesPage.title1')
+            }}
+            {{ fee }}$
           </div>
         </div>
       </div>
@@ -35,14 +35,7 @@
 <script>
 export default {
   name: 'course-card',
-  props: [
-    'courseImageLink',
-    'courseTitle',
-    'lessons',
-    'duration',
-    'courseNewPrice',
-    'courseOldPrice',
-  ],
+  props: ['imageName', 'courseTitle', 'language', 'duration', 'fee', 'type'],
 }
 </script>
 
@@ -87,7 +80,7 @@ export default {
   }
 
   &-content {
-    margin: 30px 20px;
+    margin: 25px 20px;
 
     &-info,
     &-price {
@@ -95,9 +88,15 @@ export default {
       flex-direction: row;
     }
     &-info {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: stretch;
+      text-align: left;
       span {
         color: #6f6b80;
         font-size: 16px;
+        margin-bottom: 10px;
       }
     }
     &-price {

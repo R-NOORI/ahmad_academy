@@ -64,6 +64,7 @@ body,
 html {
   padding: 0;
   margin: 0;
+  // user-select: none;
 }
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;

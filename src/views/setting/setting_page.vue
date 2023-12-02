@@ -305,13 +305,15 @@ export default {
     max-width: 1120px;
     margin: 0px auto;
     .file-upload {
+      transition: 0.5s;
       &:hover {
-        border: 1px dashed @color-orange;
+        border: 2px dashed @color-light;
         cursor: pointer;
+        transition: 0.5s;
       }
       overflow: hidden;
       position: relative;
-      border: 1px dashed @color-secondary;
+      border: 2px dashed gray;
       background-color: #f5f5f5;
       width: 300px;
       height: 200px;
@@ -381,10 +383,13 @@ export default {
     }
     h3 {
       font-size: 30px;
-      &:hover {
-        cursor: pointer;
-        .icon-btn {
+      .icon-btn {
+        transition: 0.5s;
+        &:hover {
           color: @color-secondary;
+          font-size: 35px;
+          cursor: pointer;
+          transition: 0.5s;
         }
       }
     }

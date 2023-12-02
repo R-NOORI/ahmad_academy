@@ -28,7 +28,7 @@ export default [
         component: () => import('../views/course_page/course_view.vue'),
       },
       {
-        path: '/course/course-details/:course_id/:instructor_id',
+        path: '/course/course-details/:type/:id',
         name: 'courseDetails',
         meta: {
           access: [],

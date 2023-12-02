@@ -37,7 +37,7 @@ button {
   }
   &:hover {
     transition: 0.8s;
-    background-color: @color-primary;
+    background-color: @color-light;
     color: #ffffff;
   }
 }

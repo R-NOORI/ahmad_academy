@@ -18,7 +18,7 @@
           {{ $t('homePage.title3') }}
         </h5>
         <AppButon
-          @click="this.$router.push('/contact')"
+          @click="this.$router.push('/about')"
           :btn-text="$t('homePage.getStarted')"
           :right-icon="[
             'fas',
@@ -41,7 +41,20 @@
         ><p class="title_1">{{ $t('homePage.title4') }}</p></el-divider
       >
       <p class="title_2">{{ $t('homePage.offerTitle1') }}</p>
-      <div class="offers">
+      <div
+        class="offers"
+        v-motion
+        :initial="{ opacity: 0, y: 150 }"
+        :enter="{
+          opacity: 1,
+          y: 0,
+        }"
+        :visible="{
+          opacity: 1,
+          y: 0,
+        }"
+        :delay="200"
+      >
         <!-- card 1 -->
         <div class="offers_card">
           <div class="offers_icon_container">
@@ -82,7 +95,6 @@
         </div>
       </div>
     </div>
-
     <div
       v-motion
       :initial="{ opacity: 0, y: 100 }"
@@ -94,7 +106,6 @@
       <el-divider content-position="center"
         ><p class="title_1">{{ $t('homePage.instructor') }}</p></el-divider
       >
-      <p class="title_2">{{ $t('homePage.lifeCoaches') }}</p>
       <div class="instructor">
         <!-- if  loading is true -->
         <div
@@ -115,19 +126,13 @@
           <div class="image_box">
             <div class="image_content">
               <img :src="item.image_link" />
-              <div class="content">
-                <div
-                  class="btn"
-                  @click="() => openInNewTab(item.facebook_link)"
-                >
-                  f
-                </div>
-              </div>
             </div>
           </div>
           <div class="details">
+            <p class="occupation">
+              {{ item.comment }}
+            </p>
             <p class="name">{{ item.name + ' ' + item.last_name }}</p>
-            <p class="occupation">{{ item.profession }}</p>
           </div>
         </div>
       </div>
@@ -181,7 +186,7 @@ export default {
     async getAllInstructor() {
       try {
         this.is_loading = true
-        var citiesRef = db.collection('instructor')
+        var citiesRef = db.collection('students_comments')
         var res = await citiesRef.get()
         let items = []
         res.forEach((doc) => {
@@ -209,6 +214,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
+    padding-bottom: 50px;
     .hero_text_left {
       text-align: left;
     }
@@ -236,7 +242,6 @@ export default {
         color: #54595f;
       }
     }
-
     .hero_image {
       width: 700px;
       // margin-left: 80px;
@@ -247,7 +252,7 @@ export default {
     }
   }
   .sub-content {
-    margin-top: 150px;
+    margin-top: 100px;
     padding: 0 50px;
     text-align: center;
     display: flex;
@@ -272,11 +277,16 @@ export default {
       display: grid;
       grid-template-columns: auto auto auto;
       grid-gap: 2em;
+      padding-top: 40px;
       .image_container {
         min-height: 300px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
         .image_box {
-          width: 300px;
-          height: 300px;
+          width: 200px;
+          height: 200px;
           border-radius: 50%;
           overflow: hidden;
           position: relative;
@@ -303,15 +313,11 @@ export default {
           }
           .image_content {
             border-radius: 50%;
-            width: 260px;
-            height: 260px;
+            width: 160px;
+            height: 160px;
             overflow: hidden;
             position: absolute;
             inset: 21px;
-            // top: 0;
-            // left: 0;
-            // bottom: 0;
-            // right: 0;
             z-index: 3;
             transition: 0.3s;
             img {
@@ -322,47 +328,14 @@ export default {
               left: 0;
               object-fit: cover;
             }
-            .content {
-              border-radius: 50%;
-              width: 260px;
-              height: 260px;
-              overflow: hidden;
-              position: absolute;
-              // inset: 21px;
-              // top: 0;
-              // left: 0;
-              // bottom: 0;
-              // right: 0;
-              transition: 0.3s;
-              opacity: 0;
-              background-color: #23203f77;
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              .btn {
-                width: 40px;
-                height: 40px;
-                background-color: white;
-                color: @color-secondary;
-                font-weight: bolder;
-                border-radius: 50%;
-                line-height: 40px;
-                font-size: 25px;
-                margin: 5px;
-                cursor: pointer;
-                transition: 0.4s;
-                &:hover {
-                  background-color: @color-secondary;
-                  color: white;
-                }
-              }
-              &:hover {
-                opacity: 1;
-              }
-            }
           }
         }
         .details {
+          .occupation {
+            color: #54595f7d;
+            font-style: italic;
+            max-width: 300px;
+          }
           .name {
             font-weight: 900;
             font-size: 25px;
@@ -377,7 +350,6 @@ export default {
       display: flex;
       justify-content: center;
       align-items: center;
-
       .offers_card {
         width: 252px;
         height: 274px;
@@ -409,13 +381,13 @@ export default {
         .offers_icon_container {
           width: 70px;
           height: 70px;
-          background-color: #5361df58;
+          background-color: @color-light;
           border-top-left-radius: 50%;
           border-top-right-radius: 50%;
           line-height: 70px;
           margin-bottom: 10px;
           .icon {
-            color: @color-secondary;
+            color: whitesmoke;
           }
         }
         .text_left {

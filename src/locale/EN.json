@@ -44,13 +44,17 @@
     "offer2Details": "We have a live Video chats and sessions that can help you understand any subject",
     "offerTitle3": "Learn From Anywhere",
     "offer3Details": "Our courses are totally online; you can follow and learn from anywhere in the world",
-    "instructor": "SKILLED INSTRUCTOR",
-    "lifeCoaches": " Introduce Our Life Coaches"
+    "instructor": "What  our students say about us!"
   },
   "coursesPage": {
-    "total": "total",
+    "total": "Total",
     "courses": "courses",
-    "search_by_name": "search by name"
+    "classes": "classes",
+    "search_by_name": "search by name",
+    "title1": "Fee Per Month",
+    "title2": "Course Fee",
+    "title3": "All Courses",
+    "title4": "All Classes"
   },
   "courseDetailsPage": {
     "duration": "Duration",
@@ -60,7 +64,12 @@
     "instructor": "Instructor",
     "fee": "Fee",
     "courseDescription": "Course Description",
-    "course1Details": "What You’ll Learn From This Course"
+    "course1Details": "All subjects in this class",
+    "title1": "Fee Per Month",
+    "title2": "Course Fee",
+    "online": "ONLINE",
+    "classes": "CLASSES",
+    "courses": "COURSES"
   },
   "contactPage": {
     "contact1Details": "NEED HELP?",
@@ -81,14 +90,14 @@
   },
   "aboutPage": {
     "title1": "WHO WE ARE?",
-    "title1Details": "Welcome to Alnoor Safa Academy, it is an online education institution that specializes in providing various subjects according to the needs of students from 1st to 6th grade. Our curriculum includes learning Islam, (Noorani Qaida, Quran, Tajwid, Hadith, Fiqh, Aqidah) as well as more languages. Like Pashto, Dari, English, Arabic. We also cover topics such as Islamic and national history, geography and culture. And more our short-specialized courses expand your knowledge in a particular subject. We offer easy Islamic and modern education through our unique platform.",
-    "title7":"WHAT WE OFFER?",
-    "title8":"How Does Alnoor Safa Academy Work?",
-    "title9":"Register",
+    "title1Details": "We welcome all students who are interested in learning the Quran.  Al Noor Safa Online Academy is the leading independent online Islamic academy for those who want to learn online through virtual classrooms. We have created a comprehensive curriculum for Quran and basic Islamic education and we specialize in providing different subjects according to the needs of students from 1st to 6th grade. Our curriculum includes learning Islam, (Noorani Qaida, Quran, Tajweed, Faith, Fiqh) as well as more languages. Like Pashto, Dari, English, Arabic. We also pay attention to subjects like Islamic and national history, geography and culture so that students have the spirit of love for the country along with Islamic education. And likewise our short specialized courses expand your knowledge in a particular subject. We believe in the importance of personalized learning; Because it strengthens the students in a particular subject and quickly leads them to their goal.",
+    "title7": "WHAT WE OFFER?",
+    "title8": "How Does Alnoor Safa Academy Work?",
+    "title9": "Register",
     "title9Details": "First of all you have to register in order to enroll in a course",
-    "title10":"Enroll in a course",
+    "title10": "Enroll in a course",
     "title10Details": "After successfull registring enroll in any course you wish to learn",
-    "title11":"Start at any time",
+    "title11": "Start at any time",
     "title11Details": "start your course any time in the day you like",
     "mission": "OUR MISSION",
     "missionTitle": "Education In Continuing A Proud Tradition",
@@ -131,7 +140,7 @@
   },
   "portalPage": {
     "btn1": "Setting",
-    "btn2": "Zoom Link",
+    "btn2": "OPEN LINK",
     "message1Details": "Search by course title",
     "message2Details": "Active Courses",
     "message3Details": "More Info...",

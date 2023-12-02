@@ -11,44 +11,72 @@
     <AppPageTitleArea
       :currentPath="path_value.split('/')"
       :title="course_title"
+      translate="true"
     />
     <div class="course-img">
-      <img src="@/assets/about-page/image_5.png" />
+      <img src="@/assets/course-details-page/image_5.png" />
     </div>
-    <div class="course-info">
+    <div
+      :class="
+        selectLanguage == 'EN'
+          ? 'course-info text-left'
+          : 'course-info text-right'
+      "
+    >
       <div class="course-info-summary">
-        <div class="instructor-info">
-          <img :src="instructor.image_link" />
-          <span>{{ instructor.name + ' ' + instructor.last_name }}</span>
-        </div>
-        <h1>{{ course.title }}</h1>
+        <h1>
+          {{
+            selectLanguage == 'EN'
+              ? course.en_name
+              : selectLanguage == 'PA'
+              ? course.pa_name
+              : course.fa_name
+          }}
+        </h1>
         <div class="course-description">
-          <h3>{{ $t('courseDetailsPage.courseDescription') }}</h3>
-          <p>
-            {{ course.description }}
-          </p>
-          <h3>{{ $t('courseDetailsPage.course1Details') }}</h3>
-          <ol>
-            <li>
-              {{ course.course_objectives_1 }}
-            </li>
-            <li>
-              {{ course.course_objectives_2 }}
-            </li>
-            <li>
-              {{ course.course_objectives_3 }}
-            </li>
-            <li>
-              {{ course.course_objectives_4 }}
-            </li>
-          </ol>
+          <div
+            class="course-description-item_1"
+            v-if="$route.params.type == 'course'"
+          >
+            <h3>{{ $t('courseDetailsPage.courseDescription') }}</h3>
+            <p>
+              {{
+                selectLanguage == 'EN'
+                  ? course.en_discription
+                  : selectLanguage == 'PA'
+                  ? course.pa_discription
+                  : course.fa_discription
+              }}
+            </p>
+          </div>
+          <div class="course-description-item_2" v-else>
+            <h3>{{ $t('courseDetailsPage.course1Details') }}</h3>
+            <ol>
+              <li v-for="(item, index) in course.subjects" :key="index">
+                {{
+                  selectLanguage == 'EN'
+                    ? item.en_name
+                    : selectLanguage == 'PA'
+                    ? item.pa_name
+                    : item.fa_name
+                }}
+              </li>
+            </ol>
+          </div>
         </div>
       </div>
       <div class="course-info-sidebar">
         <div class="course-info-sidebar-details">
           <div class="sidebar-img">
-            <img :src="course.image_link" />
-            <div class="sidebar-brn"></div>
+            <h2>{{ $t('courseDetailsPage.online') }}</h2>
+            <h2>
+              {{
+                $route.params.type == 'course'
+                  ? $t('courseDetailsPage.courses')
+                  : $t('courseDetailsPage.classes')
+              }}
+            </h2>
+            <!-- <img src="@/assets/course-details-page/image_1.png" /> -->
           </div>
           <div class="course-details">
             <div class="course-details-items">
@@ -59,18 +87,13 @@
                 />
                 &nbsp; {{ $t('courseDetailsPage.duration') }}</span
               >
-              <span>{{ course.duration }}</span>
-            </div>
-            <el-divider style="margin: 0px" />
-            <div class="course-details-items">
-              <span>
-                <font-awesome-icon
-                  style="margin-right: 10px"
-                  :icon="['fas', 'clipboard-list']"
-                />
-                &nbsp; {{ $t('courseDetailsPage.lessons') }}</span
-              >
-              <span>{{ course.lessons }}</span>
+              <span>{{
+                selectLanguage == 'EN'
+                  ? course.en_duration
+                  : selectLanguage == 'PA'
+                  ? course.pa_duration
+                  : course.fa_duration
+              }}</span>
             </div>
             <el-divider style="margin: 0px" />
             <div class="course-details-items">
@@ -81,7 +104,13 @@
                 />
                 &nbsp; {{ $t('courseDetailsPage.skillLevel') }}</span
               >
-              <span>{{ course.skill_level }}</span>
+              <span>{{
+                selectLanguage == 'EN'
+                  ? course.en_skill_level
+                  : selectLanguage == 'PA'
+                  ? course.pa_skill_level
+                  : course.fa_skill_level
+              }}</span>
             </div>
             <el-divider style="margin: 0px" />
             <div class="course-details-items">
@@ -92,18 +121,13 @@
                 />
                 &nbsp; {{ $t('courseDetailsPage.language') }}</span
               >
-              <span>{{ course.language }}</span>
-            </div>
-            <el-divider style="margin: 0px" />
-            <div class="course-details-items">
-              <span>
-                <font-awesome-icon
-                  style="margin-right: 10px"
-                  :icon="['far', 'user']"
-                />
-                &nbsp; {{ $t('courseDetailsPage.instructor') }}</span
-              >
-              <span>{{ instructor.name + ' ' + instructor.last_name }}</span>
+              <span>{{
+                selectLanguage == 'EN'
+                  ? course.en_languages
+                  : selectLanguage == 'PA'
+                  ? course.pa_languages
+                  : course.fa_languages
+              }}</span>
             </div>
             <el-divider style="margin: 0px" />
             <div class="course-details-items">
@@ -112,9 +136,14 @@
                   style="margin-right: 10px"
                   :icon="['fas', 'money-check']"
                 />
-                &nbsp; {{ $t('courseDetailsPage.fee') }}</span
+                &nbsp;
+                {{
+                  $route.params.type == 'course'
+                    ? $t('coursesPage.title2')
+                    : $t('coursesPage.title1')
+                }}</span
               >
-              <span>{{ course.new_fees }}</span>
+              <span> {{ course.fee }} $</span>
             </div>
             <el-divider style="margin: 0px" />
           </div>
@@ -125,8 +154,10 @@
 </template>
 
 <script>
-import { db } from '@/firebase/config'
 import AppPageTitleArea from '@/components/app_page_title_area.vue'
+import AllClasses from '@/json/classes'
+import AllCourses from '@/json/courses'
+import store from '@/store'
 export default {
   name: 'course-details-page',
   components: { AppPageTitleArea },
@@ -145,33 +176,37 @@ export default {
       is_loading: true,
       instructor: {},
       course: {},
+      type: '',
       path_value: '/course/courseDetails',
       course_title: '',
     }
   },
-  async mounted() {
-    await this.getCourse(this.$route.params.course_id)
-    await this.getInstructor(this.$route.params.instructor_id)
+  computed: {
+    selectLanguage: () => store.state.user.language,
+  },
+  mounted() {
+    console.log('===============> ', this.$route.params.id)
+    console.log('===============> ', this.$route.params.type)
+    this.getCourse(this.$route.params.type, this.$route.params.id)
+    console.log('===============> ', this.course.subjects)
   },
   methods: {
-    async getCourse(id) {
+    getCourse(type, id) {
       this.is_loading = true
       try {
-        const userRef = db.collection('course').doc(id)
-        const res = await userRef.get()
-        this.course = res.data()
-        this.course_title = res.data().title
-      } catch (error) {
-        this.is_loading_page = false
-        console.log(error.message)
-      }
-    },
-    async getInstructor(id) {
-      this.is_loading = true
-      try {
-        const userRef = db.collection('instructor').doc(id)
-        const res = await userRef.get()
-        this.instructor = res.data()
+        if (type == 'course') {
+          AllCourses.filter((item) => {
+            if (id == item.id) {
+              this.course = item
+            }
+          })
+        } else {
+          AllClasses.filter((item) => {
+            if (id == item.id) {
+              this.course = item
+            }
+          })
+        }
         this.is_loading = false
       } catch (error) {
         this.is_loading = false
@@ -201,6 +236,13 @@ export default {
       background-size: 100% 100%;
     }
   }
+  .text-left {
+    text-align: left;
+  }
+
+  .text-right {
+    text-align: right;
+  }
   .course-info {
     max-width: 1090px;
     padding: 0px 20px;
@@ -214,28 +256,9 @@ export default {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
-      .instructor-info {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: flex-start;
-        margin: 60px 0px 30px 0px;
-        img {
-          width: 40px;
-          height: 40px;
-          border-radius: 100%;
-        }
-        span {
-          font-size: 16px;
-          color: #231f40;
-          font-weight: 600;
-          margin: 0px 10px;
-        }
-      }
       h1 {
         color: #231f40;
         font-size: 40px;
-        margin: 0px 0px 50px 0px;
       }
       .course-description {
         width: 100%;
@@ -246,26 +269,39 @@ export default {
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-        h3 {
-          margin: 0px;
-          color: #231f40;
-          font-size: 24px;
-          margin: 0px 0px 20px 0px;
+        &-item_1 {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          h3 {
+            margin: 0px;
+            color: #231f40;
+            font-size: 24px;
+            margin: 0px 0px 20px 0px;
+          }
+          p {
+            font-size: 16px;
+            color: #6f6b80;
+            line-height: 1.7em;
+            margin: 0px 0px 30px 0px;
+          }
         }
-        p {
-          font-size: 16px;
-          color: #6f6b80;
-          line-height: 1.7em;
-          margin: 0px 0px 30px 0px;
-        }
-        ol {
-          padding: 0px 0px 0px 20px;
-          margin: 0px 18px 30px 0px;
-        }
-        ol li {
-          font-size: 16px;
-          color: #6f6b80;
-          margin: 10px 0px;
+        &-item_2 {
+          h3 {
+            margin: 0px;
+            color: #231f40;
+            font-size: 24px;
+            margin: 0px 0px 20px 0px;
+          }
+          ol {
+            padding: 0px 0px 0px 20px;
+            margin: 0px 18px 30px 0px;
+          }
+          ol li {
+            font-size: 16px;
+            color: #6f6b80;
+            margin: 10px 0px;
+          }
         }
       }
     }
@@ -285,13 +321,21 @@ export default {
         -moz-box-shadow: 0px 0px 43px 4px rgba(66, 68, 90, 0.12);
         box-shadow: 0px 0px 43px 4px rgba(66, 68, 90, 0.12);
         .sidebar-img {
+          background-image: url('@/assets/course-details-page/image_1.png');
+          background-size: 100% 100%;
           width: 100%;
-          height: 240px;
+          height: 290px;
           overflow: hidden;
           border-radius: 5px;
-          img {
-            width: 100%;
-            height: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          padding-top: 20px;
+          h2 {
+            margin: 0px 0px;
+            font-size: 25px;
+            font-weight: 900;
           }
         }
         .course-details {

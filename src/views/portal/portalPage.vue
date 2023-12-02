@@ -55,7 +55,7 @@
         </button>
       </div>
     </div>
-    <div v-if="classes.length == 0" class="portal-empty">
+    <div v-if="registeClasses.length == 0" class="portal-empty">
       <img src="@/assets/portal-page/empty.png" />
       <h3>{{ $t('portalPage.message4Details') }}</h3>
       <p>
@@ -70,18 +70,36 @@
       <div class="portal-body-active-course">
         <PortalCourseCard
           v-for="(item, index) in search_value == '' || search_value == null
-            ? classes
+            ? registeClasses
             : searchCourseValue"
           :key="index"
-          :courseImageLink="item.image_link"
-          :courseTitle="item.title"
-          :language="item.language"
-          :lessons="item.lessons"
+          :imageName="item.image_name"
+          :courseTitle="
+            language == 'EN'
+              ? item.en_name
+              : language == 'PA'
+              ? item.pa_name
+              : item.fa_name
+          "
+          :language="
+            language == 'EN'
+              ? item.en_languages
+              : language == 'PA'
+              ? item.pa_languages
+              : item.fa_languages
+          "
           :feeAmount="item.fee_amount"
           :startTime="item.class_start_time"
-          :instructorId="item.instructor_id"
           :courseId="item.course_id"
-          :zoomLink="item.zoom_link"
+          :link="item.link"
+          :type="item.type"
+          :duration="
+            language == 'EN'
+              ? item.en_duration
+              : language == 'PA'
+              ? item.pa_duration
+              : item.fa_duration
+          "
         />
       </div>
     </div>
@@ -93,6 +111,8 @@ import PortalCourseCard from './components/portal_course_card.vue'
 import { db } from '@/firebase/config'
 import dayjs from 'dayjs'
 import store from '@/store'
+import course from '@/json/courses'
+import classes from '@/json/classes'
 export default {
   components: { PortalCourseCard },
   data() {
@@ -113,9 +133,15 @@ export default {
       userName: '',
       profileImage: '',
       classes: [],
+      course: [],
+      registeClasses: [],
     }
   },
   async mounted() {
+    this.courses = course
+    this.classes = classes
+    console.log(classes)
+    console.log(course)
     await this.getRegisterClass(),
       (this.userId = store.state.user.userId),
       (this.userName = store.state.user.userName),
@@ -125,51 +151,78 @@ export default {
   computed: {
     language: () => store.state.user.language,
     searchCourseValue: function () {
-      return this.classes.filter((value) => {
-        return value.title.toLowerCase().match(this.search_value.toLowerCase())
+      return this.registeClasses.filter((value) => {
+        return value.en_name
+          .toLowerCase()
+          .match(this.search_value.toLowerCase())
       })
     },
   },
   methods: {
     async getRegisterClass() {
       this.is_loading = true
-      try {
-        const id = await store.state.user.userId
-        var citiesRef = db
-          .collection('classes')
-          .where('class_status', '==', 'progress')
-          .where('user_id', '==', id)
-        var res = await citiesRef.get()
-        res.forEach(async (doc) => {
-          await this.getCourse(doc.data().course_id, doc)
-        })
-        this.is_loading = false
-      } catch (error) {
-        this.is_loading = false
-        console.log('something went wrong', error)
-      }
-    },
-    async getCourse(id, doc) {
-      console.log(doc.data().fee_amount)
-      try {
-        const userRef = db.collection('course').doc(id)
-        const res = await userRef.get()
-        console.log()
-        this.classes.push({
-          ...doc.data(),
-          id: doc.id,
-          title: res.data().title,
-          image_link: res.data().image_link,
-          language: res.data().language,
-          lessons: res.data().lessons,
-          instructor_id: res.data().instructor_id,
-          class_start_time: dayjs(doc.data().class_start_time).format(
-            'hh:mm A'
-          ),
-        })
-      } catch (error) {
-        console.log(error.message)
-      }
+      const id = await store.state.user.userId
+      var citiesRef = db
+        .collection('classes')
+        .where('class_status', '==', 'progress')
+        .where('user_id', '==', id)
+      await citiesRef.onSnapshot(
+        (snap) => {
+          let items = []
+          snap.forEach((doc) => {
+            if (doc.data().type == 'course') {
+              return this.courses.forEach((value) => {
+                if (value.id == doc.data().course_id)
+                  return items.push({
+                    ...doc.data(),
+                    image_name: value.image_name,
+                    en_name: value.en_name,
+                    pa_name: value.pa_name,
+                    fa_name: value.fa_name,
+                    en_languages: value.en_languages,
+                    pa_languages: value.pa_languages,
+                    fa_languages: value.fa_languages,
+                    en_duration: value.en_duration,
+                    pa_duration: value.pa_duration,
+                    fa_duration: value.fa_duration,
+                    class_start_time: dayjs(doc.data().class_start_time).format(
+                      'hh:mm A'
+                    ),
+                    id: doc.id,
+                  })
+              })
+            } else {
+              return this.classes.forEach((value) => {
+                if (value.id == doc.data().course_id)
+                  return items.push({
+                    ...doc.data(),
+                    image_name: value.image_name,
+                    en_name: value.en_name,
+                    pa_name: value.pa_name,
+                    fa_name: value.fa_name,
+                    en_languages: value.en_languages,
+                    pa_languages: value.pa_languages,
+                    fa_languages: value.fa_languages,
+                    en_duration: value.en_duration,
+                    pa_duration: value.pa_duration,
+                    fa_duration: value.fa_duration,
+                    class_start_time: dayjs(doc.data().class_start_time).format(
+                      'hh:mm A'
+                    ),
+                    id: doc.id,
+                  })
+              })
+            }
+          })
+          this.registeClasses = items
+          this.is_loading = false
+          console.log('something went =============', items)
+        },
+        (err) => {
+          this.is_loading = false
+          console.log('something went wrong', err)
+        }
+      )
     },
   },
 }
@@ -280,7 +333,7 @@ export default {
       color: @color-secondary;
     }
     &-bacground-div {
-      background-color: #5361df24;
+      background-color: #28aae20f;
       width: 100%;
       height: 400px;
       position: absolute;

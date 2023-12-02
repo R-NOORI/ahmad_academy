@@ -49,6 +49,8 @@ import {
   faAnglesLeft,
   faAngleLeft,
   faAngleRight,
+  faLink,
+  faCalendar,
 } from '@fortawesome/free-solid-svg-icons'
 import { faUser } from '@fortawesome/free-regular-svg-icons'
 import {
@@ -99,7 +101,9 @@ library.add(
   faLanguage,
   faArrowLeft,
   faAngleLeft,
-  faAngleRight
+  faAngleRight,
+  faLink,
+  faCalendar
 )
 
 const i18n = createI18n({

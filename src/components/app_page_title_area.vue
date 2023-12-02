@@ -2,7 +2,11 @@
   <div class="page-title-area">
     <div class="page-title-area-content">
       <div class="page-title-area-content-title">
-        {{ $t(`pageTitleArea.${title}`).toUpperCase() }}
+        {{
+          translate
+            ? title.toUpperCase()
+            : $t(`pageTitleArea.${title}`).toUpperCase()
+        }}
       </div>
       <div class="page-title-area-content-path changeDirection">
         <el-breadcrumb>
@@ -25,7 +29,7 @@
 import store from '@/store'
 export default {
   name: 'app_page_title_area',
-  props: ['currentPath', 'title'],
+  props: ['currentPath', 'title', 'translate'],
   data() {
     return {
       data: [],

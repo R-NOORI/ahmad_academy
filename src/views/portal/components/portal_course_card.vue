@@ -1,6 +1,9 @@
 <template>
   <div class="portal-course-card">
-    <img class="card-image" :src="courseImageLink" />
+    <img
+      class="card-image"
+      :src="require(`@/assets/course-page/${imageName}`)"
+    />
     <div
       :class="
         isLanguage == 'EN'
@@ -12,23 +15,45 @@
       <div class="portal-course-card-content-items">
         <div class="portal-course-card-content-items-info">
           <p>
-            <font-awesome-icon class="card-icon" :icon="['fas', 'language']" />
+            <font-awesome-icon
+              :class="
+                isLanguage == 'EN'
+                  ? 'card-icon text-left'
+                  : 'card-icon text-right'
+              "
+              :icon="['fas', 'language']"
+            />
             {{ language }}
           </p>
           <p>
             <font-awesome-icon
-              class="card-icon"
-              :icon="['fas', 'clipboard-list']"
+              :class="
+                isLanguage == 'EN'
+                  ? 'card-icon text-left'
+                  : 'card-icon text-right'
+              "
+              :icon="['fas', 'calendar']"
             />
-            {{ lessons }}
+            {{ duration }}
           </p>
           <p>
-            <font-awesome-icon class="card-icon" :icon="['fa', 'clock']" />
+            <font-awesome-icon
+              :class="
+                isLanguage == 'EN'
+                  ? 'card-icon text-left'
+                  : 'card-icon text-right'
+              "
+              :icon="['fa', 'clock']"
+            />
             {{ startTime }}
           </p>
           <p>
             <font-awesome-icon
-              class="card-icon"
+              :class="
+                isLanguage == 'EN'
+                  ? 'card-icon text-left'
+                  : 'card-icon text-right'
+              "
               :icon="['fas', 'money-check']"
             />
             {{
@@ -44,16 +69,13 @@
         />
         <img v-else src="@/assets/portal-page/pay.png" />
       </div>
-      <button @click="openInNewTab(zoomLink)">
+      <button @click="openInNewTab(link)">
+        <font-awesome-icon style="margin: 0px 10px" :icon="['fas', 'link']" />
         {{ $t('portalPage.btn2') }}
       </button>
       <div
         class="portal-course-card-content-link"
-        @click="
-          this.$router.push(
-            `/course/course-details/${courseId}/${instructorId}`
-          )
-        "
+        @click="this.$router.push(`/course/course-details/${type}/${courseId}`)"
       >
         {{ $t('portalPage.message3Details') }}
       </div>
@@ -67,15 +89,15 @@ import store from '@/store'
 export default {
   name: 'course-card',
   props: [
-    'instructorId',
     'courseId',
-    'courseImageLink',
+    'imageName',
     'courseTitle',
     'language',
-    'lessons',
     'feeAmount',
     'startTime',
-    'zoomLink',
+    'duration',
+    'type',
+    'link',
   ],
   computed: {
     isLanguage: () => store.state.user.language,
@@ -136,8 +158,13 @@ export default {
           font-weight: 600;
           margin: 0px;
           padding: 0px;
+          .text-left {
+            margin-right: 5px;
+          }
+          .text-right {
+            margin-left: 5px;
+          }
           .card-icon {
-            margin: 0px 10px;
             width: 17px;
           }
         }
@@ -160,10 +187,11 @@ export default {
       padding: 10px 15px;
       font-size: 14px;
       border-radius: 6px;
+      transition: 0.8s;
       &:hover {
         cursor: pointer;
         transition: 0.8s;
-        background-color: @color-primary;
+        background-color: @color-light;
         color: #ffffff;
       }
     }
@@ -173,7 +201,9 @@ export default {
       color: @color-primary;
       font-size: 13px;
       width: 100%;
+      transition: 0.8s;
       &:hover {
+        transition: 0.8s;
         color: red;
         cursor: pointer;
         font-weight: 600;

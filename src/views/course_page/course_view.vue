@@ -11,68 +11,98 @@
       :element-loading-svg="svg"
       element-loading-svg-view-box="-10, -10, 50, 50"
     >
-      <div class="search-content">
-        <p>
-          {{ $t('coursesPage.total') }} {{ total_records }}
-          {{ $t('coursesPage.courses') }}
-        </p>
-        <div class="search-content-field">
-          <input
-            :placeholder="$t('coursesPage.search_by_name') + '*'"
-            v-model="search_value"
-          />
-          <font-awesome-icon
-            class="search-content-field-icon"
-            :icon="['fas', 'magnifying-glass']"
-          />
+      <div class="tab-content">
+        <div class="tab-content-items">
+          <div
+            :class="
+              tab == 'all_courses'
+                ? 'tab-content-items-active'
+                : 'tab-content-items-deactive'
+            "
+            @click="handleTabChange('all_courses')"
+          >
+            {{ $t('coursesPage.title3') }}
+          </div>
+          <div
+            @click="handleTabChange('all_classes')"
+            :class="
+              tab == 'all_classes'
+                ? 'tab-content-items-active'
+                : 'tab-content-items-deactive'
+            "
+          >
+            {{ $t('coursesPage.title4') }}
+          </div>
         </div>
+        <p>
+          {{ $t('coursesPage.total') }}
+          {{ tab == 'all_courses' ? courses.length : classes.length }}
+          {{
+            tab == 'all_courses'
+              ? $t('coursesPage.courses')
+              : $t('coursesPage.classes')
+          }}
+        </p>
       </div>
       <div class="course-list">
         <CourseCard
-          @click="
-            this.$router.push(
-              `/course/course-details/${item.id}/${item.instructor_id}`
-            )
-          "
-          v-for="(item, index) in search_value == '' || search_value == null
-            ? courses
-            : searchCourseValue"
+          @click="this.$router.push(`/course/course-details/course/${item.id}`)"
+          v-for="(item, index) in courses"
           :key="index"
-          :courseImageLink="item.image_link"
-          :courseTitle="item.title"
-          :lessons="item.lessons"
-          :duration="item.duration"
-          :courseNewPrice="item.new_fees"
-          :courseOldPrice="item.old_fees"
+          :imageName="item.image_name"
+          :courseTitle="
+            selectLanguage == 'EN'
+              ? item.en_name
+              : selectLanguage == 'PA'
+              ? item.pa_name
+              : item.fa_name
+          "
+          :language="
+            selectLanguage == 'EN'
+              ? item.en_languages
+              : selectLanguage == 'PA'
+              ? item.pa_languages
+              : item.fa_languages
+          "
+          :duration="
+            selectLanguage == 'EN'
+              ? item.en_duration
+              : selectLanguage == 'PA'
+              ? item.pa_duration
+              : item.fa_duration
+          "
+          :fee="item.fee"
+          type="course"
+          v-show="tab == 'all_courses' ? true : false"
         />
-      </div>
-      <el-pagination
-        v-show="search_value == '' ? true : false"
-        v-model:current-page="current_page"
-        style="margin-top: 50px"
-        background
-        layout="prev, pager, next"
-        :default-page-size="per_page"
-        :total="total_records"
-        @next-click="getNextCourse"
-        @prev-click="getPreCourse"
-        :hide-on-single-page="true"
-      />
-      <div class="course-list" v-show="search_value == '' ? false : true">
         <CourseCard
-          v-for="(item, index) in searchCourseValue"
+          v-for="(item, index) in classes"
           :key="index"
-          @click="
-            this.$router.push(
-              `/course/course-details/${item.id}/${item.instructor_id}`
-            )
+          @click="this.$router.push(`/course/course-details/class/${item.id}`)"
+          :imageName="item.image_name"
+          :courseTitle="
+            selectLanguage == 'EN'
+              ? item.en_name
+              : selectLanguage == 'PA'
+              ? item.pa_name
+              : item.fa_name
           "
-          :courseImageLink="item.image_link"
-          :courseTitle="item.title"
-          :lessons="item.lessons"
-          :duration="item.duration"
-          :courseNewPrice="item.new_fees"
-          :courseOldPrice="item.old_fees"
+          :language="
+            selectLanguage == 'EN'
+              ? item.en_languages
+              : selectLanguage == 'PA'
+              ? item.pa_languages
+              : item.fa_languages
+          "
+          :duration="
+            selectLanguage == 'EN'
+              ? item.en_duration
+              : selectLanguage == 'PA'
+              ? item.pa_duration
+              : item.fa_duration
+          "
+          :fee="item.fee"
+          v-show="tab == 'all_classes' ? true : false"
         />
       </div>
     </div>
@@ -83,11 +113,17 @@
 import { db } from '@/firebase/config'
 import CourseCard from './components/course_card.vue'
 import AppPageTitleArea from '@/components/app_page_title_area.vue'
+import AllClasses from '@/json/classes'
+import AllCourses from '@/json/courses'
+import store from '@/store'
+// import imeg from ''
+
 export default {
   name: 'course-page',
   components: { CourseCard, AppPageTitleArea },
   data() {
     return {
+      tab: 'all_courses',
       svg: `
         <path class="path" d="
           M 30 15
@@ -98,28 +134,22 @@ export default {
           L 15 15
         " style="stroke-width: 4px; fill: rgba(0, 0, 0, 0)"/>
       `,
-      is_loading: true,
-      search_value: '',
+      classes: [],
       courses: [],
-      all_courses: [],
-      total_records: 0,
-      current_page: 1,
-      per_page: 6,
     }
   },
   async mounted() {
-    await this.getAllCourse()
-    await this.getCourse()
+    this.classes = AllClasses
+    this.courses = AllCourses
   },
 
   computed: {
-    searchCourseValue: function () {
-      return this.all_courses.filter((value) => {
-        return value.title.toLowerCase().match(this.search_value.toLowerCase())
-      })
-    },
+    selectLanguage: () => store.state.user.language,
   },
   methods: {
+    handleTabChange(tab) {
+      this.tab = tab
+    },
     async getAllCourse() {
       try {
         var citiesRef = db.collection('course').orderBy('regiser_date')
@@ -226,34 +256,49 @@ export default {
     max-width: 1080px;
     padding: 0px 20px;
 
-    .search-content {
+    .tab-content {
       display: flex;
       flex-direction: row;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 40px;
       width: 100%;
-      .search-content-field {
-        background-color: #f5f5f5;
-        padding: 0px 30px;
-        font-size: 14px;
-        height: 60px;
-        width: 200px;
-        border-radius: 10px;
-        font-family: inherit;
+      &-items {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
-        &-icon {
-          font-size: medium;
+        width: 300px;
+        height: 50px;
+        border-radius: 150px;
+        -webkit-box-shadow: 0px 3px 28px 2px rgba(66, 68, 90, 0.09);
+        -moz-box-shadow: 0px 3px 28px 2px rgba(66, 68, 90, 0.09);
+        box-shadow: 0px 3px 28px 2px rgba(66, 68, 90, 0.09);
+        &-deactive,
+        &-active {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-weight: 600;
         }
-        input {
-          background-color: transparent;
-          outline: none;
-          border: none;
-          font-size: 14px;
-          width: 100%;
+        &-deactive {
+          height: 50px;
+          width: 50%;
+          &:hover {
+            color: @color-light;
+            cursor: pointer;
+          }
+        }
+        &-active {
+          height: 50px;
+          width: 50%;
+          border-radius: 150px;
+          color: whitesmoke;
+          background-color: @color-secondary;
+          &:hover {
+            cursor: pointer;
+            transition: 0.5s;
+          }
         }
       }
     }

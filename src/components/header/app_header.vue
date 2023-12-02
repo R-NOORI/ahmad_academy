@@ -7,7 +7,7 @@
       <router-link to="/">{{ $t('header.home') }}</router-link>
       <router-link
         to="/course"
-        :class="{ activeNav: this.$route.fullPath == '/course/course-details' }"
+        :class="{ activeNav: this.$route.name == 'courseDetails' }"
         >{{ $t('header.course') }}</router-link
       >
       <router-link to="/contact">{{ $t('header.contact') }}</router-link>
@@ -21,7 +21,7 @@
       <div style="width: 50px"></div>
       <div class="header_btn">
         <el-button
-          color="#525fe1"
+          color="#0677ca"
           size="large"
           @click="handleSignOut()"
           v-if="isLoggendIn"
@@ -33,7 +33,7 @@
           <span>{{ $t('header.signout') }}</span>
         </el-button>
         <el-button
-          color="#525fe1"
+          color="#0677ca"
           size="large"
           @click="() => this.$router.push('/login')"
           v-else
@@ -116,7 +116,7 @@ export default {
   box-sizing: border-box;
   align-items: center;
   height: 80px;
-  z-index: 2;
+  z-index: 10;
   .app_icon {
     width: 40px;
     height: 40px;
@@ -131,8 +131,8 @@ export default {
     justify-content: space-evenly;
     align-items: center;
     .activeNav {
-      color: @color-orange;
-      border-bottom: 2px solid @color-orange;
+      color: @color-light;
+      border-bottom: 2px solid @color-light;
     }
   }
   .header_btn {
@@ -162,17 +162,21 @@ a {
   margin: 0 20px;
   vertical-align: middle;
   font-size: medium;
+  transition: 0.5s;
 
   &:hover {
-    color: #ff8d00;
+    color: @color-light;
+    transition: 0.5s;
   }
 
   &.router-link-exact-active {
+    transition: 0.5s;
     color: @color-secondary;
     border-bottom: 2px solid @color-secondary;
   }
 }
 .example-showcase .el-dropdown-link {
+  transition: 0.5s;
   cursor: pointer;
   color: var(--el-color-primary);
   display: flex;

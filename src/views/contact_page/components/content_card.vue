@@ -50,17 +50,17 @@ export default {
     transition: 0.5s;
     border-radius: 100%;
     margin-bottom: 20px;
-    background-color: rgba(83, 97, 223, 0.174);
+    background-color: rgba(40, 170, 226, 0.085);
     display: flex;
     justify-content: center;
     align-items: center;
     &-icon {
-      color: #5362df;
+      color: @color-secondary;
       transition: 0.5s;
     }
   }
   &:hover {
-    background-color: #f16d11;
+    background-color: @color-secondary;
     transition: 0.5s;
     top: -20px;
     h3,
@@ -72,7 +72,7 @@ export default {
       background-color: #ffffff;
       transition: 0.5s;
       .contact-card-content-icon {
-        color: #f16d11;
+        color: @color-light;
         transition: 0.5s;
       }
     }

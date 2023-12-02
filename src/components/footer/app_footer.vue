@@ -25,13 +25,6 @@
               :icon="['fab', 'facebook-f']"
             />
           </div>
-          <!-- &nbsp; &nbsp;
-          <div class="socail-madia-info-card">
-            <font-awesome-icon
-              style="font-size: 25px"
-              :icon="['fab', 'linkedin-in']"
-            />
-          </div> -->
           &nbsp; &nbsp;
           <div
             class="socail-madia-info-card"
@@ -45,13 +38,6 @@
             <font-awesome-icon
               style="font-size: 25px"
               :icon="['fab', 'instagram']"
-            />
-          </div>
-          &nbsp; &nbsp;
-          <div class="socail-madia-info-card">
-            <font-awesome-icon
-              style="font-size: 25px"
-              :icon="['fab', 'twitter']"
             />
           </div>
         </div>
@@ -147,7 +133,7 @@ export default {
 
 <style lang="less" scoped>
 .footer-container {
-  background-color: @color-primary;
+  background-color: @color-secondary;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -189,7 +175,7 @@ export default {
         &-card {
           width: 50px;
           height: 50px;
-          background-color: #393755;
+          background-color: @color-light;
           margin: 0px;
           border-radius: 5px;
           transition: 0.5s;
@@ -197,7 +183,8 @@ export default {
           justify-content: center;
           align-items: center;
           &:hover {
-            background-color: @color-secondary;
+            color: @color-light;
+            background-color: white;
             transition: 0.5s;
           }
         }
@@ -216,7 +203,7 @@ export default {
         transition: 0.5s;
         margin-bottom: 20px;
         &:hover {
-          color: @color-secondary;
+          color: @color-light;
           cursor: pointer;
           transition: 0.5s;
         }
