@@ -45,14 +45,18 @@ export default {
   flex-direction: row;
   align-content: flex-start;
   align-items: flex-start;
-  margin-bottom: 40px;
+  margin-bottom: 5px;
   h3,
   p {
     margin: 0px;
   }
   &-image {
     border-radius: 100%;
-    padding: 15px 17px;
+    padding: 10px 13px;
+    img {
+      width: 25px;
+      height: 25px;
+    }
   }
   .margin-left {
     p,
@@ -67,16 +71,16 @@ export default {
     }
   }
   &-content {
-    padding-top: 10px;
+    padding-top: 7px;
     h3 {
-      font-size: 20px;
+      font-size: 17px;
       color: #231f40;
-      margin-bottom: 8px;
+      margin-bottom: 4px;
     }
     p {
       color: #6f6b80;
-      font-size: 16px;
-      line-height: 32px;
+      font-size: 13px;
+      line-height: 17px;
     }
   }
 }

@@ -11,7 +11,6 @@
     "
   >
     <div
-      class=""
       :class="
         getLanguage == 'EN'
           ? 'elementor-images margin-right'
@@ -62,9 +61,35 @@
       :delay="350"
     >
       <h1>{{ $t('aboutPage.title1') }}</h1>
+
       <p>
         {{ $t('aboutPage.title1Details') }}
       </p>
+      <h1>{{ $t('aboutPage.title2') }}</h1>
+      <AboutCard
+        imageIcon="book"
+        :title="this.$t('aboutPage.title2_1Details')"
+        :body="this.$t('aboutPage.title2_2Details')"
+        backgroundColor="background-color: #ffa41b1a"
+      />
+      <AboutCard
+        imageIcon="student"
+        :title="this.$t('aboutPage.title2_3Details')"
+        :body="this.$t('aboutPage.title2_4Details')"
+        backgroundColor="background-color: #525FE11A;"
+      />
+      <AboutCard
+        imageIcon="reward"
+        :title="this.$t('aboutPage.title2_5Details')"
+        :body="this.$t('aboutPage.title2_6Details')"
+        backgroundColor="background-color: #FB7C561A;"
+      />
+      <AboutCard
+        imageIcon="teacher"
+        :title="this.$t('aboutPage.title2_7Details')"
+        :body="this.$t('aboutPage.title2_8Details')"
+        backgroundColor="background-color: #FB7C561A;"
+      />
     </div>
   </div>
   <div class="what-we-offer">
@@ -254,11 +279,12 @@
 
 <script>
 import AppPageTitleArea from '@/components/app_page_title_area.vue'
+import AboutCard from './components/about-card.vue'
 import AboutItemCard from './components/about-item-card.vue'
 import store from '@/store'
 export default {
   name: 'course-page',
-  components: { AppPageTitleArea, AboutItemCard },
+  components: { AppPageTitleArea, AboutCard, AboutItemCard },
   data() {
     return {
       scrollValue: 20,
@@ -280,35 +306,34 @@ export default {
 }
 .who-we-are {
   background-color: #ffff;
-  max-width: 1090px;
+  max-width: 1300px;
   border: 1px solid blacks;
   display: flex;
   flex-direction: row;
-  align-content: space-between;
-  justify-content: space-between;
   margin: 0px auto;
-
   .elementor-container {
-    width: 50%;
+    width: 40%;
     display: flex;
     flex-direction: column;
     align-content: flex-start;
+    padding: 20px;
 
     h4 {
       font-size: 16px;
       margin: 0px;
     }
-    p {
-      line-height: 1.5;
-      color: #6b6b80;
-      font-size: 20px;
-      text-align: justify;
-      text-justify: inter-word;
-    }
     h1 {
       font-size: 40px;
-      // color: @color-secondary;
-      margin: 0px;
+      color: @color-secondary;
+
+      margin: 0px 0px 20px 0px;
+    }
+    p {
+      margin: 0px 0px 20px 0px;
+      color: #6b6b80;
+      font-size: 14px;
+      text-align: justify;
+      text-justify: inter-word;
     }
   }
   .margin-left {
@@ -342,7 +367,7 @@ export default {
         width: 250px;
         height: 250px;
         top: 20%;
-        left: -25%;
+        left: -15%;
         z-index: -1;
       }
     }
