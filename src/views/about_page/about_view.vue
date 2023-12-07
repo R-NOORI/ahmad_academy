@@ -92,6 +92,267 @@
       />
     </div>
   </div>
+  <div
+    :class="
+      getLanguage == 'EN'
+        ? 'terms-and-conditions align-text-left'
+        : 'terms-and-conditions align-text-right'
+    "
+  >
+    <el-divider content-position="center"
+      ><p class="title_1">{{ $t('aboutPage.title3') }}</p></el-divider
+    >
+    <div class="terms-and-conditions-items">
+      <div class="terms-and-conditions-items-info">
+        <h2
+          v-motion
+          :initial="{ opacity: 0, y: -100 }"
+          :enter="{
+            opacity: 1,
+            y: 0,
+            transition: {
+              mass: 1.5,
+            },
+          }"
+          :visible="{
+            opacity: 1,
+            y: 0,
+            transition: {
+              mass: 1.5,
+            },
+          }"
+          :delay="200"
+        >
+          {{ $t('aboutPage.title3_1Details') }}
+        </h2>
+        <p
+          v-motion
+          :initial="{ opacity: 0, x: -100 }"
+          :enter="{
+            opacity: 1,
+            x: 0,
+            transition: {
+              mass: 1,
+            },
+          }"
+          :visible="{
+            opacity: 1,
+            x: 0,
+            transition: {
+              mass: 1,
+            },
+          }"
+        >
+          <span> {{ $t('aboutPage.title3_2Details') }} </span>
+          {{ $t('aboutPage.title3_3Details') }}
+        </p>
+        <p
+          v-motion
+          :initial="{ opacity: 0, x: -100 }"
+          :enter="{
+            opacity: 1,
+            x: 0,
+            transition: {
+              mass: 1.2,
+            },
+          }"
+          :visible="{
+            opacity: 1,
+            x: 0,
+            transition: {
+              mass: 1.2,
+            },
+          }"
+          :delay="200"
+        >
+          <span> {{ $t('aboutPage.title3_4Details') }} </span>
+          {{ $t('aboutPage.title3_5Details') }}
+        </p>
+        <p
+          v-motion
+          :initial="{ opacity: 0, x: -100 }"
+          :enter="{
+            opacity: 1,
+            x: 0,
+            transition: {
+              mass: 1.3,
+            },
+          }"
+          :visible="{
+            opacity: 1,
+            x: 0,
+            transition: {
+              mass: 1.3,
+            },
+          }"
+          :delay="300"
+        >
+          <span> {{ $t('aboutPage.title3_6Details') }} </span>
+          {{ $t('aboutPage.title3_7Details') }}
+        </p>
+        <h3
+          v-motion
+          :initial="{ opacity: 0, x: -100 }"
+          :enter="{
+            opacity: 1,
+            x: 0,
+            transition: {
+              mass: 1.4,
+            },
+          }"
+          :visible="{
+            opacity: 1,
+            x: 0,
+            transition: {
+              mass: 1.4,
+            },
+          }"
+          :delay="400"
+        >
+          {{ $t('aboutPage.title3_8Details') }}
+        </h3>
+      </div>
+      <div class="terms-and-conditions-items-images">
+        <img src="@/assets/about-page/image_12.png" />
+      </div>
+    </div>
+  </div>
+  <div class="terms-and-conditions">
+    <el-divider content-position="center"
+      ><p class="title_1">{{ $t('aboutPage.title4') }}</p></el-divider
+    >
+    <div class="terms-and-conditions-items">
+      <div class="terms-and-conditions-items-images">
+        <img
+          src="@/assets/about-page/image_13.png"
+          v-motion
+          :initial="{ opacity: 0, x: -200 }"
+          :enter="{
+            opacity: 1,
+            x: 0,
+            transition: {
+              mass: 1,
+            },
+          }"
+          :visible="{
+            opacity: 1,
+            x: 0,
+            transition: {
+              mass: 1,
+            },
+          }"
+        />
+      </div>
+      <div class="terms-and-conditions-items-info">
+        <h2
+          v-motion
+          :initial="{ opacity: 0, y: -100 }"
+          :enter="{
+            opacity: 1,
+            y: 0,
+            transition: {
+              mass: 1.5,
+            },
+          }"
+          :visible="{
+            opacity: 1,
+            y: 0,
+            transition: {
+              mass: 1.5,
+            },
+          }"
+        >
+          {{ $t('aboutPage.title4_1Details') }}
+        </h2>
+        <p
+          v-motion
+          :initial="{ opacity: 0, x: 100 }"
+          :enter="{
+            opacity: 1,
+            x: 0,
+            transition: {
+              mass: 1,
+            },
+          }"
+          :visible="{
+            opacity: 1,
+            x: 0,
+            transition: {
+              mass: 1,
+            },
+          }"
+        >
+          <span> {{ $t('aboutPage.title4_2Details') }}</span>
+          {{ $t('aboutPage.title4_3Details') }}
+        </p>
+        <p
+          v-motion
+          :initial="{ opacity: 0, x: 100 }"
+          :enter="{
+            opacity: 1,
+            x: 0,
+            transition: {
+              mass: 1.2,
+            },
+          }"
+          :visible="{
+            opacity: 1,
+            x: 0,
+            transition: {
+              mass: 1.2,
+            },
+          }"
+          :delay="100"
+        >
+          <span>{{ $t('aboutPage.title4_4Details') }}</span>
+          {{ $t('aboutPage.title4_5Details') }}
+        </p>
+        <p
+          v-motion
+          :initial="{ opacity: 0, x: 100 }"
+          :enter="{
+            opacity: 1,
+            x: 0,
+            transition: {
+              mass: 1.3,
+            },
+          }"
+          :visible="{
+            opacity: 1,
+            x: 0,
+            transition: {
+              mass: 1.3,
+            },
+          }"
+          :delay="200"
+        >
+          <span>{{ $t('aboutPage.title4_6Details') }}</span>
+          {{ $t('aboutPage.title4_7Details') }}
+        </p>
+        <h3
+          v-motion
+          :initial="{ opacity: 0, x: 100 }"
+          :enter="{
+            opacity: 1,
+            x: 0,
+            transition: {
+              mass: 1.4,
+            },
+          }"
+          :visible="{
+            opacity: 1,
+            x: 0,
+            transition: {
+              mass: 1.4,
+            },
+          }"
+          :delay="300"
+        >
+          {{ $t('aboutPage.title4_8Details') }}
+        </h3>
+      </div>
+    </div>
+  </div>
   <div class="what-we-offer">
     <div class="what-we-offer-content">
       <h4
@@ -168,56 +429,80 @@
 
     <img
       v-motion
-      :initial="{ opacity: 0, y: 100 }"
+      :initial="{ opacity: 0, y: 150 }"
       :enter="{
         opacity: 1,
         y: 0,
+        transition: {
+          mass: 1,
+        },
       }"
       :visible="{
         opacity: 1,
         y: 0,
+        transition: {
+          mass: 1,
+        },
       }"
       src="@/assets/about-page/image_6.png"
       style="height: 180px; width: 270px"
     />
     <img
       v-motion
-      :initial="{ opacity: 0, y: 100 }"
+      :initial="{ opacity: 0, y: 150 }"
       :enter="{
         opacity: 1,
         y: 0,
+        transition: {
+          mass: 1,
+        },
       }"
       :visible="{
         opacity: 1,
         y: 0,
+        transition: {
+          mass: 1,
+        },
       }"
       style="height: 370px; width: 270px"
       src="@/assets/about-page/image_11.png"
     />
     <img
       v-motion
-      :initial="{ opacity: 0, y: 100 }"
+      :initial="{ opacity: 0, y: 150 }"
       :enter="{
         opacity: 1,
         y: 0,
+        transition: {
+          mass: 1,
+        },
       }"
       :visible="{
         opacity: 1,
         y: 0,
+        transition: {
+          mass: 1,
+        },
       }"
       style="height: 200px; width: 270px"
       src="@/assets/about-page/image_8.png"
     />
     <img
       v-motion
-      :initial="{ opacity: 0, y: 100 }"
+      :initial="{ opacity: 0, y: 150 }"
       :enter="{
         opacity: 1,
         y: 0,
+        transition: {
+          mass: 1,
+        },
       }"
       :visible="{
         opacity: 1,
         y: 0,
+        transition: {
+          mass: 1,
+        },
       }"
       style="height: 300px; width: 270px"
       src="@/assets/about-page/image_9.png"
@@ -233,7 +518,7 @@
     <div
       class="our-info-content-mission"
       v-motion
-      :initial="{ opacity: 0, y: 100 }"
+      :initial="{ opacity: 0, y: 150 }"
       :enter="{
         opacity: 1,
         y: 0,
@@ -255,7 +540,7 @@
     <div
       class="our-info-content-vision"
       v-motion
-      :initial="{ opacity: 0, y: 100 }"
+      :initial="{ opacity: 0, y: 150 }"
       :enter="{
         opacity: 1,
         y: 0,
@@ -307,7 +592,6 @@ export default {
 .who-we-are {
   background-color: #ffff;
   max-width: 1300px;
-  border: 1px solid blacks;
   display: flex;
   flex-direction: row;
   margin: 0px auto;
@@ -325,7 +609,6 @@ export default {
     h1 {
       font-size: 40px;
       color: @color-secondary;
-
       margin: 0px 0px 20px 0px;
     }
     p {
@@ -376,7 +659,56 @@ export default {
     }
   }
 }
+.terms-and-conditions {
+  max-width: 1300px;
+  margin: 150px auto 0px auto;
+  display: flex;
+  flex-direction: column;
+  .title_1 {
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    color: @color-secondary;
+    text-align: center;
+  }
+  &-items {
+    display: flex;
+    flex-direction: row;
+    margin-top: 70px;
 
+    &-info {
+      width: 50%;
+      text-align: left;
+      h2 {
+        font-size: 30px;
+        font-weight: 700;
+        color: @color-secondary;
+      }
+      p {
+        margin: 0px 0px 20px 0px;
+        color: #6b6b80;
+        font-size: 17px;
+        text-align: justify;
+        text-justify: inter-word;
+        span {
+          font-size: 20px;
+          font-weight: 700;
+          color: @color-primary;
+        }
+      }
+      h3 {
+        color: @color-light;
+      }
+    }
+    &-images {
+      width: 50%;
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+}
 .what-we-offer {
   background-size: 100% 100%;
   background-image: url('../../assets/bg.jpg');
@@ -429,7 +761,6 @@ export default {
     }
   }
 }
-
 .scroll-images {
   max-width: 1200px;
   margin: 0px auto;
@@ -467,7 +798,6 @@ export default {
     margin: 0px 15px;
   }
 }
-
 .our-info-content {
   max-width: 1100px;
   margin: 0px auto;
@@ -482,7 +812,7 @@ export default {
       margin: 0px;
     }
     h1 {
-      font-size: 35px;
+      font-size: 30px;
       color: #231f40;
       margin: 15px 0px 40px 0px;
       width: 100%;

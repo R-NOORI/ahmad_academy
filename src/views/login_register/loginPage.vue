@@ -239,7 +239,7 @@ export default {
       try {
         this.email_is_exist = false
         const collectionRef = db
-          .collection('users')
+          .collection('students')
           .where('email_address', '==', email)
         var res = await collectionRef.get()
         if (res.docs.length > 0) {
@@ -253,7 +253,7 @@ export default {
       try {
         this.user_name_is_exist = false
         const collectionRef = db
-          .collection('users')
+          .collection('students')
           .where('user_name', '==', userName)
         var res = await collectionRef.get()
         if (res.docs.length > 0) {
@@ -271,10 +271,10 @@ export default {
       if (this.email_is_exist === false && this.user_name_is_exist === false) {
         console.log('submitted', values)
         try {
-          const collectionRef = db.collection('users')
+          const collectionRef = db.collection('students')
           await collectionRef.add({
             register_type: 'un_register',
-            account_status: 'deactive',
+            account_status: 'active',
             email_address: values.email,
             password: '',
             profile_image: '',
@@ -301,7 +301,7 @@ export default {
     async getUserInfo(email) {
       try {
         const userRef = db
-          .collection('users')
+          .collection('students')
           .where('email_address', '==', email)
         const res = await userRef.get()
         console.log(res.docs[0].data())

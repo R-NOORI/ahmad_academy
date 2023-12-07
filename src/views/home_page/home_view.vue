@@ -1,4 +1,14 @@
 <template>
+  <div class="background-image">
+    <el-carousel indicator-position="none" style="height: 600px">
+      <el-carousel-item v-for="item in 4" :key="item">
+        <!-- <img src="@/assets/about-page/image_2.png" /> -->
+        <img
+          src="https://images.pexels.com/photos/531880/pexels-photo-531880.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+        />
+      </el-carousel-item>
+    </el-carousel>
+  </div>
   <div class="container">
     <div class="main-content">
       <div
@@ -17,6 +27,29 @@
         <h5>
           {{ $t('homePage.title3') }}
         </h5>
+      </div>
+
+      <!-- <div
+        v-motion
+        :initial="{ opacity: 0, y: -100 }"
+        :enter="{ opacity: 1, y: 0 }"
+        :delay="400"
+        class="hero_image"
+      >
+        <img src="@/assets/hero_image_1.png" />
+      </div> -->
+    </div>
+    <div class="main-image">
+      <div
+        :class="
+          getLanguage == 'EN'
+            ? 'main-image-container text_left'
+            : 'main-image-container text_right'
+        "
+      >
+        <p>
+          {{ $t('homePage.title5') }}
+        </p>
         <AppButon
           @click="this.$router.push('/about')"
           :btn-text="$t('homePage.getStarted')"
@@ -25,15 +58,6 @@
             getLanguage == 'EN' ? 'arrow-right' : 'arrow-left',
           ]"
         />
-      </div>
-      <div
-        v-motion
-        :initial="{ opacity: 0, y: -100 }"
-        :enter="{ opacity: 1, y: 0 }"
-        :delay="400"
-        class="hero_image"
-      >
-        <img src="@/assets/hero_image_1.png" />
       </div>
     </div>
     <div class="sub-content">
@@ -207,14 +231,54 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.el-carousel__item {
+  height: 600px;
+}
+.background-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 600px;
+  z-index: -1;
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
 .container {
+  .main-image {
+    width: 100%;
+    background-size: 100% 100%;
+    background-image: url('@/assets/bg.jpg');
+    text-align: left;
+    .text_left {
+      text-align: left;
+    }
+    .text_right {
+      text-align: right;
+    }
+    &-container {
+      margin: 0px auto;
+      padding: 20px;
+      max-width: 1140px;
+      p {
+        margin: 0px 0px 20px 0px;
+        color: @color-primary;
+        font-size: 18px;
+        text-align: justify;
+        text-justify: inter-word;
+        font-weight: 600;
+      }
+    }
+  }
   .main-content {
-    margin: 30px auto;
-    height: 700px;
+    margin: 60px auto 0px auto;
+    max-width: 1140px;
+    height: 458px;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    padding-bottom: 50px;
+    flex-direction: column;
+    justify-items: flex-end;
     .hero_text_left {
       text-align: left;
     }
@@ -231,25 +295,28 @@ export default {
       h4 {
         font-weight: 800;
         font-size: 16px;
-        color: #525fe1;
+        // color: #525fe1;
+        color: white;
       }
       h1 {
         font-size: 72px;
         margin: 0;
+        color: white;
       }
       h5 {
         font-size: 16px;
-        color: #54595f;
+        // color: #54595f;
+        color: white;
       }
     }
-    .hero_image {
-      width: 700px;
-      // margin-left: 80px;
-      img {
-        width: 100%;
-        // height: 800px;
-      }
-    }
+    // .hero_image {
+    //   width: 700px;
+    //   // margin-left: 80px;
+    //   img {
+    //     width: 100%;
+    //     // height: 800px;
+    //   }
+    // }
   }
   .sub-content {
     margin-top: 100px;

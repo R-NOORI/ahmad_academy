@@ -10,7 +10,7 @@
   <div class="course-details-page" v-else>
     <AppPageTitleArea
       :currentPath="path_value.split('/')"
-      :title="course_title"
+      :title="course.title"
       translate="true"
     />
     <div class="course-img">
@@ -25,41 +25,23 @@
     >
       <div class="course-info-summary">
         <h1>
-          {{
-            selectLanguage == 'EN'
-              ? course.en_name
-              : selectLanguage == 'PA'
-              ? course.pa_name
-              : course.fa_name
-          }}
+          {{ course.title }}
         </h1>
         <div class="course-description">
           <div
             class="course-description-item_1"
-            v-if="$route.params.type == 'course'"
+            v-if="$route.params.type == 'courses'"
           >
             <h3>{{ $t('courseDetailsPage.courseDescription') }}</h3>
             <p>
-              {{
-                selectLanguage == 'EN'
-                  ? course.en_discription
-                  : selectLanguage == 'PA'
-                  ? course.pa_discription
-                  : course.fa_discription
-              }}
+              {{ course.description }}
             </p>
           </div>
           <div class="course-description-item_2" v-else>
             <h3>{{ $t('courseDetailsPage.course1Details') }}</h3>
             <ol>
               <li v-for="(item, index) in course.subjects" :key="index">
-                {{
-                  selectLanguage == 'EN'
-                    ? item.en_name
-                    : selectLanguage == 'PA'
-                    ? item.pa_name
-                    : item.fa_name
-                }}
+                {{ item.sub_name }}
               </li>
             </ol>
           </div>
@@ -71,7 +53,7 @@
             <h2>{{ $t('courseDetailsPage.online') }}</h2>
             <h2>
               {{
-                $route.params.type == 'course'
+                $route.params.type == 'courses'
                   ? $t('courseDetailsPage.courses')
                   : $t('courseDetailsPage.classes')
               }}
@@ -85,15 +67,12 @@
                   style="margin-right: 10px"
                   :icon="['fa', 'clock']"
                 />
-                &nbsp; {{ $t('courseDetailsPage.duration') }}</span
+                &nbsp; {{ $t('courseDetailsPage.duration') }}
+              </span>
+              <span>
+                {{ course.duration }}
+                {{ $t(`courseDetailsPage.${course.duration_type}`) }}</span
               >
-              <span>{{
-                selectLanguage == 'EN'
-                  ? course.en_duration
-                  : selectLanguage == 'PA'
-                  ? course.pa_duration
-                  : course.fa_duration
-              }}</span>
             </div>
             <el-divider style="margin: 0px" />
             <div class="course-details-items">
@@ -102,15 +81,9 @@
                   style="margin-right: 10px"
                   :icon="['fas', 'chart-simple']"
                 />
-                &nbsp; {{ $t('courseDetailsPage.skillLevel') }}</span
+                &nbsp; {{ $t(`courseDetailsPage.skillLevel`) }}</span
               >
-              <span>{{
-                selectLanguage == 'EN'
-                  ? course.en_skill_level
-                  : selectLanguage == 'PA'
-                  ? course.pa_skill_level
-                  : course.fa_skill_level
-              }}</span>
+              <span>{{ $t(`courseDetailsPage.${course.skill_level}`) }}</span>
             </div>
             <el-divider style="margin: 0px" />
             <div class="course-details-items">
@@ -121,13 +94,7 @@
                 />
                 &nbsp; {{ $t('courseDetailsPage.language') }}</span
               >
-              <span>{{
-                selectLanguage == 'EN'
-                  ? course.en_languages
-                  : selectLanguage == 'PA'
-                  ? course.pa_languages
-                  : course.fa_languages
-              }}</span>
+              <span>{{ course.language }}</span>
             </div>
             <el-divider style="margin: 0px" />
             <div class="course-details-items">
@@ -155,9 +122,9 @@
 
 <script>
 import AppPageTitleArea from '@/components/app_page_title_area.vue'
-import AllClasses from '@/json/classes'
-import AllCourses from '@/json/courses'
 import store from '@/store'
+import { db } from '@/firebase/config'
+
 export default {
   name: 'course-details-page',
   components: { AppPageTitleArea },
@@ -174,7 +141,6 @@ export default {
         " style="stroke-width: 4px; fill: rgba(0, 0, 0, 0)"/>
       `,
       is_loading: true,
-      instructor: {},
       course: {},
       type: '',
       path_value: '/course/courseDetails',
@@ -185,28 +151,16 @@ export default {
     selectLanguage: () => store.state.user.language,
   },
   mounted() {
-    console.log('===============> ', this.$route.params.id)
-    console.log('===============> ', this.$route.params.type)
     this.getCourse(this.$route.params.type, this.$route.params.id)
-    console.log('===============> ', this.course.subjects)
   },
   methods: {
-    getCourse(type, id) {
+    async getCourse(type, id) {
       this.is_loading = true
       try {
-        if (type == 'course') {
-          AllCourses.filter((item) => {
-            if (id == item.id) {
-              this.course = item
-            }
-          })
-        } else {
-          AllClasses.filter((item) => {
-            if (id == item.id) {
-              this.course = item
-            }
-          })
-        }
+        const userRef = db.collection(type).doc(id)
+        const res = await userRef.get()
+        this.course = res.data()
+        console.log(res.data())
         this.is_loading = false
       } catch (error) {
         this.is_loading = false

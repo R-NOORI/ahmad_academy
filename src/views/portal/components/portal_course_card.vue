@@ -1,9 +1,28 @@
 <template>
   <div class="portal-course-card">
-    <img
-      class="card-image"
-      :src="require(`@/assets/course-page/${imageName}`)"
-    />
+    <el-popover
+      placement="top-start"
+      :title="$t('portalPage.title2')"
+      :width="200"
+      trigger="hover"
+      :content="$t('portalPage.title3')"
+    >
+      <template #reference>
+        <button
+          class="image-btn"
+          v-show="type == 'classes' ? true : false"
+          @click="
+            this.$router.push(
+              `/portal/class-marks/${registerClassId}/${courseId}`
+            )
+          "
+        >
+          {{ $t('portalPage.btn3') }}
+        </button>
+      </template>
+    </el-popover>
+    <div></div>
+    <img class="card-image" :src="imageLink" />
     <div
       :class="
         isLanguage == 'EN'
@@ -34,6 +53,7 @@
               "
               :icon="['fas', 'calendar']"
             />
+            {{ $t(`courseDetailsPage.${durationType}`) }}
             {{ duration }}
           </p>
           <p>
@@ -90,12 +110,15 @@ export default {
   name: 'course-card',
   props: [
     'courseId',
-    'imageName',
+    'registerClassId',
+    'examType',
+    'imageLink',
     'courseTitle',
     'language',
     'feeAmount',
     'startTime',
     'duration',
+    'durationType',
     'type',
     'link',
   ],
@@ -128,6 +151,25 @@ export default {
   // text-align: center;
   padding: 0px 15px 20px 15px;
   box-sizing: border-box;
+  position: relative;
+  .image-btn {
+    position: absolute;
+    top: -25px;
+    left: 25px;
+    color: @color-secondary;
+    font-weight: 700;
+    border: 0px;
+    padding: 10px 10px;
+    font-size: 13px;
+    border-radius: 6px;
+    transition: 0.8s;
+    &:hover {
+      cursor: pointer;
+      transition: 0.8s;
+      background-color: @color-light;
+      color: #ffffff;
+    }
+  }
   .card-image {
     width: 100%;
     height: 180px;

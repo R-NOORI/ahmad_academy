@@ -62,7 +62,6 @@ export default {
 .page-title-area {
   width: 100%;
   // height: 215px;
-  background-color: red;
   margin-bottom: 120px;
   padding: 50px 0px;
   background-size: 100% 100%;

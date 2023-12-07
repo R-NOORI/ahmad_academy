@@ -89,6 +89,17 @@ export default [
         component: () => import('../views/portal/portalPage.vue'),
       },
       {
+        path: '/portal/class-marks/:registerClassId/:courseId',
+        name: 'classMarks',
+        meta: {
+          access: [],
+          title: 'course details',
+          icon: 'md-build',
+          transition: 'slide-right',
+        },
+        component: () => import('../views/portal/class_marks.vue'),
+      },
+      {
         path: '/portal/setting',
         name: 'setting',
         meta: {

@@ -161,7 +161,7 @@ export default {
     ...mapActions(['setUserImage', 'removeUserInfo']),
     async getUserInfo(id) {
       try {
-        const userRef = db.collection('users').doc(id)
+        const userRef = db.collection('students').doc(id)
         const res = await userRef.get()
         this.userForm = res.data()
         console.log(res.data())

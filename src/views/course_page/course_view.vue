@@ -5,12 +5,14 @@
       :title="this.$route.name"
     />
     <div
-      class="course-page-content"
       v-loading="is_loading"
       element-loading-text="Loading..."
       :element-loading-svg="svg"
       element-loading-svg-view-box="-10, -10, 50, 50"
-    >
+      class="loading-div"
+      v-if="is_loading"
+    ></div>
+    <div class="course-page-content" v-else>
       <div class="tab-content">
         <div class="tab-content-items">
           <div
@@ -46,61 +48,30 @@
       </div>
       <div class="course-list">
         <CourseCard
-          @click="this.$router.push(`/course/course-details/course/${item.id}`)"
+          @click="
+            this.$router.push(`/course/course-details/courses/${item.id}`)
+          "
           v-for="(item, index) in courses"
           :key="index"
-          :imageName="item.image_name"
-          :courseTitle="
-            selectLanguage == 'EN'
-              ? item.en_name
-              : selectLanguage == 'PA'
-              ? item.pa_name
-              : item.fa_name
-          "
-          :language="
-            selectLanguage == 'EN'
-              ? item.en_languages
-              : selectLanguage == 'PA'
-              ? item.pa_languages
-              : item.fa_languages
-          "
-          :duration="
-            selectLanguage == 'EN'
-              ? item.en_duration
-              : selectLanguage == 'PA'
-              ? item.pa_duration
-              : item.fa_duration
-          "
+          :imageLink="item.image_link"
+          :courseTitle="item.title"
+          :language="item.language"
+          :durationType="item.duration_type"
+          :durationNumber="item.duration"
           :fee="item.fee"
-          type="course"
           v-show="tab == 'all_courses' ? true : false"
         />
         <CourseCard
           v-for="(item, index) in classes"
           :key="index"
-          @click="this.$router.push(`/course/course-details/class/${item.id}`)"
-          :imageName="item.image_name"
-          :courseTitle="
-            selectLanguage == 'EN'
-              ? item.en_name
-              : selectLanguage == 'PA'
-              ? item.pa_name
-              : item.fa_name
+          @click="
+            this.$router.push(`/course/course-details/classes/${item.id}`)
           "
-          :language="
-            selectLanguage == 'EN'
-              ? item.en_languages
-              : selectLanguage == 'PA'
-              ? item.pa_languages
-              : item.fa_languages
-          "
-          :duration="
-            selectLanguage == 'EN'
-              ? item.en_duration
-              : selectLanguage == 'PA'
-              ? item.pa_duration
-              : item.fa_duration
-          "
+          :imageLink="item.image_link"
+          :courseTitle="item.title"
+          :language="item.language"
+          :durationType="item.duration_type"
+          :durationNumber="item.duration"
           :fee="item.fee"
           v-show="tab == 'all_classes' ? true : false"
         />
@@ -113,10 +84,7 @@
 import { db } from '@/firebase/config'
 import CourseCard from './components/course_card.vue'
 import AppPageTitleArea from '@/components/app_page_title_area.vue'
-import AllClasses from '@/json/classes'
-import AllCourses from '@/json/courses'
 import store from '@/store'
-// import imeg from ''
 
 export default {
   name: 'course-page',
@@ -124,6 +92,7 @@ export default {
   data() {
     return {
       tab: 'all_courses',
+      is_loading: false,
       svg: `
         <path class="path" d="
           M 30 15
@@ -139,8 +108,8 @@ export default {
     }
   },
   async mounted() {
-    this.classes = AllClasses
-    this.courses = AllCourses
+    await this.getAllCourse()
+    await this.getAllClasses()
   },
 
   computed: {
@@ -151,8 +120,9 @@ export default {
       this.tab = tab
     },
     async getAllCourse() {
+      this.is_loading = true
       try {
-        var citiesRef = db.collection('course').orderBy('regiser_date')
+        var citiesRef = db.collection('courses')
         var res = await citiesRef.get()
         this.total_records = res.docs.length
         var items = []
@@ -162,40 +132,20 @@ export default {
             id: doc.id,
           })
         })
-        this.all_courses = items
-      } catch (error) {
-        console.log('something went wrong', error)
-      }
-    },
-    async getCourse() {
-      try {
-        var citiesRef = db
-          .collection('course')
-          .orderBy('regiser_date')
-          .limit(this.per_page)
-        var res = await citiesRef.get()
-        var items = []
-        res.forEach((doc) => {
-          items.push({
-            ...doc.data(),
-            id: doc.id,
-          })
-        })
         this.courses = items
+        console.log(items)
         this.is_loading = false
       } catch (error) {
         this.is_loading = false
+
         console.log('something went wrong', error)
       }
     },
-    async getNextCourse() {
+    async getAllClasses() {
       try {
-        var citiesRef = db
-          .collection('course')
-          .orderBy('regiser_date')
-          .startAfter(this.courses[this.courses.length - 1].regiser_date)
-          .limit(this.per_page)
+        var citiesRef = db.collection('classes')
         var res = await citiesRef.get()
+        this.total_records = res.docs.length
         var items = []
         res.forEach((doc) => {
           items.push({
@@ -203,35 +153,7 @@ export default {
             id: doc.id,
           })
         })
-        if (items.length != 0) {
-          this.courses = items
-        } else {
-          console.log('no more data')
-        }
-      } catch (error) {
-        console.log('something went wrong', error)
-      }
-    },
-    async getPreCourse() {
-      try {
-        var citiesRef = db
-          .collection('course')
-          .orderBy('regiser_date')
-          .endBefore(this.courses[0].regiser_date)
-          .limitToLast(this.per_page)
-        var res = await citiesRef.get()
-        var items = []
-        res.forEach((doc) => {
-          items.push({
-            ...doc.data(),
-            id: doc.id,
-          })
-        })
-        if (items.length != 0) {
-          this.courses = items
-        } else {
-          console.log('no more data')
-        }
+        this.classes = items
       } catch (error) {
         console.log('something went wrong', error)
       }
@@ -247,6 +169,11 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  .loading-div {
+    max-width: 1290px;
+    height: 200px;
+    margin: 0px auto;
+  }
   &-content {
     background-color: #ffff;
     display: flex;

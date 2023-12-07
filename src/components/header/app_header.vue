@@ -44,7 +44,7 @@
         </el-button>
       </div>
       <el-dropdown @command="handleCommand" style="margin: 0px 10px">
-        <el-button circle color="#000" size="large">
+        <el-button circle color="#0677ca" size="large">
           <font-awesome-icon :icon="['fas', 'globe']" size="xl" />
         </el-button>
         <template #dropdown>

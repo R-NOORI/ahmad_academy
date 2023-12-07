@@ -1,13 +1,15 @@
 <template>
   <div class="course-card">
     <div class="course-card-image">
-      <img :src="require(`@/assets/course-page/${imageName}`)" />
+      <img :src="imageLink" />
     </div>
     <div class="course-card-content">
       <div class="course-card-content-info">
         <span>
           <font-awesome-icon :icon="['fa', 'clock']" />
-          &nbsp;{{ duration }}
+          &nbsp;
+          {{ durationNumber }}
+          {{ $t(`courseDetailsPage.${durationType}`) }}
         </span>
         <span>
           <font-awesome-icon :icon="['fas', 'language']" />
@@ -35,7 +37,15 @@
 <script>
 export default {
   name: 'course-card',
-  props: ['imageName', 'courseTitle', 'language', 'duration', 'fee', 'type'],
+  props: [
+    'imageLink',
+    'courseTitle',
+    'language',
+    'durationType',
+    'durationNumber',
+    'fee',
+    'type',
+  ],
 }
 </script>
 

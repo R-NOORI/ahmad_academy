@@ -73,33 +73,17 @@
             ? registeClasses
             : searchCourseValue"
           :key="index"
-          :imageName="item.image_name"
-          :courseTitle="
-            language == 'EN'
-              ? item.en_name
-              : language == 'PA'
-              ? item.pa_name
-              : item.fa_name
-          "
-          :language="
-            language == 'EN'
-              ? item.en_languages
-              : language == 'PA'
-              ? item.pa_languages
-              : item.fa_languages
-          "
-          :feeAmount="item.fee_amount"
-          :startTime="item.class_start_time"
+          :imageLink="item.image_link"
+          :courseTitle="item.title"
+          :language="item.language"
+          :feeAmount="item.fee"
+          :startTime="item.format_date"
           :courseId="item.course_id"
+          :registerClassId="item.id"
           :link="item.link"
           :type="item.type"
-          :duration="
-            language == 'EN'
-              ? item.en_duration
-              : language == 'PA'
-              ? item.pa_duration
-              : item.fa_duration
-          "
+          :duration="item.duration"
+          :durationType="item.duration_type"
         />
       </div>
     </div>
@@ -111,8 +95,6 @@ import PortalCourseCard from './components/portal_course_card.vue'
 import { db } from '@/firebase/config'
 import dayjs from 'dayjs'
 import store from '@/store'
-import course from '@/json/courses'
-import classes from '@/json/classes'
 export default {
   components: { PortalCourseCard },
   data() {
@@ -133,90 +115,113 @@ export default {
       userName: '',
       profileImage: '',
       classes: [],
-      course: [],
+      courses: [],
       registeClasses: [],
     }
   },
   async mounted() {
-    this.courses = course
-    this.classes = classes
-    console.log(classes)
-    console.log(course)
-    await this.getRegisterClass(),
-      (this.userId = store.state.user.userId),
+    ;(this.userId = store.state.user.userId),
       (this.userName = store.state.user.userName),
       (this.profileImage = store.state.user.userImage),
-      console.log(store.state.user.userImage)
+      await this.getCourses()
+    await this.getClasses()
+    await this.getRegisterClass()
   },
   computed: {
     language: () => store.state.user.language,
     searchCourseValue: function () {
       return this.registeClasses.filter((value) => {
-        return value.en_name
-          .toLowerCase()
-          .match(this.search_value.toLowerCase())
+        return value.title.toLowerCase().match(this.search_value.toLowerCase())
       })
     },
   },
   methods: {
-    async getRegisterClass() {
-      this.is_loading = true
-      const id = await store.state.user.userId
-      var citiesRef = db
-        .collection('classes')
-        .where('class_status', '==', 'progress')
-        .where('user_id', '==', id)
-      await citiesRef.onSnapshot(
+    getCourses() {
+      var citiesRef = db.collection('courses')
+      citiesRef.onSnapshot(
         (snap) => {
           let items = []
           snap.forEach((doc) => {
-            if (doc.data().type == 'course') {
+            items.push({
+              ...doc.data(),
+              id: doc.id,
+            })
+          })
+          this.courses = items
+        },
+        (err) => {
+          console.log('something went wrong', err)
+        }
+      )
+    },
+    getClasses() {
+      var citiesRef = db.collection('classes')
+      citiesRef.onSnapshot(
+        (snap) => {
+          let items = []
+          snap.forEach((doc) => {
+            items.push({
+              ...doc.data(),
+              id: doc.id,
+            })
+          })
+          this.classes = items
+        },
+        (err) => {
+          console.log('something went wrong', err)
+        }
+      )
+    },
+    async getRegisterClass() {
+      this.is_loading = true
+      var citiesRef = db
+        .collection('register_classes')
+        .where('class_status', '==', 'progress')
+        .where('user_id', '==', this.userId)
+      citiesRef.onSnapshot(
+        (snap) => {
+          let items = []
+          snap.forEach((doc) => {
+            console.log('=>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', doc.data())
+
+            if (doc.data().type == 'courses') {
               return this.courses.forEach((value) => {
-                if (value.id == doc.data().course_id)
+                if (doc.data().course_id == value.id) {
                   return items.push({
                     ...doc.data(),
-                    image_name: value.image_name,
-                    en_name: value.en_name,
-                    pa_name: value.pa_name,
-                    fa_name: value.fa_name,
-                    en_languages: value.en_languages,
-                    pa_languages: value.pa_languages,
-                    fa_languages: value.fa_languages,
-                    en_duration: value.en_duration,
-                    pa_duration: value.pa_duration,
-                    fa_duration: value.fa_duration,
-                    class_start_time: dayjs(doc.data().class_start_time).format(
+                    title: value.title,
+                    duration: value.duration,
+                    duration_type: value.duration_type,
+                    language: value.language,
+                    image_link: value.image_link,
+                    format_date: dayjs(doc.data().class_start_time).format(
                       'hh:mm A'
                     ),
                     id: doc.id,
                   })
+                }
               })
             } else {
               return this.classes.forEach((value) => {
-                if (value.id == doc.data().course_id)
+                if (doc.data().course_id == value.id) {
                   return items.push({
                     ...doc.data(),
-                    image_name: value.image_name,
-                    en_name: value.en_name,
-                    pa_name: value.pa_name,
-                    fa_name: value.fa_name,
-                    en_languages: value.en_languages,
-                    pa_languages: value.pa_languages,
-                    fa_languages: value.fa_languages,
-                    en_duration: value.en_duration,
-                    pa_duration: value.pa_duration,
-                    fa_duration: value.fa_duration,
-                    class_start_time: dayjs(doc.data().class_start_time).format(
+                    title: value.title,
+                    duration: value.duration,
+                    duration_type: value.duration_type,
+                    language: value.language,
+                    image_link: value.image_link,
+                    format_date: dayjs(doc.data().class_start_time).format(
                       'hh:mm A'
                     ),
                     id: doc.id,
                   })
+                }
               })
             }
           })
           this.registeClasses = items
           this.is_loading = false
-          console.log('something went =============', items)
         },
         (err) => {
           this.is_loading = false

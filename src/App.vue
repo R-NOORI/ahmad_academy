@@ -64,7 +64,7 @@ body,
 html {
   padding: 0;
   margin: 0;
-  // user-select: none;
+  user-select: none;
 }
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -74,24 +74,28 @@ html {
   color: #2c3e50;
 }
 
-.main {
-  background: url('./assets/bg.jpg');
-  height: 900px;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: 100% 100%;
-}
+// /* Scroll bar stylings */
+// ::-webkit-scrollbar {
+//   width: 10px;
+//   height: 7px;
+// }
 
-// nav {
-//   padding: 30px;
+// /* Track */
+// ::-webkit-scrollbar-track {
+//   // background: var(--lightestgrey);
+//   background-color: transparent;
+// }
 
-//   a {
-//     font-weight: bold;
-//     color: #2c3e50;
+// /* Handle */
+// ::-webkit-scrollbar-thumb {
+//   /* background: #888; */
+//   background: @color-secondary;
+//   border-radius: 3px;
+// }
 
-//     &.router-link-exact-active {
-//       color: #42b983;
-//     }
-//   }
+// /* Handle on hover */
+// ::-webkit-scrollbar-thumb:hover {
+//   /* background: #555; */
+//   background: @color-light;
 // }
 </style>
