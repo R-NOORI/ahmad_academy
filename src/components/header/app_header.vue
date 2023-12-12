@@ -1,7 +1,8 @@
 <template>
   <div :class="isScrolling ? 'scrolledNav' : 'nav'">
     <div class="app_icon">
-      <img src="@/assets/logo.png" />
+      <img src="@/assets/logo_2.png" />
+      <h2>{{ $t('header.title') }}</h2>
     </div>
     <div class="nav_item">
       <router-link to="/">{{ $t('header.home') }}</router-link>
@@ -116,13 +117,25 @@ export default {
   box-sizing: border-box;
   align-items: center;
   height: 80px;
-  z-index: 10;
+  z-index: 9999;
   .app_icon {
-    width: 40px;
     height: 40px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    box-sizing: border-box;
+
     img {
-      width: 40px;
-      height: 40px;
+      width: 50px;
+      height: 50px;
+    }
+    h2 {
+      margin: 0px 10px;
+      font-weight: bold;
+      text-decoration: none;
+      vertical-align: middle;
+      font-size: medium;
+      color: @color-secondary;
     }
   }
 

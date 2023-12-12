@@ -40,6 +40,21 @@
               :icon="['fab', 'instagram']"
             />
           </div>
+          &nbsp; &nbsp;
+          <div
+            class="socail-madia-info-card"
+            @click="
+              () =>
+                openInNewTab(
+                  'https://instagram.com/alnoorsafa.onlineacademy?igshid=OGQ5ZDc2ODk2ZA=='
+                )
+            "
+          >
+            <font-awesome-icon
+              style="font-size: 25px"
+              :icon="['fab', 'youtube']"
+            />
+          </div>
         </div>
       </div>
       <div class="content-info-list">
@@ -112,7 +127,19 @@
         </div>
       </div>
     </div>
-    <p>Copyright 2023 EduVibe | Developed By DevsVibe. All Rights Reserved</p>
+    <p>
+      Copyright 2023 Alnoor Safa Academy |
+      <span
+        @click="
+          () =>
+            openInNewTab(
+              'https://www.facebook.com/aftech.software.co?mibextid=ZbWKwL'
+            )
+        "
+      >
+        Developed By AFTECH</span
+      >. All Rights Reserved
+    </p>
   </div>
 </template>
 <script>
@@ -220,6 +247,17 @@ export default {
     min-width: 90%;
     max-width: 80%;
     margin: 70px 0px 40px 0px;
+    transition: 0.7s;
+    span {
+      text-decoration: underline;
+      transition: 0.7s;
+
+      &:hover {
+        color: @color-primary;
+        cursor: pointer;
+        transition: 0.7s;
+      }
+    }
   }
 }
 </style>

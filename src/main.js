@@ -59,6 +59,7 @@ import {
   faTwitter,
   faTelegram,
   faInstagram,
+  faYoutube,
 } from '@fortawesome/free-brands-svg-icons'
 /* add icons to the library  magnifying-glass */
 library.add(
@@ -103,7 +104,8 @@ library.add(
   faAngleLeft,
   faAngleRight,
   faLink,
-  faCalendar
+  faCalendar,
+  faYoutube
 )
 
 const i18n = createI18n({

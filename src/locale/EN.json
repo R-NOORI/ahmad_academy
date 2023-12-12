@@ -7,7 +7,8 @@
     "about": "About",
     "portal": "Portal",
     "signout": "Sign Out",
-    "loginRegister": "Login / Register"
+    "loginRegister": "Login / Register",
+    "title": "Alnoor Safa Academy .Online"
   },
   "footer": {
     "title1": "Alnoor Safa Academy",
@@ -18,7 +19,7 @@
     "aboutUs": "About Us",
     "newAccount": "New Account",
     "title3": "Contact Info",
-    "address": "275 Quadra Street Victoria Road, New York"
+    "address": "Mawlawi Nasar Complex, Ahmed Shahi Road, Kandahar-Afghanistan"
   },
   "pageTitleArea": {
     "home": "Home",
@@ -34,9 +35,9 @@
   },
   "homePage": {
     "title1": "LEARN NEW THINGS DAILY",
-    "title2": "Education Is A Path To Success In Life",
+    "title2": "Education is a PATH for success in life",
     "title3": "Empower yourself with the knowledge and skills gained through onlineeducation and best instructors.",
-    "title5": "Welcome to Alnoor Safa Academy, it is an online education institution that specializes in providing various subjects according to the needs of students from 1st to 6th grade. Our curriculum includes learning Islam, (Noorani Qaida, Quran, Tajwid, Hadith, Fiqh, Aqidah) as well as more languages. Like Pashto, Dari, English, Arabic. We also cover topics such as Islamic and national history, geography and culture. And more our short-specialized courses expand your knowledge in a particular subject. We offer easy Islamic and modern education through our unique platform.",
+    "title5": "Welcome to Alnoor Safa Academy, it is an online educational institution that has been specialized in providing various subjects according to the necessities of students from grade 1 to grade 6. Our curriculum includes learning Islam, (Noorani Qaida, Quran, Tajwid, Hadith, Fiqh, Aqidah) as well as more languages, like Pashto, Dari, English and Arabic. We also cover topics such as Islamic and national history, geographical and cultural issues. And furthermore our short-specialized courses are also held to boost your knowledge in a particular subject. We responsibly present Islamic and modern education through our unique platform.",
     "getStarted": "Get Started Today",
     "title4": "WHAT WE OFFER",
     "offerTitle1": "Learn New Skills When And Where You Like",
@@ -148,6 +149,7 @@
     "userName": "User Name*",
     "phoneNumber": "Phone Number*",
     "password": "password*",
+    "subject": "Class / Course Name*",
     "title1": "Forget Password",
     "inputTitle1": "Enter email address",
     "inputTitle2": "Enter password",
@@ -159,6 +161,7 @@
     "inputTitle8": "This field must be a valid email",
     "inputTitle9": "The phone number must be 10 digits",
     "inputTitle10": "Password moust be 6 character",
+    "inputTitle11": "Enter class or course name",
     "message1Details": "Email or Password is incorrect",
     "message2Details": "Network Connection Refused",
     "message3Details": "Register successful."

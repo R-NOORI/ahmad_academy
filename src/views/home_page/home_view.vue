@@ -1,15 +1,26 @@
 <template>
   <div class="background-image">
-    <el-carousel indicator-position="none" style="height: 600px">
-      <el-carousel-item v-for="item in 4" :key="item">
-        <!-- <img src="@/assets/about-page/image_2.png" /> -->
-        <img
-          src="https://images.pexels.com/photos/531880/pexels-photo-531880.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-        />
+    <el-carousel
+      indicator-position="none"
+      style="height: 550px"
+      interval="20000"
+    >
+      <el-carousel-item>
+        <img src="@/assets/home-page/image_1.jpg" />
+      </el-carousel-item>
+      <el-carousel-item>
+        <img src="@/assets/home-page/image_2.jpg" />
+      </el-carousel-item>
+      <el-carousel-item>
+        <img src="@/assets/home-page/image_3.jpg" />
+      </el-carousel-item>
+      <el-carousel-item>
+        <img src="@/assets/home-page/image_4.jpg" />
+      </el-carousel-item>
+      <el-carousel-item>
+        <img src="@/assets/home-page/image_5.jpg" />
       </el-carousel-item>
     </el-carousel>
-  </div>
-  <div class="container">
     <div class="main-content">
       <div
         v-motion
@@ -39,27 +50,23 @@
         <img src="@/assets/hero_image_1.png" />
       </div> -->
     </div>
-    <div class="main-image">
-      <div
-        :class="
-          getLanguage == 'EN'
-            ? 'main-image-container text_left'
-            : 'main-image-container text_right'
-        "
-      >
-        <p>
-          {{ $t('homePage.title5') }}
-        </p>
-        <AppButon
-          @click="this.$router.push('/about')"
-          :btn-text="$t('homePage.getStarted')"
-          :right-icon="[
-            'fas',
-            getLanguage == 'EN' ? 'arrow-right' : 'arrow-left',
-          ]"
-        />
-      </div>
+  </div>
+  <div class="main-image">
+    <div class="main-image-container">
+      <p>
+        {{ $t('homePage.title5') }}
+      </p>
+      <AppButon
+        @click="this.$router.push('/course')"
+        :btn-text="$t('homePage.getStarted')"
+        :right-icon="[
+          'fas',
+          getLanguage == 'EN' ? 'arrow-right' : 'arrow-left',
+        ]"
+      />
     </div>
+  </div>
+  <div class="container">
     <div class="sub-content">
       <el-divider content-position="center"
         ><p class="title_1">{{ $t('homePage.title4') }}</p></el-divider
@@ -154,24 +161,42 @@
           </div>
           <div class="details">
             <p class="occupation">
-              {{ item.comment }}
+              "
+              {{
+                getLanguage == 'EN'
+                  ? item.comment
+                  : getLanguage == 'PA'
+                  ? item.p_comment
+                  : item.f_comment
+              }}
+              "
             </p>
-            <p class="name">{{ item.name + ' ' + item.last_name }}</p>
+            <p class="name">
+              {{
+                getLanguage == 'EN'
+                  ? item.name + ' ' + item.last_name
+                  : item.pf_name + ' ' + item.pf_last_name
+              }}
+            </p>
           </div>
         </div>
       </div>
     </div>
   </div>
+  <AppWhatsapp />
 </template>
 
 <script>
 import AppButon from '@/components/app_button.vue'
 import { db } from '@/firebase/config'
 import { ElMessage } from 'element-plus'
+import AppWhatsapp from '@/components/whatsapp_btn.vue'
+
 import store from '@/store'
 export default {
   components: {
     AppButon,
+    AppWhatsapp,
   },
 
   data() {
@@ -187,6 +212,13 @@ export default {
           L 15 15
         " style="stroke-width: 4px; fill: rgba(0, 0, 0, 0)"/>
       `,
+      images: [
+        '../../assets/home-page/image_1.jpg',
+        '../../assets/home-page/image_2.jpg',
+        '../../assets/home-page/image_3.jpg',
+        '../../assets/home-page/image_4.jpg',
+        '../../assets/home-page/image_5.jpg',
+      ],
       instructors: [],
     }
   },
@@ -197,6 +229,10 @@ export default {
     getLanguage: () => store.state.user.language,
   },
   methods: {
+    getImage(imagePath) {
+      console.log(imagePath)
+      return require(imagePath)
+    },
     openInNewTab(url) {
       if (url == '' || url == null) {
         ElMessage({
@@ -232,92 +268,88 @@ export default {
 
 <style lang="less" scoped>
 .el-carousel__item {
-  height: 600px;
+  height: 550px;
+}
+.hero_text_left {
+  text-align: left;
+}
+.hero_text_right {
+  text-align: right;
 }
 .background-image {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 600px;
-  z-index: -1;
+  height: 550px;
+  position: relative;
+
   img {
     width: 100%;
     height: 100%;
   }
-}
-.container {
-  .main-image {
-    width: 100%;
-    background-size: 100% 100%;
-    background-image: url('@/assets/bg.jpg');
-    text-align: left;
-    .text_left {
-      text-align: left;
-    }
-    .text_right {
-      text-align: right;
-    }
-    &-container {
-      margin: 0px auto;
-      padding: 20px;
-      max-width: 1140px;
-      p {
-        margin: 0px 0px 20px 0px;
-        color: @color-primary;
-        font-size: 18px;
-        text-align: justify;
-        text-justify: inter-word;
-        font-weight: 600;
-      }
-    }
-  }
   .main-content {
-    margin: 60px auto 0px auto;
+    margin: 0px auto;
     max-width: 1140px;
-    height: 458px;
-    display: flex;
-    flex-direction: column;
-    justify-items: flex-end;
-    .hero_text_left {
-      text-align: left;
-    }
-    .hero_text_right {
-      text-align: right;
-    }
+    box-sizing: border-box;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
     .hero_text {
-      width: 600px;
+      width: 100%;
+      height: 100%;
       display: flex;
       flex-direction: column;
       align-items: flex-start;
       justify-content: center;
       margin-right: 40px;
       h4 {
+        text-shadow: 0px -1px 50px rgba(0, 0, 0, 0.66);
         font-weight: 800;
         font-size: 16px;
-        // color: #525fe1;
         color: white;
       }
       h1 {
-        font-size: 72px;
+        text-shadow: 4px 3px 0 #7a7a7a;
+        font-size: 70px;
         margin: 0;
         color: white;
+        width: 600px;
       }
       h5 {
+        text-shadow: 0px -1px 50px rgba(0, 0, 0, 0.66);
         font-size: 16px;
-        // color: #54595f;
         color: white;
       }
     }
-    // .hero_image {
-    //   width: 700px;
-    //   // margin-left: 80px;
-    //   img {
-    //     width: 100%;
-    //     // height: 800px;
-    //   }
-    // }
   }
+}
+.main-image {
+  width: 100%;
+  background-size: 130% 130%;
+  background-image: url('@/assets/bg.jpg');
+  .text_left {
+    p {
+      text-align: left;
+    }
+  }
+  .text_right {
+    p {
+      text-align: right;
+    }
+  }
+  &-container {
+    margin: 0px auto;
+    padding: 20px;
+    max-width: 1140px;
+    text-align: center;
+    p {
+      margin: 0px 0px 20px 0px;
+      color: @color-primary;
+    }
+  }
+}
+
+.container {
   .sub-content {
     margin-top: 100px;
     padding: 0 50px;

@@ -179,6 +179,24 @@
                   : 'color: red; text-align: rgiht; margin-top: 5px'
               "
             />
+            <p>{{ $t('loginPage.subject') }}</p>
+            <Field
+              :placeholder="$t('loginPage.inputTitle11')"
+              name="subject"
+              :rules="validateSubject"
+            />
+            <ErrorMessage
+              v-motion
+              :initial="{ opacity: 0, y: -30 }"
+              :enter="{ opacity: 1, y: 0 }"
+              :delay="200"
+              name="subject"
+              :style="
+                language == 'EN'
+                  ? 'color: red; text-align: left; margin-top: 5px'
+                  : 'color: red; text-align: rgiht; margin-top: 5px'
+              "
+            />
             <AppButton
               v-loading="is_loading"
               :element-loading-svg="svg"
@@ -278,6 +296,7 @@ export default {
             email_address: values.email,
             password: '',
             profile_image: '',
+            subject: values.subject,
             phone_number: values.phone,
             register_date: timestamp(),
             user_name: values.username.toLowerCase(),
@@ -360,6 +379,14 @@ export default {
       return true
     },
     validateName(value) {
+      // if the field is empty
+      if (!value) {
+        return this.$t('loginPage.inputTitle7')
+      }
+      // All is good
+      return true
+    },
+    validateSubject(value) {
       // if the field is empty
       if (!value) {
         return this.$t('loginPage.inputTitle7')
