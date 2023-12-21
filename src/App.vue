@@ -1,18 +1,6 @@
 <template>
   <div :class="{ main: routeName == '/' }">
-    <appHeader
-      v-motion
-      :initial="{ opacity: 0, y: -100 }"
-      :enter="{
-        opacity: 1,
-        y: 0,
-      }"
-      :delay="500"
-      v-motion-slide-top
-      v-if="isScrolled"
-      :isScrolling="isScrolled"
-    />
-    <appHeader v-else :isScrolling="isScrolled" />
+    <appHeader />
     <router-view />
     <AppFooter />
   </div>
@@ -21,6 +9,7 @@
 <script>
 import AppHeader from '@/components/header/app_header.vue'
 import AppFooter from './components/footer/app_footer.vue'
+import store from './store'
 export default {
   components: {
     AppHeader,
@@ -42,12 +31,10 @@ export default {
     handleScroll() {
       // Any code to be executed when the window is scrolled
       // console.log('scrolling', window.scrollY)
-      if (window.scrollY > 100) {
-        this.isScrolled = true
-      }
-      if (window.scrollY < 100) {
-        this.isScrolled = false
-      }
+      // const elems = document.getElementsByClassName('nav_phone')
+      // for (let elem of elems) {
+      //   elem.style.display = 'none'
+      // }
       // console.log('is scrolling ', this.isScrolled)
     },
   },
@@ -55,6 +42,7 @@ export default {
     routeName() {
       return this.$router.currentRoute.value.path
     },
+    language: () => store.state.user.language,
   },
 }
 </script>

@@ -236,4 +236,43 @@ export default {
     }
   }
 }
+@media @mobile {
+  .course-page {
+    width: 100%;
+    .loading-div {
+      width: 100%;
+      height: 100px;
+    }
+    &-content {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 0px 15px;
+      .tab-content {
+        margin-bottom: 30px;
+        &-items {
+          height: 45px;
+          width: 200px;
+          border-radius: 150px;
+          &-deactive,
+          &-active {
+            font-weight: 700;
+            width: 50%;
+            font-size: 13px;
+            border-radius: 100px;
+            height: 45px;
+          }
+        }
+        p {
+          font-size: 14px;
+        }
+      }
+      .course-list {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 100%;
+        grid-gap: 1em;
+      }
+    }
+  }
+}
 </style>

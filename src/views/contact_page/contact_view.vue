@@ -279,24 +279,25 @@ export default {
       margin: 0px 0px 100px 0px;
     }
     .contact-container {
-      display: flex;
-      width: 100%;
+      display: grid;
+      grid-template-columns: 50% 45%;
+      justify-content: space-between;
+      grid-gap: 1em;
       .contact-container-cards {
-        width: 50%;
-        display: flex;
-        flex-direction: column;
-        margin: 0px 15px;
+        display: grid;
+        grid-template-rows: 50% 50%;
+        grid-gap: 2em;
         .contact-cards-row {
-          display: flex;
-          flex-direction: row;
+          box-sizing: border-box;
+          display: grid;
+          grid-template-columns: 50% 50%;
+          grid-gap: 2em;
         }
       }
       .contact-form-save {
-        width: 100%;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        margin: 0px 15px;
         input,
         textarea {
           background-color: #f5f5f5;
@@ -328,6 +329,88 @@ export default {
     padding: 100px 20px;
     margin: 0px auto;
     height: 500px;
+  }
+}
+
+@media @tablet {
+  .contact-root {
+    width: 100%;
+    .contact-page {
+      padding: 0px 20px;
+      box-sizing: border-box;
+      h4 {
+        color: @color-secondary;
+      }
+      h1 {
+        margin: 0px 0px 100px 0px;
+      }
+      .contact-container {
+        display: grid;
+        grid-template-columns: 100%;
+        justify-content: space-between;
+        grid-gap: 1em;
+        width: 100%;
+        .contact-container-cards {
+          display: grid;
+          grid-template-rows: auto auto;
+          grid-gap: 1em;
+          .contact-cards-row {
+            display: grid;
+            grid-template-columns: 47% 47%;
+            justify-content: space-between;
+            grid-gap: 1em;
+          }
+        }
+        .contact-form-save {
+          margin-top: 20px;
+        }
+      }
+    }
+  }
+}
+@media @mobile {
+  .contact-root {
+    width: 100%;
+    .contact-page {
+      padding: 0px 10px;
+      box-sizing: border-box;
+      h4 {
+        color: @color-secondary;
+        font-size: 14px;
+      }
+      h1 {
+        margin: 0px 0px 100px 0px;
+        font-size: 25px;
+      }
+      .contact-container {
+        display: grid;
+        grid-template-columns: 100%;
+        justify-content: center;
+        grid-gap: 0px;
+        width: 100%;
+        .contact-container-cards {
+          display: grid;
+          grid-template-rows: auto;
+          justify-content: stretch;
+          grid-gap: 0px;
+          .contact-cards-row {
+            display: grid;
+            grid-template-columns: 100%;
+            justify-content: start;
+            grid-gap: 30px;
+          }
+        }
+        .contact-form-save {
+          margin-top: 20px;
+        }
+      }
+    }
+  }
+  &-map {
+    max-width: 1080px;
+    padding: 0px;
+    margin: 0px auto;
+    height: 300px;
   }
 }
 </style>

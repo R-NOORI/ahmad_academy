@@ -200,4 +200,15 @@ export default {
     }
   }
 }
+@media @tablet {
+  .container {
+    .account-container {
+      padding: 0px 20px;
+      box-sizing: border-box;
+      .reset_form {
+        width: 100%;
+      }
+    }
+  }
+}
 </style>

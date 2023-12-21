@@ -87,4 +87,26 @@ export default {
     }
   }
 }
+@media @mobile {
+  .page-title-area {
+    width: 100%;
+    // height: 215px;
+    margin-bottom: 50px;
+    padding: 30px 0px;
+    &-content {
+      padding-left: 20px;
+      &-title {
+        color: #231f40;
+        font-size: 30px;
+        font-weight: 700;
+        margin-bottom: 10px;
+      }
+      &-path {
+        font-size: 13px;
+        direction: ltr;
+        unicode-bidi: embed;
+      }
+    }
+  }
+}
 </style>

@@ -51,6 +51,8 @@ import {
   faAngleRight,
   faLink,
   faCalendar,
+  faXmark,
+  faBars,
 } from '@fortawesome/free-solid-svg-icons'
 import { faUser } from '@fortawesome/free-regular-svg-icons'
 import {
@@ -105,7 +107,9 @@ library.add(
   faAngleRight,
   faLink,
   faCalendar,
-  faYoutube
+  faYoutube,
+  faXmark,
+  faBars
 )
 
 const i18n = createI18n({

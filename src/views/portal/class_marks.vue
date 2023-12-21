@@ -369,4 +369,151 @@ export default {
     }
   }
 }
+
+@media @tablet {
+  .classs-marks-details-page {
+    .classs-marks-img {
+      height: 400px;
+    }
+    .classs-marks-info {
+      width: 100%;
+      padding: 0px 10px;
+      &-summary {
+        width: 50%;
+        margin: 0px 10px;
+        h1 {
+          font-size: 30px;
+        }
+        .classs-marks-description {
+          width: 100%;
+          padding: 15px;
+          &-item_1 {
+            h3 {
+              font-size: 18px;
+            }
+            p {
+              font-size: 14px;
+              margin: 0px 0px 20px 0px;
+            }
+          }
+          &-item_2 {
+            h3 {
+              font-size: 18px;
+            }
+            .table-bottom {
+              width: 100%;
+              height: 50px;
+              border-radius: 10px;
+              margin-top: 10px;
+              padding: 0px;
+              &-details {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                width: 100%;
+                height: 50px;
+                h4 {
+                  margin: 0px 10px;
+                  font-size: 15px;
+                }
+                span {
+                  font-size: 14px;
+                }
+              }
+            }
+          }
+        }
+      }
+      &-sidebar {
+        min-width: 50%;
+        padding: 0px;
+        &-details {
+          width: 90%;
+          margin-right: 20px;
+          .sidebar-img {
+            height: 200px;
+            padding-top: 20px;
+            h2 {
+              margin: 0px 0px;
+              font-size: 20px;
+              font-weight: 800;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media @mobile {
+  .classs-marks-details-page {
+    .classs-marks-img {
+      height: 300px;
+      border-radius: 5px;
+      margin: 0px 20px;
+      box-sizing: border-box;
+      img {
+        width: 100%;
+        height: 100%;
+        background-size: 100% 100%;
+      }
+    }
+    .classs-marks-info {
+      padding: 0px 20px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      &-summary {
+        width: 100%;
+        margin: 0px;
+        h1 {
+          font-size: 30px;
+        }
+        .classs-marks-description {
+          padding: 20px;
+          display: flex;
+          &-item_2 {
+            width: 100%;
+            h3 {
+              font-size: 18px;
+            }
+            .table-bottom {
+              padding: 0px;
+              &-details {
+                height: 50px;
+                h4 {
+                  margin: 0px 10px;
+                  font-size: 15px;
+                }
+                span {
+                  font-size: 14px;
+                }
+              }
+            }
+          }
+        }
+      }
+      &-sidebar {
+        min-width: 100%;
+        padding-left: 0px;
+        margin-top: 20px;
+        &-details {
+          width: 100%;
+          padding: 0px;
+          top: 0px;
+          .sidebar-img {
+            align-items: center;
+            justify-content: center;
+            padding-top: 20px;
+            h2 {
+              margin: 0px 0px;
+              font-size: 25px;
+              font-weight: 900;
+            }
+          }
+        }
+      }
+    }
+  }
+}
 </style>

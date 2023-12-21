@@ -67,4 +67,31 @@ export default {
     }
   }
 }
+
+@media @mobile {
+  .elementor-container-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+    &-icon {
+      font-size: 25px;
+    }
+    &-content {
+      padding-top: 0px;
+      h3 {
+        font-size: 19px;
+        margin: 10px 0px 0px 0px;
+        color: #231f40;
+        text-align: center;
+      }
+      p {
+        color: #6f6b80;
+        font-size: 14px;
+        line-height: 32px;
+        text-align: center;
+      }
+    }
+  }
+}
 </style>

@@ -108,7 +108,7 @@
             style="font-size: 15px"
             :icon="['fas', 'location-dot']"
           />
-          <span>{{ $t('footer.address') }}</span>
+          <div>{{ $t('footer.address') }}</div>
         </div>
         <div class="content-info-list-nav">
           <font-awesome-icon style="font-size: 15px" :icon="['fas', 'phone']" />
@@ -166,8 +166,12 @@ export default {
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  z-index: -10;
   margin-top: 130px;
   padding-top: 30px;
+  padding-left: 10px;
+  padding-right: 10px;
+  box-sizing: border-box;
   .text-right {
     text-align: right;
   }
@@ -175,14 +179,15 @@ export default {
     text-align: left;
   }
   .content-info {
-    display: flex;
-    flex-direction: row;
-    align-content: center;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-top: 30px;
-    min-width: 71%;
-    flex-wrap: wrap;
+    // display: flex;
+    // flex-direction: row;
+    // align-content: center;
+    // justify-content: space-between;
+    // align-items: flex-start;
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-gap: 8em;
+    margin: 30px;
     .socail-madia {
       display: flex;
       flex-direction: column;
@@ -221,7 +226,6 @@ export default {
       display: flex;
       flex-direction: column;
       color: #fff;
-      margin: 0px 10px 0px 20px;
 
       h2 {
         font-size: 25px;
@@ -229,12 +233,17 @@ export default {
       &-nav {
         transition: 0.5s;
         margin-bottom: 20px;
+        display: flex;
         &:hover {
           color: @color-light;
           cursor: pointer;
           transition: 0.5s;
         }
         span {
+          margin: 0px 10px;
+          font-size: 15px;
+        }
+        div {
           margin: 0px 10px;
           font-size: 15px;
         }
@@ -256,6 +265,153 @@ export default {
         color: @color-primary;
         cursor: pointer;
         transition: 0.7s;
+      }
+    }
+  }
+}
+
+@media @tablet {
+  .footer-container {
+    .content-info {
+      display: grid;
+      grid-template-columns: auto auto auto;
+      grid-gap: 1em;
+      margin: 10px;
+      .socail-madia {
+        h2 {
+          font-size: 20px;
+        }
+        p {
+          font-size: 14px;
+        }
+        &-info {
+          &-card {
+            width: 40px;
+            height: 40px;
+          }
+        }
+      }
+      &-list {
+        h2 {
+          font-size: 20px;
+        }
+        &-nav {
+          transition: 0.5s;
+          margin-bottom: 20px;
+          display: flex;
+          &:hover {
+            color: @color-light;
+            cursor: pointer;
+            transition: 0.5s;
+          }
+          span {
+            margin: 0px 10px;
+            font-size: 14px;
+          }
+          div {
+            margin: 0px 10px;
+            font-size: 15px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media @mobile {
+  .footer-container {
+    margin-top: 80px;
+    padding-top: 30px;
+    .content-info {
+      // display: flex;
+      // flex-direction: row;
+      // align-content: center;
+      // justify-content: space-between;
+      // align-items: flex-start;
+      display: grid;
+      grid-template-columns: auto;
+      grid-gap: 2em;
+      margin-top: 30px;
+      min-width: 71%;
+      flex-wrap: wrap;
+      .socail-madia {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        color: #fff;
+        h2 {
+          font-size: 25px;
+        }
+        p {
+          font-size: 16px;
+          max-width: 100%;
+          margin: 0px 0px 20px 0px;
+        }
+        &-info {
+          display: flex;
+          flex-direction: row;
+          &-card {
+            width: 50px;
+            height: 50px;
+            background-color: @color-light;
+            margin: 0px;
+            border-radius: 5px;
+            transition: 0.5s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            &:hover {
+              color: @color-light;
+              background-color: white;
+              transition: 0.5s;
+            }
+          }
+        }
+      }
+      &-list {
+        display: flex;
+        flex-direction: column;
+        color: #fff;
+
+        h2 {
+          font-size: 25px;
+        }
+        &-nav {
+          transition: 0.5s;
+          margin-bottom: 20px;
+          display: flex;
+          &:hover {
+            color: @color-light;
+            cursor: pointer;
+            transition: 0.5s;
+          }
+          span {
+            margin: 0px 10px;
+            font-size: 15px;
+          }
+          div {
+            margin: 0px 10px;
+            font-size: 15px;
+            width: 100%;
+          }
+        }
+      }
+    }
+    p {
+      color: #ffffff;
+      font-size: 14px;
+      min-width: 90%;
+      max-width: 80%;
+      margin: 20px 0px 40px 0px;
+      transition: 0.7s;
+      span {
+        text-decoration: underline;
+        transition: 0.7s;
+        &:hover {
+          color: @color-primary;
+          cursor: pointer;
+          transition: 0.7s;
+        }
       }
     }
   }

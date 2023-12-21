@@ -23,10 +23,8 @@ export default {
   position: relative;
   top: 0;
   transition: top ease 0.5s;
-  width: 252px;
   height: 274px;
   background-color: #ffffff;
-  margin-right: 30px;
   border-radius: 10px;
   box-shadow: -1px 1px 10px #aaaaaa35;
   display: flex;

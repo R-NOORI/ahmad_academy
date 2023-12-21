@@ -113,6 +113,50 @@
               <span> {{ course.fee }} $</span>
             </div>
             <el-divider style="margin: 0px" />
+            <p
+              class="message-text"
+              v-show="is_register"
+              v-motion-slide-visible-top
+            >
+              {{
+                $route.params.type == 'courses'
+                  ? $t('courseDetailsPage.title3')
+                  : $t('courseDetailsPage.title5')
+              }}
+            </p>
+            <p
+              class="message-text"
+              v-show="is_exist"
+              v-motion-slide-visible-top
+            >
+              {{
+                $route.params.type == 'courses'
+                  ? $t('courseDetailsPage.title4')
+                  : $t('courseDetailsPage.title6')
+              }}
+            </p>
+            <AppButtonVue
+              @click="checkBuyClass"
+              style="height: 50px; margin-top: 10px"
+              :btnText="
+                $route.params.type == 'courses'
+                  ? $t('courseDetailsPage.buyCourse')
+                  : $t('courseDetailsPage.buyClass')
+              "
+              v-if="!is_btn_loading"
+            />
+            <AppButtonVue
+              v-else
+              v-loading="is_btn_loading"
+              :element-loading-svg="svg"
+              element-loading-svg-view-box="-10, -10, 50, 50"
+              style="height: 50px; margin-top: 10px"
+              :btnText="
+                $route.params.type == 'courses'
+                  ? $t('courseDetailsPage.buyCourse')
+                  : $t('courseDetailsPage.buyClass')
+              "
+            />
           </div>
         </div>
       </div>
@@ -123,11 +167,13 @@
 <script>
 import AppPageTitleArea from '@/components/app_page_title_area.vue'
 import store from '@/store'
-import { db } from '@/firebase/config'
+import { db, timestamp } from '@/firebase/config'
+import AppButtonVue from '@/components/app_button.vue'
+import { ElMessage } from 'element-plus'
 
 export default {
   name: 'course-details-page',
-  components: { AppPageTitleArea },
+  components: { AppPageTitleArea, AppButtonVue },
   data() {
     return {
       svg: `
@@ -141,6 +187,9 @@ export default {
         " style="stroke-width: 4px; fill: rgba(0, 0, 0, 0)"/>
       `,
       is_loading: true,
+      is_btn_loading: false,
+      is_exist: false,
+      is_register: false,
       course: {},
       type: '',
       path_value: '/course/courseDetails',
@@ -160,11 +209,80 @@ export default {
         const userRef = db.collection(type).doc(id)
         const res = await userRef.get()
         this.course = res.data()
-        console.log(res.data())
         this.is_loading = false
       } catch (error) {
         this.is_loading = false
         console.log(error.message)
+      }
+    },
+    async checkBuyClass() {
+      console.log('=========================>', store.state.user.loggedIn)
+      if (!store.state.user.userId) {
+        ElMessage({
+          message: 'Frist you moust login to user account',
+          type: 'error',
+        })
+        return this.$router.push('/login')
+      }
+      try {
+        this.is_btn_loading = true
+        this.is_exist = false
+        this.is_register = false
+        const collectionRef = db
+          .collection('buy_classes')
+          .where('user_id', '==', store.state.user.userId)
+          .where('c_id', '==', this.$route.params.id)
+        const collectionRef2 = db
+          .collection('register_classes')
+          .where('user_id', '==', store.state.user.userId)
+          .where('course_id', '==', this.$route.params.id)
+          .where('class_status', '==', 'progress')
+        var res2 = await collectionRef2.get()
+        var res = await collectionRef.get()
+        if (res2.docs.length > 0) {
+          this.is_btn_loading = false
+          this.is_register = true
+          return
+        }
+        if (res.docs.length > 0) {
+          this.is_btn_loading = false
+          this.is_exist = true
+          return
+        }
+        await this.buyClasses()
+        this.is_btn_loading = false
+      } catch (error) {
+        this.is_btn_loading = false
+        ElMessage({
+          message: this.$t('courseDetailsPage.message2Details'),
+          type: 'error',
+        })
+      }
+    },
+    async buyClasses() {
+      try {
+        const collectionRef = db.collection('buy_classes')
+        await collectionRef.add({
+          user_id: store.state.user.userId,
+          image_link: store.state.user.userImage,
+          user_name: store.state.user.userName,
+          email: store.state.user.email,
+          phone_number: store.state.user.phoneNumber,
+          c_id: this.$route.params.id,
+          c_name: this.course.title,
+          c_type: this.$route.params.type,
+          register_date: timestamp(),
+        })
+        ElMessage({
+          message: this.$t('courseDetailsPage.message1Details'),
+          type: 'success',
+        })
+      } catch (error) {
+        this.is_btn_loading = false
+        ElMessage({
+          message: this.$t('courseDetailsPage.message2Details'),
+          type: 'error',
+        })
       }
     },
   },
@@ -190,6 +308,7 @@ export default {
       background-size: 100% 100%;
     }
   }
+
   .text-left {
     text-align: left;
   }
@@ -274,6 +393,10 @@ export default {
         -webkit-box-shadow: 0px 0px 43px 4px rgba(66, 68, 90, 0.12);
         -moz-box-shadow: 0px 0px 43px 4px rgba(66, 68, 90, 0.12);
         box-shadow: 0px 0px 43px 4px rgba(66, 68, 90, 0.12);
+        .message-text {
+          color: red;
+          font-weight: 700;
+        }
         .sidebar-img {
           background-image: url('@/assets/course-details-page/image_1.png');
           background-size: 100% 100%;
@@ -310,6 +433,115 @@ export default {
               display: flex;
               justify-content: center;
               align-items: center;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media @tablet {
+  .course-details-page {
+    box-sizing: border-box;
+    .course-img {
+      height: 400px;
+    }
+    .course-info {
+      width: 100%;
+      padding: 0px 10px;
+      &-summary {
+        width: 50%;
+        margin: 0px 10px;
+        h1 {
+          font-size: 30px;
+        }
+        .course-description {
+          width: 100%;
+          padding: 15px;
+          &-item_1 {
+            h3 {
+              font-size: 18px;
+            }
+            p {
+              font-size: 14px;
+              margin: 0px 0px 20px 0px;
+            }
+          }
+          &-item_2 {
+            h3 {
+              font-size: 20px;
+            }
+            ol li {
+              font-size: 14px;
+            }
+          }
+        }
+      }
+      &-sidebar {
+        min-width: 50%;
+        padding: 0px;
+        &-details {
+          width: 90%;
+          margin-right: 20px;
+          .sidebar-img {
+            height: 200px;
+            padding-top: 20px;
+            h2 {
+              margin: 0px 0px;
+              font-size: 20px;
+              font-weight: 800;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+@media @mobile {
+  .course-details-page {
+    .course-img {
+      height: 300px;
+      border-radius: 5px;
+      margin: 0px 20px;
+      box-sizing: border-box;
+      img {
+        width: 100%;
+        height: 100%;
+        background-size: 100% 100%;
+      }
+    }
+    .course-info {
+      padding: 0px 20px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      &-summary {
+        width: 100%;
+        margin: 0px;
+        h1 {
+          font-size: 40px;
+        }
+        .course-description {
+          width: 100%;
+        }
+      }
+      &-sidebar {
+        min-width: 100%;
+        padding-left: 0px;
+        margin-top: 20px;
+        &-details {
+          width: 100%;
+          padding: 0px;
+          top: 0px;
+          .sidebar-img {
+            align-items: center;
+            justify-content: center;
+            padding-top: 20px;
+            h2 {
+              margin: 0px 0px;
+              font-size: 25px;
+              font-weight: 900;
             }
           }
         }

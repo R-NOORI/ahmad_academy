@@ -143,7 +143,7 @@ export default {
       is_loading: false,
       show_password: false,
       userForm: {
-        id: '',
+        // id: '',
         profile_image: '',
         phone_number: '',
         password: '',
@@ -158,7 +158,7 @@ export default {
     console.log(this.userForm)
   },
   methods: {
-    ...mapActions(['setUserImage', 'removeUserInfo']),
+    ...mapActions(['setUserImage', 'setPhoneNumber']),
     async getUserInfo(id) {
       try {
         const userRef = db.collection('students').doc(id)
@@ -235,14 +235,15 @@ export default {
         })
       }
     },
-
     async onSubmit(values) {
       console.log(values)
       console.log(this.userForm)
       this.is_loading = true
       try {
         if (this.userForm.profile_image != '') {
-          const productRef = db.collection('users').doc(store.state.user.userId)
+          const productRef = db
+            .collection('students')
+            .doc(store.state.user.userId)
           await productRef.update(this.userForm)
           ElMessage({
             message: this.$t('settingPage.message5Details'),
@@ -250,6 +251,9 @@ export default {
           })
           this.setUserImage({
             userImage: this.userForm.profile_image,
+          })
+          this.setPhoneNumber({
+            phoneNumber: this.userForm.phone_number,
           })
           this.is_loading = false
           this.$router.go(-1)
@@ -269,14 +273,14 @@ export default {
         })
       }
     },
-    validatePassword(value) {
-      // if the field is empty
-      if (!value) {
-        return this.$t('settingPage.message8Details')
-      }
-      // All is good
-      return true
-    },
+    // validatePassword(value) {
+    //   // if the field is empty
+    //   if (!value) {
+    //     return this.$t('settingPage.message8Details')
+    //   }
+    //   // All is good
+    //   return true
+    // },
     validatePhone(value) {
       // if the field is empty
       if (!value) {
@@ -419,6 +423,134 @@ export default {
       }
       .appbutton {
         margin-top: 40px;
+      }
+    }
+  }
+}
+
+@media @tablet {
+  .setting {
+    .setting_form {
+      max-width: 100%;
+      margin: 0px;
+      padding: 0px 20px;
+      box-sizing: border-box;
+      .file-upload {
+        transition: 0.5s;
+        &:hover {
+          border: 2px dashed @color-light;
+          cursor: pointer;
+          transition: 0.5s;
+        }
+        overflow: hidden;
+        position: relative;
+        border: 2px dashed gray;
+        background-color: #f5f5f5;
+        width: 300px;
+        height: 200px;
+        border-radius: 10px;
+        margin-top: 10px;
+        margin-bottom: 20px;
+        .file_upload-details {
+          height: 100%;
+          &-items {
+            padding: 20px;
+            display: flex;
+            flex-direction: row;
+            .icon-dev {
+              width: 40px;
+              height: 40px;
+              border-radius: 100%;
+              background-color: @color-secondary;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              color: aliceblue;
+              font-size: 17px;
+              margin-right: 10px;
+            }
+            .file-info {
+              h1 {
+                font-size: 14px;
+                font-weight: 500;
+                margin: 0px 0px 5px 0px;
+              }
+
+              h2 {
+                font-size: 15px;
+                font-weight: 500;
+                margin: 0px 0px 5px 0px;
+              }
+              p {
+                margin: 0px 0px 20px 0px;
+                font-size: 14px;
+              }
+            }
+          }
+          .progress-bar {
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          }
+        }
+        .file-upload-show {
+          padding: 5px;
+          width: 100%;
+          height: 100%;
+          position: relative;
+          box-sizing: border-box;
+          img {
+            height: 100%;
+            width: 100%;
+            border-radius: 10px;
+          }
+          .btn-icon {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+          }
+        }
+      }
+      h3 {
+        font-size: 30px;
+        .icon-btn {
+          transition: 0.5s;
+          &:hover {
+            color: @color-secondary;
+            font-size: 35px;
+            cursor: pointer;
+            transition: 0.5s;
+          }
+        }
+      }
+      .form_content {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        border: 1px solid rgb(232, 232, 232);
+        padding: 20px;
+        border-radius: 12px;
+        input {
+          background-color: #f5f5f5;
+          outline: 0px solid #ffffff;
+          border: 0px solid #ffffff;
+          padding: 0px 30px;
+          font-size: 14px;
+          height: 60px;
+          border-radius: 5px;
+          font-family: inherit;
+          transition: 0.8s;
+        }
+        input {
+          &:focus {
+            border: 1px solid @color-secondary;
+            transition: 0.8s;
+          }
+        }
+        .appbutton {
+          margin-top: 40px;
+        }
       }
     }
   }

@@ -44,7 +44,6 @@
           }"
           :delay="350"
           class="animate"
-          :style="'top: ' + scrollValue + '%'"
           src="@/assets/about-page/image_2.png"
         />
       </div>
@@ -213,11 +212,36 @@
         </h3>
       </div>
       <div class="terms-and-conditions-items-images">
-        <img src="@/assets/about-page/image_12.png" />
+        <img
+          src="@/assets/about-page/image_12.png"
+          v-motion
+          :initial="{ opacity: 0, x: 200 }"
+          :enter="{
+            opacity: 1,
+            x: 0,
+            transition: {
+              mass: 1,
+            },
+          }"
+          :visible="{
+            opacity: 1,
+            x: 0,
+            transition: {
+              mass: 1,
+            },
+          }"
+          :delay="300"
+        />
       </div>
     </div>
   </div>
-  <div class="terms-and-conditions">
+  <div
+    :class="
+      getLanguage == 'EN'
+        ? 'terms-and-conditions align-text-left'
+        : 'terms-and-conditions align-text-right'
+    "
+  >
     <el-divider content-position="center"
       ><p class="title_1">{{ $t('aboutPage.title4') }}</p></el-divider
     >
@@ -426,87 +450,92 @@
     <div class="vector-image">
       <img src="@/assets/about-page/shape_04_012.png" />
     </div>
-
-    <img
-      v-motion
-      :initial="{ opacity: 0, y: 150 }"
-      :enter="{
-        opacity: 1,
-        y: 0,
-        transition: {
-          mass: 1,
-        },
-      }"
-      :visible="{
-        opacity: 1,
-        y: 0,
-        transition: {
-          mass: 1,
-        },
-      }"
-      src="@/assets/about-page/image_6.png"
-      style="height: 180px; width: 270px"
-    />
-    <img
-      v-motion
-      :initial="{ opacity: 0, y: 150 }"
-      :enter="{
-        opacity: 1,
-        y: 0,
-        transition: {
-          mass: 1,
-        },
-      }"
-      :visible="{
-        opacity: 1,
-        y: 0,
-        transition: {
-          mass: 1,
-        },
-      }"
-      style="height: 370px; width: 270px"
-      src="@/assets/about-page/image_11.png"
-    />
-    <img
-      v-motion
-      :initial="{ opacity: 0, y: 150 }"
-      :enter="{
-        opacity: 1,
-        y: 0,
-        transition: {
-          mass: 1,
-        },
-      }"
-      :visible="{
-        opacity: 1,
-        y: 0,
-        transition: {
-          mass: 1,
-        },
-      }"
-      style="height: 200px; width: 270px"
-      src="@/assets/about-page/image_8.png"
-    />
-    <img
-      v-motion
-      :initial="{ opacity: 0, y: 150 }"
-      :enter="{
-        opacity: 1,
-        y: 0,
-        transition: {
-          mass: 1,
-        },
-      }"
-      :visible="{
-        opacity: 1,
-        y: 0,
-        transition: {
-          mass: 1,
-        },
-      }"
-      style="height: 300px; width: 270px"
-      src="@/assets/about-page/image_9.png"
-    />
+    <div class="all-images">
+      <div class="item">
+        <img
+          v-motion
+          :initial="{ opacity: 0, y: 150 }"
+          :enter="{
+            opacity: 1,
+            y: 0,
+            transition: {
+              mass: 1,
+            },
+          }"
+          :visible="{
+            opacity: 1,
+            y: 0,
+            transition: {
+              mass: 1,
+            },
+          }"
+          src="@/assets/about-page/image_6.png"
+        />
+      </div>
+      <div class="item">
+        <img
+          v-motion
+          :initial="{ opacity: 0, y: 150 }"
+          :enter="{
+            opacity: 1,
+            y: 0,
+            transition: {
+              mass: 1,
+            },
+          }"
+          :visible="{
+            opacity: 1,
+            y: 0,
+            transition: {
+              mass: 1,
+            },
+          }"
+          src="@/assets/about-page/image_11.png"
+        />
+      </div>
+      <div class="item">
+        <img
+          v-motion
+          :initial="{ opacity: 0, y: 150 }"
+          :enter="{
+            opacity: 1,
+            y: 0,
+            transition: {
+              mass: 1,
+            },
+          }"
+          :visible="{
+            opacity: 1,
+            y: 0,
+            transition: {
+              mass: 1,
+            },
+          }"
+          src="@/assets/about-page/image_8.png"
+        />
+      </div>
+      <div class="item">
+        <img
+          v-motion
+          :initial="{ opacity: 0, y: 150 }"
+          :enter="{
+            opacity: 1,
+            y: 0,
+            transition: {
+              mass: 1,
+            },
+          }"
+          :visible="{
+            opacity: 1,
+            y: 0,
+            transition: {
+              mass: 1,
+            },
+          }"
+          src="@/assets/about-page/image_9.png"
+        />
+      </div>
+    </div>
   </div>
   <div
     :class="
@@ -569,7 +598,11 @@ import AboutItemCard from './components/about-item-card.vue'
 import store from '@/store'
 export default {
   name: 'course-page',
-  components: { AppPageTitleArea, AboutCard, AboutItemCard },
+  components: {
+    AppPageTitleArea,
+    AboutCard,
+    AboutItemCard,
+  },
   data() {
     return {
       scrollValue: 20,
@@ -583,6 +616,13 @@ export default {
 </script>
 
 <style scoped lang="less">
+.who-we-are,
+.terms-and-conditions,
+.what-we-offer,
+.scroll-images,
+.our-info-content {
+  z-index: -1;
+}
 .align-text-left {
   text-align: left;
 }
@@ -664,12 +704,14 @@ export default {
   margin: 150px auto 0px auto;
   display: flex;
   flex-direction: column;
+  padding: 20px;
+  box-sizing: border-box;
+  overflow: hidden;
   .title_1 {
     font-size: 20px;
     font-weight: 800;
     letter-spacing: 0.1em;
     color: @color-secondary;
-    text-align: center;
   }
   &-items {
     display: flex;
@@ -678,7 +720,6 @@ export default {
 
     &-info {
       width: 50%;
-      text-align: left;
       h2 {
         font-size: 30px;
         font-weight: 700;
@@ -755,7 +796,7 @@ export default {
         position: relative;
         img {
           position: absolute;
-          right: -200%;
+          right: -100%;
         }
       }
     }
@@ -764,9 +805,14 @@ export default {
 .scroll-images {
   max-width: 1200px;
   margin: 0px auto;
-  padding: 0px 0px 100px 0px;
+  padding: 0px 20px 100px 20px;
   position: relative;
   z-index: 0;
+  overflow: hidden;
+  // style='height: 180px; width: 270px'
+  //   style='height: 370px; width: 270px'
+  //   style='height: 200px; width: 270px'
+  //   style='height: 300px; width: 270px'
   .circale-shap {
     width: 100px;
     height: 100px;
@@ -793,9 +839,23 @@ export default {
     left: -50px;
     z-index: -1;
   }
-  img {
-    border-radius: 5px;
-    margin: 0px 15px;
+  .all-images {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    grid-gap: 1em;
+    width: 100%;
+    box-sizing: border-box;
+    .item {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      img {
+        width: 100%;
+        border-radius: 5px;
+      }
+    }
   }
 }
 .our-info-content {
@@ -822,6 +882,317 @@ export default {
       font-size: 16px;
       text-align: justify;
       text-justify: inter-word;
+    }
+  }
+}
+@media @tablet {
+  .who-we-are {
+    background-color: #ffff;
+    max-width: 1300px;
+    display: flex;
+    flex-direction: row;
+    margin: 10px;
+    .elementor-container {
+      width: 60%;
+      display: flex;
+      flex-direction: column;
+      align-content: flex-start;
+      padding: 10px;
+
+      h4 {
+        font-size: 16px;
+        margin: 0px;
+      }
+      h1 {
+        font-size: 30px;
+      }
+      p {
+        font-size: 14px;
+      }
+    }
+    .margin-left {
+      margin-left: 20px;
+    }
+    .margin-right {
+      margin-right: 20px;
+    }
+    .elementor-images {
+      width: 40%;
+      height: auto;
+      padding-top: 0px;
+      position: relative;
+      z-index: 0;
+      &-large {
+        background-image: none;
+        height: 100%;
+        position: none;
+        display: flex;
+        flex-direction: column;
+        .animate {
+          width: 100%;
+          height: 50%;
+          position: relative;
+          z-index: 15;
+          left: 0;
+          bottom: 0;
+          border: 3px solid white;
+        }
+        .small {
+          width: 100%;
+          height: 50%;
+          position: relative;
+          left: 0;
+          top: 0;
+          z-index: -1;
+        }
+      }
+      img {
+        border-radius: 5px;
+      }
+    }
+  }
+  .terms-and-conditions {
+    flex-direction: column;
+    .title_1 {
+      font-size: 20px;
+      font-weight: 800;
+      text-align: center;
+    }
+    &-items {
+      display: flex;
+      flex-direction: column;
+      margin-top: 70px;
+
+      &-info {
+        width: 100%;
+        h2 {
+          font-size: 30px;
+          font-weight: 700;
+        }
+        p {
+          font-size: 17px;
+          span {
+            font-size: 20px;
+            font-weight: 700;
+          }
+        }
+      }
+      &-images {
+        width: 100%;
+      }
+    }
+  }
+  .what-we-offer {
+    background-size: 100% 100%;
+    height: 500px;
+    margin: 80px 0px;
+
+    &-content {
+      h4 {
+        font-size: 14px;
+      }
+      h1 {
+        font-size: 30px;
+        margin: 10px 0px 0px 0px;
+      }
+      &-items {
+        .arrow-image-down {
+          display: none;
+        }
+        .arrow-image-top {
+          display: none;
+        }
+      }
+    }
+  }
+  .scroll-images {
+    padding: 0px 20px 70px 20px;
+    .rectangle-shape {
+      display: none;
+    }
+    .all-images {
+      .item {
+        justify-content: center;
+      }
+    }
+  }
+  .our-info-content {
+    &-mission,
+    &-vision {
+      padding: 20px;
+      h4 {
+        font-size: 14px;
+      }
+      h1 {
+        font-size: 20px;
+        color: #231f40;
+        margin: 15px 0px 25px 0px;
+        width: 100%;
+      }
+      p {
+        color: #6b6b80;
+        font-size: 14px;
+        text-align: justify;
+        text-justify: inter-word;
+      }
+    }
+  }
+}
+
+@media @mobile {
+  .who-we-are {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+    box-sizing: border-box;
+    .elementor-container {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 0px;
+
+      h4 {
+        font-size: 16px;
+        margin: 0px;
+      }
+      h1 {
+        font-size: 30px;
+        color: @color-secondary;
+        margin: 0px 0px 20px 0px;
+      }
+      p {
+        margin: 0px 0px 20px 0px;
+        color: #6b6b80;
+        font-size: 14px;
+        text-align: justify;
+        text-justify: inter-word;
+      }
+    }
+    .margin-left {
+      margin-left: 0px;
+    }
+    .margin-right {
+      margin-right: 0px;
+    }
+    .elementor-images {
+      width: 100%;
+      height: 300px;
+      box-sizing: border-box;
+      margin-bottom: 30px;
+      &-large {
+        background-image: url('@/assets/about-page/image_3.png');
+        background-size: 100% 100%;
+        height: 100%;
+        max-width: 100%;
+        position: relative;
+        border-radius: 5px;
+        .animate {
+          display: none;
+        }
+        .small {
+          display: none;
+        }
+      }
+      img {
+        border-radius: 5px;
+      }
+    }
+  }
+  .terms-and-conditions {
+    margin: 50px auto 0px auto;
+    .title_1 {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+    &-items {
+      display: flex;
+      flex-direction: column;
+      margin-top: 0px;
+      &-info {
+        width: 100%;
+        h2 {
+          font-size: 20px;
+        }
+        p {
+          font-size: 14px;
+          span {
+            font-size: 16px;
+            font-weight: 600;
+          }
+        }
+      }
+      &-images {
+        width: 100%;
+      }
+    }
+  }
+  .what-we-offer {
+    background-size: 100% 100%;
+    height: auto;
+    margin: 50px 0px;
+    padding: 30px 20px;
+    box-sizing: border-box;
+    &-content {
+      h4 {
+        font-size: 13px;
+      }
+      h1 {
+        font-size: 25px;
+        margin: 10px 0px 0px 0px;
+      }
+      &-items {
+        flex-direction: column;
+        .arrow-image-down {
+          display: none;
+        }
+        .arrow-image-top {
+          display: none;
+        }
+      }
+    }
+  }
+  .scroll-images {
+    padding: 0px 20px 100px 20px;
+    .circale-shap {
+      display: none;
+    }
+    .rectangle-shape {
+      display: none;
+    }
+    .vector-image {
+      display: none;
+    }
+    .all-images {
+      display: grid;
+      grid-template-columns: 100%;
+      grid-gap: 1em;
+    }
+  }
+  .our-info-content {
+    display: flex;
+    flex-direction: column;
+    &-mission,
+    &-vision {
+      padding: 20px;
+      h4 {
+        font-size: 14px;
+        color: @color-secondary;
+        margin: 0px;
+      }
+      h1 {
+        font-size: 20px;
+        color: #231f40;
+        margin: 15px 0px 20px 0px;
+        width: 100%;
+      }
+      p {
+        color: #6b6b80;
+        font-size: 14px;
+        text-align: justify;
+        text-justify: inter-word;
+      }
     }
   }
 }

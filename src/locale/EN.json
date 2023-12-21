@@ -78,7 +78,15 @@
     "expert": "Expert",
     "days": "Days",
     "weeks": "Weeks",
-    "months": "Months"
+    "months": "Months",
+    "buyClass": "Buy class",
+    "buyCourse": "Buy course",
+    "title3": "You are registered for this course and it is still running",
+    "title4": "You have already requested this course, waiting for a response",
+    "title5": "You are registered for this class and it is still running",
+    "title6": "You have already requested this class, waiting for a response",
+    "message1Details": "Your request has been sent",
+    "message2Details": "Network Connection Refused"
   },
   "contactPage": {
     "contact1Details": "NEED HELP?",

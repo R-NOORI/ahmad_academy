@@ -138,4 +138,43 @@ export default {
     }
   }
 }
+
+@media @tablet {
+  .course-card {
+    &:hover {
+      img {
+        height: 200px;
+      }
+    }
+    &-image {
+      width: 100%;
+      height: 150px;
+      img {
+        height: 200px;
+        transition: 0.5s;
+      }
+    }
+
+    &-content {
+      margin: 15px 10px;
+      &-info {
+        span {
+          font-size: 14px;
+          margin-bottom: 5%;
+        }
+      }
+      &-price {
+        .price-content {
+          .new-price {
+            font-size: 15px;
+          }
+        }
+      }
+      h2 {
+        margin: 0px;
+        font-size: 15px;
+      }
+    }
+  }
+}
 </style>

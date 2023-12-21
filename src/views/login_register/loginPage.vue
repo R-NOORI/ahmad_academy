@@ -329,6 +329,8 @@ export default {
           userId: res.docs[0].id,
           userName: res.docs[0].data().user_name,
           userImage: res.docs[0].data().profile_image,
+          phoneNumber: res.docs[0].data().phone_number,
+          email: res.docs[0].data().email_address,
         })
         console.log(res.docs[0].data().profile_image)
         console.log(res.docs[0].data().user_name)
@@ -441,6 +443,8 @@ export default {
     justify-content: center;
     max-width: 1080px;
     gap: 40px;
+    padding: 0px 20px;
+    box-sizing: border-box;
     .text_left {
       text-align: left;
     }
@@ -527,6 +531,27 @@ export default {
         .appbutton {
           margin-top: 40px;
         }
+      }
+    }
+  }
+}
+
+@media @tablet {
+  .container {
+    width: 100%;
+    .account-container {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+
+      .login_form {
+        width: 100%;
+        .forget-password {
+          color: black;
+        }
+      }
+      .register_form {
+        width: 100%;
       }
     }
   }

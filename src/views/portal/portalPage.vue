@@ -321,6 +321,12 @@ export default {
         padding: 10px 15px;
         font-size: 15px;
         border-radius: 10px;
+        transition: 0.5s;
+        &:hover {
+          cursor: pointer;
+          background-color: @color-light;
+          transition: 0.5s;
+        }
       }
     }
   }
@@ -357,6 +363,107 @@ export default {
     img {
       width: 300px;
       height: 300px;
+    }
+  }
+}
+
+@media @tablet {
+  .portal {
+    margin: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+    // border: 1px solid red;
+    &-header {
+      &-items {
+        &-search {
+          width: 200px;
+        }
+        button {
+          padding: 13px 10px;
+          font-size: 13px;
+        }
+      }
+    }
+    &-body {
+      width: 100%;
+      padding: 0px 20px;
+      &-active-course {
+        grid-template-columns: auto auto;
+      }
+    }
+    &-empty {
+      img {
+        width: 50%;
+      }
+    }
+  }
+}
+@media @mobile {
+  .portal {
+    margin: 0px;
+    max-width: 100%;
+
+    &-header {
+      padding: 0px 10px;
+      border-radius: 10px;
+      &-user {
+        &-info {
+          margin: 0px 10px;
+          p {
+            margin: 0px;
+            padding: 0px;
+          }
+          h3 {
+            margin: 5px 0px 0px 0px;
+            padding: 0px;
+          }
+        }
+      }
+      &-items {
+        width: 50%;
+        flex-direction: column-reverse;
+        &-search {
+          box-sizing: border-box;
+          margin: 0px;
+          padding: 0px;
+          height: 35px;
+          width: 100%;
+          border-radius: 5px;
+          &-icon {
+            font-size: 15px;
+            margin: 0px 10px;
+            color: @color-secondary;
+          }
+          input {
+            background-color: transparent;
+            outline: none;
+            border: none;
+            font-size: 10px;
+            width: 100%;
+          }
+        }
+        button {
+          margin-bottom: 5px;
+          width: 100%;
+          padding: 8px 15px;
+          border-radius: 5px;
+        }
+      }
+    }
+    &-body {
+      width: 100%;
+      padding: 0px 20px;
+      h3 {
+        font-size: 17px;
+      }
+      &-active-course {
+        grid-template-columns: auto;
+      }
+    }
+    &-empty {
+      img {
+        width: 60%;
+      }
     }
   }
 }
