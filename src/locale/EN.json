@@ -85,8 +85,13 @@
     "title4": "You have already requested this course, waiting for a response",
     "title5": "You are registered for this class and it is still running",
     "title6": "You have already requested this class, waiting for a response",
+    "title7": "First you have to register yourself!",
     "message1Details": "Your request has been sent",
-    "message2Details": "Network Connection Refused"
+    "message2Details": "Network Connection Refused",
+    "feeTitle2": "You didn't pay",
+    "feeTitle": "All months fee",
+    "feeDate": "Fee date",
+    "feeAmount": "Fee amount"
   },
   "contactPage": {
     "contact1Details": "NEED HELP?",
@@ -154,7 +159,7 @@
     "register": "Register",
     "login": "Login",
     "email": "Email *",
-    "userName": "User Name*",
+    "userName": "Name*",
     "phoneNumber": "Phone Number*",
     "password": "password*",
     "subject": "Class / Course Name*",
@@ -216,8 +221,10 @@
     "online": "ONLINE",
     "classes": "CLASSES",
     "title1": "Fee Per Month",
-    "title2": "Class subjects and marks",
-    "title3": "Click to view all class subjects and grades"
+    "title2": "Class subjects, marks, fees",
+    "title3": "Click to view all class subjects, grades, fees information",
+    "title4": "Course details and fees",
+    "title5": "Click to view all course details and fees information"
   },
   "settingPage": {
     "updateProfile": "Update Profile",

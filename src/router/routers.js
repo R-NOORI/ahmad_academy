@@ -1,9 +1,8 @@
+import Home from '@/views/home_page/home_view.vue'
 export default [
   {
     path: '/',
     name: 'home',
-    // redirect: '/',
-    // component: home,
     children: [
       {
         path: '/',
@@ -14,7 +13,7 @@ export default [
           icon: 'md-build',
           transition: 'slide-right',
         },
-        component: () => import('../views/home_page/home_view.vue'),
+        component: Home,
       },
       {
         path: '/course',
@@ -89,7 +88,7 @@ export default [
         component: () => import('../views/portal/portalPage.vue'),
       },
       {
-        path: '/portal/class-marks/:registerClassId/:courseId',
+        path: '/portal/class-marks/:registerClassId/:courseId/:type',
         name: 'classMarks',
         meta: {
           access: [],

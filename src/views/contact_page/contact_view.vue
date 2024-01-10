@@ -32,8 +32,7 @@
             <contact_card
               :icons="['fas', 'envelope-open']"
               :title="$t('contactPage.socialMediaTitle2')"
-              text1="eduvibe@example.com"
-              text2="contact@eduvibe.com"
+              text1="info@alnoorsafaonlineacademy.com"
             />
           </div>
           <div class="contact-cards-row">

@@ -13,7 +13,7 @@ export default {
   },
   methods: {
     openInNewTab() {
-      window.open('https://wa.me/93705151550', '_blank', 'noreferrer')
+      window.open('https://wa.me/93700063297', '_blank', 'noreferrer')
     },
   },
 }

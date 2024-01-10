@@ -64,9 +64,25 @@
     </div>
     <div class="portal-body" v-else>
       <div class="portal-body-bacground-div"></div>
-      <h3 :class="language == 'EN' ? 'text-left' : 'text-right'">
-        {{ $t('portalPage.message2Details') }}
-      </h3>
+      <div class="portal-body-tab-content">
+        <h3 :class="language == 'EN' ? 'text-left' : 'text-right'">
+          {{ $t('portalPage.message2Details') }}
+        </h3>
+        <div class="portal-body-tab-content-items">
+          <div
+            :class="tab == 'progress' ? 'items-active' : 'items-deactive'"
+            @click="getRegisterClass('progress')"
+          >
+            Progress
+          </div>
+          <div
+            @click="getRegisterClass('complete')"
+            :class="tab == 'complete' ? 'items-active' : 'items-deactive'"
+          >
+            Complete
+          </div>
+        </div>
+      </div>
       <div class="portal-body-active-course">
         <PortalCourseCard
           v-for="(item, index) in search_value == '' || search_value == null
@@ -109,6 +125,7 @@ export default {
           L 15 15
         " style="stroke-width: 4px; fill: rgba(0, 0, 0, 0)"/>
       `,
+      tab: 'progress',
       is_loading: true,
       search_value: '',
       userId: '',
@@ -125,7 +142,7 @@ export default {
       (this.profileImage = store.state.user.userImage),
       await this.getCourses()
     await this.getClasses()
-    await this.getRegisterClass()
+    await this.getRegisterClass('progress')
   },
   computed: {
     language: () => store.state.user.language,
@@ -172,18 +189,17 @@ export default {
         }
       )
     },
-    async getRegisterClass() {
+    async getRegisterClass(type) {
+      this.tab = type
       this.is_loading = true
       var citiesRef = db
         .collection('register_classes')
-        .where('class_status', '==', 'progress')
+        .where('class_status', '==', type)
         .where('user_id', '==', this.userId)
       citiesRef.onSnapshot(
         (snap) => {
           let items = []
           snap.forEach((doc) => {
-            console.log('=>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', doc.data())
-
             if (doc.data().type == 'courses') {
               return this.courses.forEach((value) => {
                 if (doc.data().course_id == value.id) {
@@ -338,11 +354,65 @@ export default {
     flex-direction: column;
     align-items: center;
     box-sizing: border-box;
-    h3 {
-      margin-top: 30px;
+    &-tab-content {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
       width: 100%;
-      color: @color-secondary;
+      .text-left {
+        text-align: left;
+      }
+
+      .text-right {
+        text-align: right;
+      }
+
+      h3 {
+        margin-top: 30px;
+        width: 100%;
+        color: @color-secondary;
+      }
+      &-items {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 300px;
+        height: 50px;
+        border-radius: 150px;
+        -webkit-box-shadow: 0px 3px 28px 2px rgba(66, 68, 90, 0.09);
+        -moz-box-shadow: 0px 3px 28px 2px rgba(66, 68, 90, 0.09);
+        box-shadow: 0px 3px 28px 2px rgba(66, 68, 90, 0.09);
+        .items-deactive,
+        .items-active {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-weight: 600;
+        }
+        .items-deactive {
+          height: 50px;
+          width: 50%;
+          &:hover {
+            color: @color-light;
+            cursor: pointer;
+          }
+        }
+        .items-active {
+          height: 50px;
+          width: 50%;
+          border-radius: 150px;
+          color: whitesmoke;
+          background-color: @color-secondary;
+          &:hover {
+            cursor: pointer;
+            transition: 0.5s;
+          }
+        }
+      }
     }
+
     &-bacground-div {
       background-color: #28aae20f;
       width: 100%;
@@ -453,9 +523,25 @@ export default {
     &-body {
       width: 100%;
       padding: 0px 20px;
-      h3 {
-        font-size: 17px;
+      &-tab-content {
+        h3 {
+          font-size: 17px;
+        }
+        &-items {
+          height: 45px;
+          width: 350px;
+          border-radius: 150px;
+          .items-deactive,
+          .items-active {
+            font-weight: 700;
+            width: 50%;
+            font-size: 13px;
+            border-radius: 100px;
+            height: 45px;
+          }
+        }
       }
+
       &-active-course {
         grid-template-columns: auto;
       }

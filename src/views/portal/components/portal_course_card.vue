@@ -1,26 +1,5 @@
 <template>
   <div class="portal-course-card">
-    <el-popover
-      placement="top-start"
-      :title="$t('portalPage.title2')"
-      :width="200"
-      trigger="hover"
-      :content="$t('portalPage.title3')"
-    >
-      <template #reference>
-        <button
-          class="image-btn"
-          v-show="type == 'classes' ? true : false"
-          @click="
-            this.$router.push(
-              `/portal/class-marks/${registerClassId}/${courseId}`
-            )
-          "
-        >
-          {{ $t('portalPage.btn3') }}
-        </button>
-      </template>
-    </el-popover>
     <div></div>
     <img class="card-image" :src="imageLink" />
     <div
@@ -93,12 +72,30 @@
         <font-awesome-icon style="margin: 0px 10px" :icon="['fas', 'link']" />
         {{ $t('portalPage.btn2') }}
       </button>
-      <div
-        class="portal-course-card-content-link"
-        @click="this.$router.push(`/course/course-details/${type}/${courseId}`)"
+      <el-popover
+        placement="top-start"
+        :title="
+          type == 'courses' ? $t('portalPage.title4') : $t('portalPage.title2')
+        "
+        :width="200"
+        trigger="hover"
+        :content="
+          type == 'courses' ? $t('portalPage.title5') : $t('portalPage.title3')
+        "
       >
-        {{ $t('portalPage.message3Details') }}
-      </div>
+        <template #reference>
+          <div
+            class="portal-course-card-content-link"
+            @click="
+              this.$router.push(
+                `/portal/class-marks/${registerClassId}/${courseId}/${type}`
+              )
+            "
+          >
+            {{ $t('portalPage.btn3') }}
+          </div>
+        </template>
+      </el-popover>
     </div>
   </div>
 </template>
@@ -243,13 +240,14 @@ export default {
       color: @color-primary;
       font-size: 13px;
       width: 100%;
-      transition: 0.8s;
+      font-weight: 600;
+      transition: 0.5s;
       &:hover {
-        transition: 0.8s;
-        color: red;
+        transition: 0.5s;
+        font-size: 16px;
+        color: @color-orange;
         cursor: pointer;
         font-weight: 600;
-        text-decoration: underline;
       }
     }
   }

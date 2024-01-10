@@ -25,7 +25,10 @@
     >
       <div class="classs-marks-info-summary">
         <h1>{{ classes.title }}</h1>
-        <div class="classs-marks-description">
+        <div
+          class="classs-marks-description"
+          v-show="$route.params.type == 'classes' ? true : false"
+        >
           <div class="classs-marks-description-item_2">
             <h3>{{ $t('portalPage.title2') }}</h3>
             <el-table :data="register_class.subjects" style="width: 100%">
@@ -50,7 +53,7 @@
                 <h4>{{ $t('portalPage.average') }}</h4>
                 <span>{{ this.average.toFixed(2) }} %</span>
               </div>
-              <div class="table-bottom-details">
+              <div class="table-bottom-details" v-show="secondExamType">
                 <h4>{{ $t('portalPage.grade') }}</h4>
                 <el-tag
                   class="grad"
@@ -63,13 +66,53 @@
             </div>
           </div>
         </div>
+        <div class="classs-marks-description">
+          <div class="classs-marks-description-item_2">
+            <h3>{{ $t('courseDetailsPage.feeTitle') }}</h3>
+            <el-table :data="register_class.monthly_fee" style="width: 100%">
+              <el-table-column
+                :label="$t('courseDetailsPage.feeDate')"
+                prop="fee_date"
+                :align="selectLanguage == 'EN' ? 'left' : 'right'"
+              />
+              <el-table-column
+                :label="$t('courseDetailsPage.feeAmount')"
+                :align="selectLanguage == 'EN' ? 'left' : 'right'"
+              >
+                <template #default="scope">
+                  <el-tag
+                    :type="
+                      scope.row.fee_amount == null ||
+                      scope.row.fee_amount == 0 ||
+                      scope.row.fee_amount == ''
+                        ? 'warning'
+                        : 'success'
+                    "
+                    disable-transitions
+                    >{{
+                      scope.row.fee_amount == null ||
+                      scope.row.fee_amount == 0 ||
+                      scope.row.fee_amount == ''
+                        ? $t('courseDetailsPage.feeTitle2')
+                        : scope.row.fee_amount + '  ' + '$'
+                    }}</el-tag
+                  >
+                </template>
+              </el-table-column>
+            </el-table>
+          </div>
+        </div>
       </div>
       <div class="classs-marks-info-sidebar">
         <div class="classs-marks-info-sidebar-details">
           <div class="sidebar-img">
-            <h2>{{ $t('portalPage.online') }}</h2>
+            <h2>{{ $t('courseDetailsPage.online') }}</h2>
             <h2>
-              {{ $t('portalPage.classes') }}
+              {{
+                $route.params.type == 'courses'
+                  ? $t('courseDetailsPage.courses')
+                  : $t('courseDetailsPage.classes')
+              }}
             </h2>
             <!-- <img src="@/assets/course-details-page/image_1.png" /> -->
           </div>
@@ -119,7 +162,11 @@
                   :icon="['fas', 'money-check']"
                 />
                 &nbsp;
-                {{ $t('portalPage.title1') }}</span
+                {{
+                  $route.params.type == 'course'
+                    ? $t('coursesPage.title2')
+                    : $t('coursesPage.title1')
+                }}</span
               >
               <span>{{ classes.fee }} $</span>
             </div>
@@ -135,6 +182,7 @@
 import AppPageTitleArea from '@/components/app_page_title_area.vue'
 import store from '@/store'
 import { db } from '@/firebase/config'
+import dayjs from 'dayjs'
 
 export default {
   name: 'classs-marks-details-page',
@@ -152,6 +200,7 @@ export default {
         " style="stroke-width: 4px; fill: rgba(0, 0, 0, 0)"/>
       `,
       is_loading: false,
+      secondExamType: false,
       average: 0,
       grad: '',
       classTitle: '',
@@ -164,21 +213,31 @@ export default {
     selectLanguage: () => store.state.user.language,
   },
   async mounted() {
-    await this.getRegisterClass(this.$route.params.registerClassId)
-    await this.getClass(this.$route.params.courseId)
+    await this.getRegisterClass(
+      this.$route.params.registerClassId,
+      this.$route.params.type
+    )
+    await this.getClass(this.$route.params.courseId, this.$route.params.type)
   },
   methods: {
     averageMarks(arr) {
-      const { total, count } = arr.reduce(
+      const { total, count, second_exam_marks } = arr.reduce(
         (a, b) => {
           a.total +=
             parseInt(b.frist_exam_marks) + parseInt(b.second_exam_marks)
           a.count++
+          a.second_exam_marks += parseInt(b.second_exam_marks) + 0
           return a
         },
-        { total: 0, count: 0 }
+        { total: 0, count: 0, second_exam_marks: 0 }
       )
 
+      console.log('======================> ', second_exam_marks)
+      if (second_exam_marks == 0) {
+        this.secondExamType = false
+      } else {
+        this.secondExamType = true
+      }
       return total / count
     },
     gradMarks(value) {
@@ -194,28 +253,37 @@ export default {
         this.grad = 'failed'
       }
     },
-    async getRegisterClass(id) {
+    async getRegisterClass(id, type) {
       this.is_loading = true
       try {
         const userRef = db.collection('register_classes').doc(id)
         const res = await userRef.get()
         this.register_class = res.data()
-        this.average = this.averageMarks(res.data().subjects)
-        this.gradMarks(this.average)
-        console.log('register class data= ', res.data())
+        const monthlyData = JSON.parse(res.data().monthly_fee)
+        var items = []
+        monthlyData.map((item) => {
+          items.push({
+            fee_date: dayjs(item.fee_date).format('YYYY/M/d'),
+            fee_amount: item.fee_amount,
+          })
+        })
+        this.register_class.monthly_fee = items
+        if (type == 'classes') {
+          this.average = this.averageMarks(res.data().subjects)
+          this.gradMarks(this.average)
+        }
       } catch (error) {
         this.is_loading = false
         console.log(error.message)
       }
     },
-    async getClass(id) {
+    async getClass(id, type) {
       this.is_loading = true
       try {
-        const userRef = db.collection('classes').doc(id)
+        const userRef = db.collection(type).doc(id)
         const res = await userRef.get()
         this.classes = res.data()
         this.classTitle = res.data().title
-        console.log('class data= ', res.id)
         this.is_loading = false
       } catch (error) {
         this.is_loading = false
@@ -278,6 +346,7 @@ export default {
         display: flex;
         flex-direction: column;
         align-items: flex-start;
+        margin-bottom: 10px;
         &-item_2 {
           width: 100%;
           h3 {
@@ -501,6 +570,7 @@ export default {
           width: 100%;
           padding: 0px;
           top: 0px;
+          margin: 0px;
           .sidebar-img {
             align-items: center;
             justify-content: center;

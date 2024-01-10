@@ -5,13 +5,13 @@ import 'firebase/compat/storage'
 import 'firebase/compat/auth'
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyAxmQBxGJMv9rGEUaAJxXArojDl2CxfbeU',
-  authDomain: 'ahmad-academy.firebaseapp.com',
-  projectId: 'ahmad-academy',
-  storageBucket: 'ahmad-academy.appspot.com',
-  messagingSenderId: '488096555472',
-  appId: '1:488096555472:web:4ce499ae21b57defe259d5',
-  measurementId: 'G-T0EJ1BHL1K',
+  apiKey: 'AIzaSyB6N_noibFm5USDSr1FG9Fi5G2PuhXODwA',
+  authDomain: 'ahmad-academy-cc3f7.firebaseapp.com',
+  projectId: 'ahmad-academy-cc3f7',
+  storageBucket: 'ahmad-academy-cc3f7.appspot.com',
+  messagingSenderId: '1028392134597',
+  appId: '1:1028392134597:web:f0de210fb2310c0bf88dac',
+  // measurementId: 'G-T0EJ1BHL1K',
 }
 
 firebase.initializeApp(firebaseConfig)

@@ -112,18 +112,20 @@
         </div>
         <div class="content-info-list-nav">
           <font-awesome-icon style="font-size: 15px" :icon="['fas', 'phone']" />
-          <span>+93(0)70 0073297</span>
+          <span v-if="language === 'EN'">+93(0)70 0073297</span>
+          <span v-else>۰۰۹۳۷۰۰۰۷۳۲۹۷</span>
         </div>
         <div class="content-info-list-nav">
           <font-awesome-icon style="font-size: 15px" :icon="['fas', 'phone']" />
-          <span>+93(0)70 0063298</span>
+          <span v-if="language === 'EN'">+93(0)70 0063298</span>
+          <span v-else>۰۰۹۳۷۰۰۰۶۳۲۹۸</span>
         </div>
         <div class="content-info-list-nav">
           <font-awesome-icon
             style="font-size: 15px"
             :icon="['fas', 'envelope']"
           />
-          <span>yourmailaddress@example.com</span>
+          <span>info@alnoorsafaonlineacademy.com</span>
         </div>
       </div>
     </div>

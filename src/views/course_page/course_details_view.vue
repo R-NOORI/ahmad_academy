@@ -216,10 +216,9 @@ export default {
       }
     },
     async checkBuyClass() {
-      console.log('=========================>', store.state.user.loggedIn)
       if (!store.state.user.userId) {
         ElMessage({
-          message: 'Frist you moust login to user account',
+          message: this.$t('courseDetailsPage.title7'),
           type: 'error',
         })
         return this.$router.push('/login')
