@@ -1,4 +1,7 @@
 {
+  "engines": {
+    "node": "16.x"
+  }
   "name": "online_academy",
   "version": "0.1.0",
   "private": true,
@@ -45,3 +48,4 @@
     "prettier": "^2.4.1"
   }
 }
+
