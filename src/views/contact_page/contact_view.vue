@@ -1,0 +1,415 @@
+<template>
+  <div class="contact-root">
+    <AppPageTitleArea
+      :currentPath="this.$route.fullPath.split('/')"
+      :title="this.$route.name"
+    />
+    <div
+      class="contact-page"
+      v-motion
+      :initial="{ opacity: 0, y: 300 }"
+      :enter="{
+        opacity: 1,
+        y: 0,
+        transition: {
+          mass: 1,
+        },
+      }"
+      :visible-once="{ opacity: 1, y: 0 }"
+      :delay="350"
+    >
+      <h4>{{ $t('contactPage.contact1Details') }}</h4>
+      <h1>{{ $t('contactPage.contact2Details') }}</h1>
+      <div class="contact-container">
+        <div class="contact-container-cards">
+          <div class="contact-cards-row" style="margin-bottom: 30px">
+            <contact_card
+              :icons="['fas', 'phone-volume']"
+              :title="$t('contactPage.socialMediaTitle1')"
+              text1="+93 (0) 700073297"
+              text2="+93 (0) 700063298"
+            />
+            <contact_card
+              :icons="['fas', 'envelope-open']"
+              :title="$t('contactPage.socialMediaTitle2')"
+              text1="info@alnoorsafaonlineacademy.com"
+            />
+          </div>
+          <div class="contact-cards-row">
+            <contact_card
+              :icons="['fab', 'instagram']"
+              :title="$t('contactPage.socialMediaTitle3')"
+              text1="alnoorsafa.onlineacademy"
+              @click="
+                () =>
+                  openInNewTab(
+                    'https://instagram.com/alnoorsafa.onlineacademy?igshid=OGQ5ZDc2ODk2ZA=='
+                  )
+              "
+            />
+
+            <contact_card
+              :icons="['fab', 'facebook-f']"
+              :title="$t('contactPage.socialMediaTitle4')"
+              text1="AlnoorSafaAcademye"
+              @click="
+                () =>
+                  openInNewTab(
+                    'https://www.facebook.com/AlnoorSafaAcademy?mibextid=ZbWKwL'
+                  )
+              "
+            />
+          </div>
+        </div>
+        <Form @submit="onSubmit" class="contact-form-save">
+          <Field
+            name="name"
+            type="text"
+            :placeholder="$t('contactPage.name')"
+            :rules="validateName"
+          />
+          <ErrorMessage
+            v-motion
+            :initial="{ opacity: 0, y: -30 }"
+            :enter="{ opacity: 1, y: 0 }"
+            :delay="200"
+            name="name"
+            :style="
+              language == 'EN'
+                ? 'color: red; text-align: left; margin-top: 5px'
+                : 'color: red; text-align: right; margin-top: 5px'
+            "
+          />
+          <Field
+            name="email"
+            :placeholder="$t('contactPage.email')"
+            :rules="validateEmail"
+          />
+          <ErrorMessage
+            v-motion
+            :initial="{ opacity: 0, y: -30 }"
+            :enter="{ opacity: 1, y: 0 }"
+            :delay="200"
+            name="email"
+            :style="
+              language == 'EN'
+                ? 'color: red; text-align: left; margin-top: 5px'
+                : 'color: red; text-align: right; margin-top: 5px'
+            "
+          />
+          <Field :placeholder="$t('contactPage.phoneNumber')" name="phone" />
+          <Field
+            :placeholder="$t('contactPage.subject')"
+            name="subject"
+            :rules="validateSubject"
+          />
+          <ErrorMessage
+            v-motion
+            :initial="{ opacity: 0, y: -30 }"
+            :enter="{ opacity: 1, y: 0 }"
+            :delay="200"
+            name="subject"
+            :style="
+              language == 'EN'
+                ? 'color: red; text-align: left; margin-top: 5px'
+                : 'color: red; text-align: right; margin-top: 5px'
+            "
+          />
+          <Field v-slot="{ field }" name="message" :rules="validateMessage">
+            <textarea
+              v-bind="field"
+              :placeholder="$t('contactPage.yourMessage')"
+            />
+          </Field>
+          <ErrorMessage
+            v-motion
+            :initial="{ opacity: 0, y: -30 }"
+            :enter="{ opacity: 1, y: 0 }"
+            :delay="200"
+            name="message"
+            :style="
+              language == 'EN'
+                ? 'color: red; text-align: left; margin-top: 5px'
+                : 'color: red; text-align: right; margin-top: 5px'
+            "
+          />
+          <AppButton
+            v-loading="is_loading"
+            :element-loading-svg="svg"
+            element-loading-svg-view-box="-10, -10, 50, 50"
+            :btnText="$t('contactPage.bnt')"
+            class="appbutton"
+            :rightIcon="[
+              'fas',
+              language == 'EN' ? 'arrow-right-long' : 'arrow-left-long',
+            ]"
+          />
+        </Form>
+      </div>
+    </div>
+    <div class="contact-root-map">
+      <l-map
+        style="width: 100%; height: 100%; z-index: 1"
+        ref="map"
+        v-model:zoom="zoom"
+        :center="[31.619061, 65.724823]"
+      >
+        <l-tile-layer
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          layer-type="base"
+          name="OpenStreetMap"
+        ></l-tile-layer>
+        <l-marker :lat-lng="[31.619061, 65.724823]"></l-marker>
+      </l-map>
+    </div>
+  </div>
+</template>
+
+<script>
+import 'leaflet/dist/leaflet.css'
+import contact_card from '@/views/contact_page/components/content_card.vue'
+import AppButton from '@/components/app_button.vue'
+import AppPageTitleArea from '@/components/app_page_title_area.vue'
+import { Form, Field, ErrorMessage } from 'vee-validate'
+import { LMap, LTileLayer, LMarker } from '@vue-leaflet/vue-leaflet'
+import { db } from '@/firebase/config'
+import { ElMessage } from 'element-plus'
+import store from '@/store'
+export default {
+  components: {
+    LMap,
+    LTileLayer,
+    LMarker,
+    contact_card,
+    AppButton,
+    AppPageTitleArea,
+    Form,
+    Field,
+    ErrorMessage,
+  },
+  data() {
+    return {
+      svg: `
+        <path class="path" d="
+          M 30 15
+          L 28 17
+          M 25.61 25.61
+          A 15 15, 0, 0, 1, 15 30
+          A 15 15, 0, 1, 1, 27.99 7.5
+          L 15 15
+        " style="stroke-width: 4px; fill: rgba(0, 0, 0, 0)"/>
+      `,
+      zoom: 15,
+      is_loading: false,
+    }
+  },
+  computed: {
+    language: () => store.state.user.language,
+  },
+  methods: {
+    openInNewTab(url) {
+      window.open(url, '_blank', 'noreferrer')
+    },
+    async onSubmit(values, { resetForm }) {
+      this.is_loading = true
+      try {
+        console.log(values)
+        const collectionRef = db.collection('emails')
+        await collectionRef.add(values)
+        ElMessage({
+          message: this.$t('contactPage.messageDetails'),
+          type: 'success',
+        })
+        resetForm()
+        this.is_loading = false
+      } catch (error) {
+        this.is_loading = false
+        ElMessage({
+          message: 'Internet connection error.',
+          type: 'error',
+        })
+      }
+      this.is_loading = false
+    },
+    validateName(value) {
+      if (!value) {
+        return this.$t('contactPage.inputTitle1')
+      }
+      return true
+    },
+    validateEmail(value) {
+      if (!value) {
+        return this.$t('contactPage.inputTitle1')
+      }
+      const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
+      if (!regex.test(value)) {
+        return this.$t('contactPage.inputTitle2')
+      }
+      return true
+    },
+    validateSubject(value) {
+      if (!value) {
+        return this.$t('contactPage.inputTitle1')
+      }
+      return true
+    },
+    validateMessage(value) {
+      if (!value) {
+        return this.$t('contactPage.inputTitle1')
+      }
+      return true
+    },
+  },
+}
+</script>
+
+<style scoped lang="less">
+.contact-root {
+  width: 100%;
+  .contact-page {
+    background-color: #ffff;
+    max-width: 1080px;
+    margin: 0px auto;
+    padding: 0px 20px;
+    h4 {
+      color: @color-secondary;
+    }
+    h1 {
+      margin: 0px 0px 100px 0px;
+    }
+    .contact-container {
+      display: grid;
+      grid-template-columns: 50% 45%;
+      justify-content: space-between;
+      grid-gap: 1em;
+      .contact-container-cards {
+        display: grid;
+        grid-template-rows: 50% 50%;
+        grid-gap: 2em;
+        .contact-cards-row {
+          box-sizing: border-box;
+          display: grid;
+          grid-template-columns: 50% 50%;
+          grid-gap: 2em;
+        }
+      }
+      .contact-form-save {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        input,
+        textarea {
+          background-color: #f5f5f5;
+          outline: 0px solid #ffffff;
+          border: 0px solid #ffffff;
+          padding: 0px 30px;
+          font-size: 14px;
+          height: 60px;
+          border-radius: 5px;
+          font-family: inherit;
+          transition: 0.8s;
+          margin-bottom: 10px;
+        }
+        textarea {
+          height: 180px;
+          padding: 20px 30px;
+        }
+        input {
+          &:focus {
+            border: 1px solid @color-secondary;
+            transition: 0.8s;
+          }
+        }
+      }
+    }
+  }
+  &-map {
+    max-width: 1080px;
+    padding: 100px 20px;
+    margin: 0px auto;
+    height: 500px;
+  }
+}
+
+@media @tablet {
+  .contact-root {
+    width: 100%;
+    .contact-page {
+      padding: 0px 20px;
+      box-sizing: border-box;
+      h4 {
+        color: @color-secondary;
+      }
+      h1 {
+        margin: 0px 0px 100px 0px;
+      }
+      .contact-container {
+        display: grid;
+        grid-template-columns: 100%;
+        justify-content: space-between;
+        grid-gap: 1em;
+        width: 100%;
+        .contact-container-cards {
+          display: grid;
+          grid-template-rows: auto auto;
+          grid-gap: 1em;
+          .contact-cards-row {
+            display: grid;
+            grid-template-columns: 47% 47%;
+            justify-content: space-between;
+            grid-gap: 1em;
+          }
+        }
+        .contact-form-save {
+          margin-top: 20px;
+        }
+      }
+    }
+  }
+}
+@media @mobile {
+  .contact-root {
+    width: 100%;
+    .contact-page {
+      padding: 0px 10px;
+      box-sizing: border-box;
+      h4 {
+        color: @color-secondary;
+        font-size: 14px;
+      }
+      h1 {
+        margin: 0px 0px 100px 0px;
+        font-size: 25px;
+      }
+      .contact-container {
+        display: grid;
+        grid-template-columns: 100%;
+        justify-content: center;
+        grid-gap: 0px;
+        width: 100%;
+        .contact-container-cards {
+          display: grid;
+          grid-template-rows: auto;
+          justify-content: stretch;
+          grid-gap: 0px;
+          .contact-cards-row {
+            display: grid;
+            grid-template-columns: 100%;
+            justify-content: start;
+            grid-gap: 30px;
+          }
+        }
+        .contact-form-save {
+          margin-top: 20px;
+        }
+      }
+    }
+  }
+  &-map {
+    max-width: 1080px;
+    padding: 0px;
+    margin: 0px auto;
+    height: 300px;
+  }
+}
+</style>

@@ -1,4 +1,7 @@
 {
+  "engines": {
+    "node": "16.x"
+  }
   "name": "online_academy",
   "version": "0.1.0",
   "private": true,
@@ -8,9 +11,23 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.4.2",
+    "@fortawesome/free-brands-svg-icons": "^6.4.2",
+    "@fortawesome/free-regular-svg-icons": "^6.4.2",
+    "@fortawesome/free-solid-svg-icons": "^6.4.2",
+    "@fortawesome/vue-fontawesome": "^3.0.3",
+    "@vue-leaflet/vue-leaflet": "^0.10.1",
+    "@vueuse/motion": "^2.0.0",
     "core-js": "^3.8.3",
     "element-plus": "^2.3.12",
+    "emailjs-com": "^3.2.0",
+    "firebase": "^10.5.2",
+    "gsap": "^3.12.2",
+    "js-cookie": "^3.0.5",
+    "leaflet": "^1.9.4",
+    "vee-validate": "^4.11.8",
     "vue": "^3.2.13",
+    "vue-i18n": "9",
     "vue-router": "^4.0.3",
     "vuex": "^4.0.0"
   },
@@ -31,3 +48,4 @@
     "prettier": "^2.4.1"
   }
 }
+
